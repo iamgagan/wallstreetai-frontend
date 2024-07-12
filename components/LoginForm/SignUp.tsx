@@ -34,12 +34,17 @@ export const SignUpForm = () => {
     <CardWrapper
       headerLabel='create an account'
       footerLabel={
-        <p className='text-md'>
-          Already have an account ? Login{" "}
-          <Link className='text-blue-800 font-semibold' href='/login'>
-            here
-          </Link>
-        </p>
+        <div className='flex flex-col gap-2'>
+          <p className='text-md'>
+            Already have an account ? Login{" "}
+            <Link
+              className='text-blue-800 font-semibold underline'
+              href='/login'
+            >
+              here
+            </Link>
+          </p>
+        </div>
       }
     >
       <Form {...form}>

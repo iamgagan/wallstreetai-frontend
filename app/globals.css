@@ -5,11 +5,11 @@
 @tailwind utilities;
 
 
-
 @keyframes gradientAnimation {
   0% {
     background: radial-gradient(ellipse 80% 80% at top, #077BCD, #3088D8, #005AA2, #004D98, #0D0379),
                 linear-gradient(45deg, #077BCD, #3088D8, #005AA2, #004D98, #0D0379);
+    background-position: 100% 50%;
   }
   25% {
     background: radial-gradient(ellipse at bottom, #3088D8, #005AA2, #004D98, #0D0379, #077BCD),
@@ -26,6 +26,7 @@
   100% {
     background: radial-gradient(ellipse 150% 200% at center, #0D0379, #077BCD, #3088D8, #005AA2, #004D98),
                 linear-gradient(45deg, #0D0379, #077BCD, #3088D8, #005AA2, #004D98);
+    background-position: 0% 50%;
   }
 }
 
@@ -42,7 +43,8 @@ body {
   background: radial-gradient(ellipse at top, #077BCD, #3088D8, #005AA2, #004D98, #0D0379),
               linear-gradient(45deg, #077BCD, #3088D8, #005AA2, #004D98, #0D0379);
   background-blend-mode: overlay;
-  animation: gradientAnimation 15s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-animation: gradientAnimation 8s linear infinite alternate both;
+  animation: gradientAnimation 30s linear infinite alternate both;
 }
 
 .focus-in-expand-fwd {
