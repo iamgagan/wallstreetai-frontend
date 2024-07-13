@@ -13,33 +13,49 @@ import { LoginSchema } from "@/schemas/index";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
+import { SocialLoginButton } from "../Button/SocialLoginButton";
+import { SocialMediaList } from "@/lib/constants";
+import { signup } from "@/actions/signup";
+import { useUserStore } from "@/store/store";
+import { FormError } from "../ui/form-error";
 
 export const SignUpForm = () => {
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
       email: "",
       password: "",
     },
   });
+  const { updateEmail } = useUserStore();
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {};
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    startTransition(() => {
+      signup(values).then((data) => {
+        if (data && data.error) {
+          setError(data.error);
+        } else {
+          updateEmail(values.email);
+          setError(undefined);
+        }
+      });
+    });
+  };
 
   return (
     <CardWrapper
-      headerLabel='create an account'
+      headerLabel=''
       footerLabel={
         <div className='flex flex-col gap-2'>
           <p className='text-md'>
             Already have an account ? Login{" "}
             <Link
               className='text-blue-800 font-semibold underline'
-              href='/login'
+              href='/auth/login'
             >
               here
             </Link>
@@ -47,45 +63,21 @@ export const SignUpForm = () => {
         </div>
       }
     >
+      <ul className='flex flex-col gap-3 mb-4'>
+        {SocialMediaList.map((provider) => (
+          <SocialLoginButton
+            provider={provider}
+            action={"signup"}
+            key={provider}
+          />
+        ))}
+      </ul>
+      <div className='text-center pb-2'>
+        <p>or</p>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
           <div className='space-y-4'>
-            <FormField
-              control={form.control}
-              name='firstName'
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type='text'
-                      placeholder='first name'
-                      autoComplete='given-name'
-                      disabled={isPending}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='lastName'
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type='text'
-                      placeholder='last name'
-                      autoComplete='family-name'
-                      disabled={isPending}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name='email'
@@ -129,6 +121,7 @@ export const SignUpForm = () => {
               )}
             />
           </div>
+          {error ? <FormError message={error} /> : null}
           <Button type='submit' className='w-full text-xl' disabled={isPending}>
             Sign up
           </Button>

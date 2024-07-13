@@ -20,11 +20,13 @@ export const CardWrapper: React.FC<CardWrapperProps> = ({
   footerLabel,
 }) => {
   return (
-    <Card className='w-[400px]'>
-      <CardHeader>
-        <CardTitle className='text-white'>{headerLabel}</CardTitle>
-      </CardHeader>
-      <CardContent className='py-6 bg-[#cfd8ff] rounded-b-lg'>
+    <Card className='w-[90vw] mx-auto min-w-[380px] sm:w-[35vw]'>
+      {headerLabel ? (
+        <CardHeader>
+          <CardTitle>{headerLabel}</CardTitle>
+        </CardHeader>
+      ) : null}
+      <CardContent className='rounded-b-lg'>
         {children}
         {footerLabel ? (
           <CardFooter className='text-black pt-4'>{footerLabel}</CardFooter>

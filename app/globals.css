@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @keyframes gradientAnimation {
   0% {
     background: radial-gradient(ellipse 80% 80% at top, #077BCD, #3088D8, #005AA2, #004D98, #0D0379),
@@ -33,12 +32,25 @@
 body {
   font-family: 'Urbanist', sans-serif;
   font-size: 16px;
+  color: #000;
+  line-height: 1.5;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 16px;
   line-height: 1.5;
   color: '#fff';
   margin: 0;
   height: 100vh;
   display: flex;
   justify-content: center;
+  width: 100%;
   align-items: center;
   background: radial-gradient(ellipse at top, #077BCD, #3088D8, #005AA2, #004D98, #0D0379),
               linear-gradient(45deg, #077BCD, #3088D8, #005AA2, #004D98, #0D0379);
