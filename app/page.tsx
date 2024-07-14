@@ -7,10 +7,9 @@ import { useUserStore } from "@/store/store";
 
 export default function Home() {
   const router = useRouter();
-  const { data, status } = useSession();
+  const { status } = useSession();
   const { updateIsLoggedIn, updateEmail } = useUserStore();
-  console.log("data", data);
-  console.log("status", status);
+
   useEffect(() => {
     if (status === "authenticated") {
       signOut().then(() => {
