@@ -53,7 +53,7 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, ListItemProps>(
   ({ className, title, children, divider, ...props }, ref) => {
     const { name } = useUserStore();
     return (
-      <li className='px-2'>
+      <li className='px-2 bg-popover z-1000'>
         <NavigationMenuLink asChild>
           <a
             ref={ref}
@@ -77,7 +77,7 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, ListItemProps>(
           </a>
         </NavigationMenuLink>
         {divider && (
-          <hr className='border-[1px] border-border w-[80%] mt-[1px] mx-2' />
+          <hr className='border-[1px] border-border w-[80%] mt-[1px] mx-2 bg-popover' />
         )}
       </li>
     );
@@ -95,7 +95,7 @@ export const ProfileMenu = () => {
             <Profile />
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className='flex flex-col gap-[1px] fixed mt-4 right-2 w-[200px] shadow-lg'>
+            <ul className='flex flex-col gap-[1px] fixed mt-4 right-2 w-[200px] shadow-lg bg-popover'>
               {MenuItems.map((item) => (
                 <ListItem
                   key={item.title}

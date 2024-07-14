@@ -1,7 +1,8 @@
 "use client";
 
-import { Button, Card } from "flowbite-react";
+import { Card } from "flowbite-react";
 import Image, { StaticImageData } from "next/image";
+import { useRouter } from "next/navigation";
 
 interface DashboardCardProps {
   title: string;
@@ -16,9 +17,10 @@ export const DashboardCard = ({
   description,
   icon,
 }: DashboardCardProps) => {
+  const router = useRouter();
   return (
     <Card
-      className={`w-[8rem] h-[8rem] lg:w-[15rem] lg:h-[12rem] rounded-xl ${bgColor}`}
+      className={`w-[8rem] h-[8rem] lg:w-[15rem] lg:h-[12rem] rounded-xl ${bgColor} cursor-pointer`}
     >
       <div className='flex flex-col lg:flex-row justify-between gap-3 items-center w-full'>
         <Image

@@ -4,6 +4,7 @@ import cv from "../../public/cv.png";
 import insights from "../../public/insights.png";
 import score from "../../public/score.png";
 import interview from "../../public/interview.png";
+import Link from "next/link";
 
 const cardList = [
   {
@@ -11,24 +12,28 @@ const cardList = [
     description: "Craft a winning resume for your Wall Street ambitions!",
     bgColor: "bg-card-blue",
     icon: cv,
+    navigateTo: "/resumes",
   },
   {
     title: "Resume analysis",
     description: "Get your resume analyzed by our AI to improve your chances!",
     bgColor: "bg-card-green",
     icon: score,
+    navigateTo: "/resume-analysis",
   },
   {
     title: "Career insights",
     description: "Empower your career with insights from industry experts!",
     bgColor: "bg-card-red",
     icon: insights,
+    navigateTo: "/career-insights",
   },
   {
     title: "Mock interviews",
     description: "Prepare for your dream job with mock interviews!",
     bgColor: "bg-card-purple",
     icon: interview,
+    navigateTo: "/mock-interviews",
   },
 ];
 
@@ -38,9 +43,9 @@ export default function Dashboard() {
       <NavigationLayout>
         <ul className='flex gap-3'>
           {cardList.map((card, index) => (
-            <li key={card.title}>
+            <Link key={card.title} href={card.navigateTo}>
               <DashboardCard {...card} />
-            </li>
+            </Link>
           ))}
         </ul>
       </NavigationLayout>
