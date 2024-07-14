@@ -19,7 +19,7 @@ export default auth((req) => {
 
   // first allow every single api route (localhost:3000/api/auth/*)
   if (isApiAuthRoute) {
-    return null;
+    return;
   }
   // check if it is login or register route (localhost:3000/auth/login or localhost:3000/auth/register)
   if (isAuthRoute) {
@@ -27,13 +27,13 @@ export default auth((req) => {
     if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
-    return null;
+    return;
   }
 
   if (!isLoggedIn && !isPublicRoute) {
     return Response.redirect(new URL("/auth/login", nextUrl));
   }
-  return null;
+  return;
 });
 
 // invoke the auth middleware with every route except for static files and the next.js internal routes
