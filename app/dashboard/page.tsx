@@ -1,10 +1,5 @@
 import { NavigationLayout } from "@/components/NavigationLayout/NavigationLayout";
 import { DashboardCard } from "@/components/DashboardCard/DashboardCard";
-import cv from "../../public/cv.png";
-import insights from "../../public/insights.png";
-import score from "../../public/score.png";
-import interview from "../../public/interview.png";
-import Link from "next/link";
 
 const cardList = [
   {
