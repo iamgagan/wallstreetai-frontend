@@ -1,15 +1,15 @@
 import { StateCreator } from "zustand";
 
 export interface UserSlice {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
+  imgSrc: string;
   sessionId: string;
   isLoggedIn: boolean;
   updateSessionId: (sessionId: string) => void;
-  updateFirstName: (firstName: string) => void;
-  updateLastName: (lastName: string) => void;
+  updateName: (name: string) => void;
   updateEmail: (email: string) => void;
+  updateImageSrc: (imgSrc: string) => void;
   updateIsLoggedIn: (isLoggedIn: boolean) => void;
   resetYourDetails: () => void;
 }
@@ -18,14 +18,14 @@ export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
   set
 ) => ({
   sessionId: "",
-  firstName: "",
-  lastName: "",
+  name: "",
   email: "",
+  imgSrc: "",
   isLoggedIn: false,
   updateSessionId: (sessionId) => set(() => ({ sessionId })),
-  updateFirstName: (firstName) => set(() => ({ firstName })),
-  updateLastName: (lastName) => set(() => ({ lastName })),
+  updateName: (name) => set(() => ({ name })),
   updateEmail: (email) => set(() => ({ email })),
+  updateImageSrc: (imgSrc) => set(() => ({ imgSrc })),
   updateIsLoggedIn: (isLoggedIn) => set(() => ({ isLoggedIn })),
   resetYourDetails: () =>
     set(() => ({

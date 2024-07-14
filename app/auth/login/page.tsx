@@ -1,12 +1,12 @@
-import { Layout } from "@/components/Layout/Layout";
+import { NavigationLayout } from "@/components/NavigationLayout/NavigationLayout";
 import { LoginForm } from "@/components/AuthForm/LoginForm";
 
 export default function Login() {
   return (
     <main className='min-h-screen w-full'>
-      <Layout>
+      <NavigationLayout>
         <LoginForm />
-      </Layout>
+      </NavigationLayout>
     </main>
   );
 }

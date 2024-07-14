@@ -1,17 +1,20 @@
 "use client";
 import { Logo } from "../Logo/Logo";
 import { Button } from "../ui/button";
-import { ProfileMenu } from "../ProfileCard/ProfileCard";
-import { useUserStore } from "@/store/store";
+import { ProfileMenu } from "../ProfileMenu/ProfileMenu";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/store";
 
-interface LayoutProps {
+interface NavigationLayoutProps {
   children: React.ReactNode;
 }
 
-export const Layout = ({ children }: LayoutProps) => {
+export const NavigationLayout = ({ children }: NavigationLayoutProps) => {
+  const { status } = useSession();
   const { isLoggedIn } = useUserStore();
   const router = useRouter();
+
   return (
     <main className='flex flex-col justify-center items-center gap-5 w-full h-full'>
       <header className='w-full py-2 sm:py-4 shadow-md bg-[#fafafa]'>
@@ -20,7 +23,7 @@ export const Layout = ({ children }: LayoutProps) => {
             <Logo background='light' />
           </div>
 
-          {isLoggedIn ? (
+          {status === "authenticated" || isLoggedIn ? (
             <ProfileMenu />
           ) : (
             <Button

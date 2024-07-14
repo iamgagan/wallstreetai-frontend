@@ -31,7 +31,7 @@ export const SignUpForm = () => {
       password: "",
     },
   });
-  const { updateEmail } = useUserStore();
+  const { updateEmail, updateIsLoggedIn } = useUserStore();
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
@@ -40,6 +40,7 @@ export const SignUpForm = () => {
           setError(data.error);
         } else {
           updateEmail(values.email);
+          updateIsLoggedIn(true);
           setError(undefined);
         }
       });

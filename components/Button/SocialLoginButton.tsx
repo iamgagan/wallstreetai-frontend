@@ -1,10 +1,12 @@
+"use client";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
 import { FaLinkedin } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { useUserStore } from "@/store/store";
 
 export type SocialMediaProvider =
   | "Google"
@@ -78,10 +80,14 @@ export const SocialLoginButton = ({
   provider,
   action,
 }: SocialLoginButtonProps) => {
-  const handleLogin = (provider: SocialMediaProvider) => {
-    signIn(provider.toLowerCase(), {
-      callbackUrl: DEFAULT_LOGIN_REDIRECT,
-    });
+  const handleLogin = async (provider: SocialMediaProvider) => {
+    try {
+      await signIn(provider.toLowerCase(), {
+        callbackUrl: DEFAULT_LOGIN_REDIRECT,
+      });
+    } catch (error) {
+      console.error("Error signing in with social media", error);
+    }
   };
   const actionLabel =
     action === "login" ? `Log in with ${provider}` : `Sign up with ${provider}`;

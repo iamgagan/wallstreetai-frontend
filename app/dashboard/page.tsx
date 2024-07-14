@@ -1,4 +1,4 @@
-import { Layout } from "@/components/Layout/Layout";
+import { NavigationLayout } from "@/components/NavigationLayout/NavigationLayout";
 
 const menuItemList = [
   "resume generator",
@@ -11,9 +11,9 @@ const menuItemList = [
 export default function Dashboard() {
   return (
     <main className='min-h-screen w-full'>
-      <Layout>
+      <NavigationLayout>
         <p>Dashboard</p>
-      </Layout>
+      </NavigationLayout>
     </main>
   );
 }

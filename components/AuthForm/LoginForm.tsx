@@ -22,7 +22,7 @@ import { useUserStore } from "@/store/store";
 import { login } from "@/actions/login";
 
 export const LoginForm = () => {
-  const { updateEmail } = useUserStore();
+  const { updateEmail, updateIsLoggedIn } = useUserStore();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -40,6 +40,7 @@ export const LoginForm = () => {
           setError(data.error);
         } else {
           updateEmail(values.email);
+          updateIsLoggedIn(true);
           setError(undefined);
         }
       });

@@ -1,12 +1,12 @@
-import { Layout } from "@/components/Layout/Layout";
+import { NavigationLayout } from "@/components/NavigationLayout/NavigationLayout";
 import { SignUpForm } from "@/components/AuthForm/SignUp";
 
 export default function SignUp() {
   return (
     <main className='min-h-screen w-full'>
-      <Layout loggedIn={false}>
+      <NavigationLayout>
         <SignUpForm />
-      </Layout>
+      </NavigationLayout>
     </main>
   );
 }
