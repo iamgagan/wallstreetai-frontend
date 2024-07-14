@@ -28,7 +28,7 @@ const cardList = [
     title: "Mock interviews",
     description: "Prepare for your dream job with mock interviews!",
     bgColor: "bg-card-purple",
-    icon: "/interviews.png",
+    icon: "/interview.png",
     navigateTo: "/mock-interviews",
   },
 ];
