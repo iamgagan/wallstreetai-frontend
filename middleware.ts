@@ -6,6 +6,7 @@ import {
   authRoutes,
   publicRoutes,
 } from "./routes";
+import { NextResponse } from "next/server";
 
 const { auth } = NextAuth(authConfig);
 
@@ -16,10 +17,9 @@ export default auth((req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-
   // first allow every single api route (localhost:3000/api/auth/*)
   if (isApiAuthRoute) {
-    return;
+    return NextResponse.next();
   }
   // check if it is login or register route (localhost:3000/auth/login or localhost:3000/auth/register)
   if (isAuthRoute) {
@@ -27,13 +27,13 @@ export default auth((req) => {
     if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
-    return;
+    return NextResponse.next();
   }
 
   if (!isLoggedIn && !isPublicRoute) {
     return Response.redirect(new URL("/auth/login", nextUrl));
   }
-  return;
+  return NextResponse.next();
 });
 
 // invoke the auth middleware with every route except for static files and the next.js internal routes
