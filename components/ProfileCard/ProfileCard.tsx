@@ -27,7 +27,9 @@ export const Profile = () => {
       {imgSrc ? (
         <AvatarImage src={imgSrc} alt='imgSrc' />
       ) : (
-        <AvatarFallback>{avatarName?.slice(0, 1).toUpperCase()}</AvatarFallback>
+        <AvatarFallback>
+          {avatarName?.slice(0, 1)?.toUpperCase() || ""}
+        </AvatarFallback>
       )}
     </Avatar>
   );

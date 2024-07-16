@@ -17,7 +17,6 @@ export default auth((req, res) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  const isFavicon = nextUrl.pathname === "/favicon.ico";
   // first allow every single api route (localhost:3000/api/auth/*)
   if (isApiAuthRoute) {
     return NextResponse.next();
@@ -29,10 +28,6 @@ export default auth((req, res) => {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
     return NextResponse.next();
-  }
-
-  if (isFavicon) {
-    return Response.redirect(new URL("/", nextUrl));
   }
 
   if (!isLoggedIn && !isPublicRoute) {
