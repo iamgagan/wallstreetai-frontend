@@ -7,8 +7,10 @@ import { useSession } from "next-auth/react";
 
 export const Profile = () => {
   const { data } = useSession();
-  const { imgSrc, name, updateEmail, updateImageSrc, updateName } =
+  const { imgSrc, name, updateEmail, updateImageSrc, updateName, email } =
     useUserStore();
+
+  const avatarName = name || data?.user?.name || email || data?.user?.email;
 
   useEffect(() => {
     if (data && data.user) {
@@ -25,7 +27,7 @@ export const Profile = () => {
       {imgSrc ? (
         <AvatarImage src={imgSrc} alt='imgSrc' />
       ) : (
-        <AvatarFallback>{name.slice(0, 1).toUpperCase()}</AvatarFallback>
+        <AvatarFallback>{avatarName?.slice(0, 1).toUpperCase()}</AvatarFallback>
       )}
     </Avatar>
   );

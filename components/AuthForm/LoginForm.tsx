@@ -13,16 +13,20 @@ import { LoginSchema } from "@/schemas/index";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Link from "next/link";
 import { SocialLoginButton } from "../Button/SocialLoginButton";
 import { SocialMediaList } from "@/lib/constants";
 import { FormError } from "../ui/form-error";
 import { useUserStore } from "@/store/store";
 import { login } from "@/actions/login";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
   const { updateEmail, updateIsLoggedIn } = useUserStore();
+  const { data } = useSession();
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -33,6 +37,16 @@ export const LoginForm = () => {
     },
   });
 
+  useEffect(() => {
+    if (data && data.user) {
+      const { email } = data.user;
+      updateEmail(email || "");
+      updateIsLoggedIn(true);
+      router.push("/dashboard");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.user]);
+
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
       login(values).then((data) => {
@@ -42,6 +56,7 @@ export const LoginForm = () => {
           updateEmail(values.email);
           updateIsLoggedIn(true);
           setError(undefined);
+          router.push("/dashboard");
         }
       });
     });

@@ -4,6 +4,8 @@ import Google from "next-auth/providers/google";
 import LinkedIn from "next-auth/providers/linkedin";
 import Apple from "next-auth/providers/apple";
 import { LoginSchema } from "./schemas";
+import { getUserByEmail } from "./lib/getUserByEmail";
+import bcryptjs from "bcryptjs";
 
 // can use prisma here because it doesn't run on the edge
 export default {
@@ -24,18 +26,18 @@ export default {
       async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials);
         if (validatedFields.success) {
-          // const { email, password } = validatedFields.data;
-          // const user = await getUserByEmail(email);
-          // if (!user || !user.password) {
-          //   return null;
-          // }
-          // const passwordsMatch = await bcryptjs.compare(
-          //   password,
-          //   user.password
-          // );
-          // if (passwordsMatch) {
-          //   return user;
-          // }
+          const { email, password } = validatedFields.data;
+          const user = await getUserByEmail(email);
+          if (!user || !user.password) {
+            return null;
+          }
+          const passwordsMatch = await bcryptjs.compare(
+            password,
+            user.password
+          );
+          if (passwordsMatch) {
+            return user;
+          }
           return validatedFields.data;
         }
         return null;

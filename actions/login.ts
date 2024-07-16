@@ -5,6 +5,7 @@ import { z } from "zod";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
+import { getUserByEmail } from "@/lib/getUserByEmail";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -14,11 +15,11 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   }
   const { email, password } = validatedFields.data;
 
-  // const existingUser = await getUserByEmail(email);
+  const existingUser = await getUserByEmail(email);
 
-  // if (!existingUser || !existingUser.email || !existingUser.password) {
-  //   return { error: "Email does not exist" };
-  // }
+  if (!existingUser || !existingUser.email || !existingUser.password) {
+    return { error: "Email does not exist" };
+  }
 
   // if (!existingUser.emailVerified) {
   //   // Google or Github account where user email is not verified

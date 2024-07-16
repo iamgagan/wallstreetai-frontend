@@ -10,7 +10,7 @@ import { NextResponse } from "next/server";
 
 const { auth } = NextAuth(authConfig);
 
-export default auth((req) => {
+export default auth((req, res) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   // don't need to protect this route, always want to allow this route

@@ -2,7 +2,7 @@
  * An array of routes that are accessible to the public
  */
 
-export const publicRoutes = ["/", "/auth/new-verification", "/dashboard"];
+export const publicRoutes = ["/", "/auth/new-verification"];
 
 export const authRoutes = [
   "/auth/login",

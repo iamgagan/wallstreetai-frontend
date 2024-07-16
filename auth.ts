@@ -1,34 +1,34 @@
 import NextAuth from "next-auth";
 import authConfig from "@/auth.config";
-// import { PrismaAdapter } from "@auth/prisma-adapter";
-// import { db } from "@/lib/db";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { db } from "@/lib/db";
+import { getUserById } from "./lib/getUserByEmail";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
-    signIn: "/auth/login",
     error: "/auth/error",
   },
   events: {
     /**
      * this event is triggered for Google & github providers accounts
      */
-    // async linkAccount({ user }) {
-    //   await db.user.update({
-    //     where: { id: user.id },
-    //     data: {
-    //       emailVerified: new Date(),
-    //     },
-    //   });
-    // },
+    async linkAccount({ user }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          emailVerified: new Date(),
+        },
+      });
+    },
   },
   callbacks: {
     async signIn({ user, account }) {
       // allow oauth without email verification
-      // if (account?.provider !== "credentials") return true;
+      if (account?.provider !== "credentials") return true;
 
-      // const existingUser = await getUserById(user?.id);
+      const dbUser = await getUserById(user?.id);
       // // prevent sign in without email verification
-      // if (!existingUser?.emailVerified) return false;
+      if (!dbUser?.email) return false;
       // add 2fa check here
       return true;
     },
@@ -45,17 +45,17 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       }
       return session;
     },
-    // async jwt({ token }) {
-    //   if (!token.sub) return token;
-    //   const existingUser = await getUserById(token.sub);
-    //   if (!existingUser) return token;
-    //   return {
-    //     ...token,
-    //     role: existingUser?.role,
-    //   };
-    // },
+    async jwt({ token }) {
+      if (!token.sub) return token;
+      const existingUser = await getUserById(token.sub);
+      if (!existingUser) return token;
+      return {
+        ...token,
+        role: existingUser?.role,
+      };
+    },
   },
-  // adapter: PrismaAdapter(db),
-  // session: { strategy: "jwt" },
+  adapter: PrismaAdapter(db),
+  session: { strategy: "jwt" },
   ...authConfig,
 });
