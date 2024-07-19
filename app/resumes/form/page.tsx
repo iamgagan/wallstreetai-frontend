@@ -10,7 +10,7 @@ export default function CreateResumeWithAI() {
         <div className="overflow-y-scroll overflow-x-hidden w-[50vw] px-5 box-border flex flex-col flex-1 max-h-[100%]">
         <ResumeFormList />
         </div>
-        <div className="overflow-y-scroll w-[50vw] px-5 box-border flex flex-col flex-1 max-h-[100%]">
+        <div className="overflow-y-scroll w-[50vw] px-5 box-border flex flex-1 max-h-[100%]">
         <ResumePreview/>
        </div>
       </div>
