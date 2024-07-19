@@ -184,32 +184,31 @@ export const WorkExperienceForm = () => {
                       </FormItem>
                     )}
                   />
-                 
-                    <FormField
-                      control={workForm.control}
-                      name={`work.${index}.country`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <Label id={`work.${index}.country`}>Country</Label>
-                          <FormControl>
-                            <Input
-                              {...workForm.register(`work.${index}.country`)}
-                              type='text'
-                              placeholder='United States'
-                              autoComplete='country'
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    /> 
-                  
+
+                  <FormField
+                    control={workForm.control}
+                    name={`work.${index}.country`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label id={`work.${index}.country`}>Country</Label>
+                        <FormControl>
+                          <Input
+                            {...workForm.register(`work.${index}.country`)}
+                            type='text'
+                            placeholder='United States'
+                            autoComplete='country'
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
                 <FormField
                   control={workForm.control}
                   name={`work.${index}.description`}
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className='sm:w-[80vw] lg:w-[45vw]'>
                       <Label id={`work.${index}.description`}>
                         Description
                       </Label>

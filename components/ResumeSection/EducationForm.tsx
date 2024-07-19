@@ -135,7 +135,7 @@ export const EducationForm = () => {
                   control={educationForm.control}
                   name={`educations.${index}.institutionName`}
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className='sm:w-[80vw] lg:w-[45vw]'>
                       <Label id={`educations.${index}.institutionName`}>
                         Institution
                       </Label>
@@ -157,7 +157,7 @@ export const EducationForm = () => {
                   control={educationForm.control}
                   name={`educations.${index}.degree`}
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className='sm:w-[80vw] lg:w-[45vw]'>
                       <Label id={`educations.${index}.degree`}>Degree</Label>
                       <FormControl>
                         <Input
@@ -173,52 +173,55 @@ export const EducationForm = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={educationForm.control}
-                  name={`educations.${index}.city`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label id={`educations.${index}.city`}>City</Label>
-                      <FormControl>
-                        <Input
-                          {...educationForm.register(
-                            `educations.${index}.city`
-                          )}
-                          type='text'
-                          placeholder='New York'
-                          autoComplete='city'
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={educationForm.control}
-                  name={`educations.${index}.country`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label id={`educations.${index}.country`}>Country</Label>
-                      <FormControl>
-                        <Input
-                          {...educationForm.register(
-                            `educations.${index}.country`
-                          )}
-                          type='text'
-                          placeholder='United States'
-                          autoComplete='country'
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
+                <div className='flex gap-2'>
+                  <FormField
+                    control={educationForm.control}
+                    name={`educations.${index}.city`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label id={`educations.${index}.city`}>City</Label>
+                        <FormControl>
+                          <Input
+                            {...educationForm.register(
+                              `educations.${index}.city`
+                            )}
+                            type='text'
+                            placeholder='New York'
+                            autoComplete='city'
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={educationForm.control}
+                    name={`educations.${index}.country`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label id={`educations.${index}.country`}>
+                          Country
+                        </Label>
+                        <FormControl>
+                          <Input
+                            {...educationForm.register(
+                              `educations.${index}.country`
+                            )}
+                            type='text'
+                            placeholder='United States'
+                            autoComplete='country'
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <FormField
                   control={educationForm.control}
                   name={`educations.${index}.description`}
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className='sm:w-[80vw] lg:w-[45vw]'>
                       <Label id={`educations.${index}.description`}>
                         Description
                       </Label>
