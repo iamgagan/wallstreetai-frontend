@@ -127,79 +127,84 @@ export const WorkExperienceForm = () => {
                     />
                   ) : null}
                 </div>
-                <FormField
-                  control={workForm.control}
-                  name={`work.${index}.companyName`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label id={`work.${index}.companyName`}>Company</Label>
-                      <FormControl>
-                        <Input
-                          {...workForm.register(`work.${index}.companyName`)}
-                          type='text'
-                          placeholder='Bank of ABC'
-                          autoComplete='company-name'
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={workForm.control}
-                  name={`work.${index}.position`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label id={`work.${index}.position`}>Position</Label>
-                      <FormControl>
-                        <Input
-                          {...workForm.register(`work.${index}.position`)}
-                          type='text'
-                          placeholder='June 2020'
-                          autoComplete='position'
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={workForm.control}
-                  name={`work.${index}.city`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label id={`work.${index}.city`}>City</Label>
-                      <FormControl>
-                        <Input
-                          {...workForm.register(`work.${index}.city`)}
-                          type='text'
-                          placeholder='New York'
-                          autoComplete='city'
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={workForm.control}
-                  name={`work.${index}.country`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label id={`work.${index}.country`}>Country</Label>
-                      <FormControl>
-                        <Input
-                          {...workForm.register(`work.${index}.country`)}
-                          type='text'
-                          placeholder='United States'
-                          autoComplete='country'
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
+                <div className='flex gap-2'>
+                  <FormField
+                    control={workForm.control}
+                    name={`work.${index}.companyName`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label id={`work.${index}.companyName`}>Company</Label>
+                        <FormControl>
+                          <Input
+                            {...workForm.register(`work.${index}.companyName`)}
+                            type='text'
+                            placeholder='Bank of ABC'
+                            autoComplete='company-name'
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={workForm.control}
+                    name={`work.${index}.position`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label id={`work.${index}.position`}>Position</Label>
+                        <FormControl>
+                          <Input
+                            {...workForm.register(`work.${index}.position`)}
+                            type='text'
+                            placeholder='June 2020'
+                            autoComplete='position'
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className='flex gap-2'>
+                  <FormField
+                    control={workForm.control}
+                    name={`work.${index}.city`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label id={`work.${index}.city`}>City</Label>
+                        <FormControl>
+                          <Input
+                            {...workForm.register(`work.${index}.city`)}
+                            type='text'
+                            placeholder='New York'
+                            autoComplete='city'
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                 
+                    <FormField
+                      control={workForm.control}
+                      name={`work.${index}.country`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <Label id={`work.${index}.country`}>Country</Label>
+                          <FormControl>
+                            <Input
+                              {...workForm.register(`work.${index}.country`)}
+                              type='text'
+                              placeholder='United States'
+                              autoComplete='country'
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    /> 
+                  
+                </div>
                 <FormField
                   control={workForm.control}
                   name={`work.${index}.description`}
