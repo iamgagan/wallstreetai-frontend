@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,31 +6,66 @@
 
 @keyframes gradientAnimation {
   0% {
-    background: radial-gradient(ellipse 80% 80% at top, #077BCD, #3088D8, #005AA2, #004D98, #0D0379),
-                linear-gradient(45deg, #077BCD, #3088D8, #005AA2, #004D98, #0D0379);
+    background: radial-gradient(
+        ellipse 80% 80% at top,
+        #077bcd,
+        #3088d8,
+        #005aa2,
+        #004d98,
+        #0d0379
+      ),
+      linear-gradient(45deg, #077bcd, #3088d8, #005aa2, #004d98, #0d0379);
     background-position: 100% 50%;
   }
   25% {
-    background: radial-gradient(ellipse at bottom, #3088D8, #005AA2, #004D98, #0D0379, #077BCD),
-                linear-gradient(45deg, #3088D8, #005AA2, #004D98, #0D0379, #077BCD);
+    background: radial-gradient(
+        ellipse at bottom,
+        #3088d8,
+        #005aa2,
+        #004d98,
+        #0d0379,
+        #077bcd
+      ),
+      linear-gradient(45deg, #3088d8, #005aa2, #004d98, #0d0379, #077bcd);
   }
   50% {
-    background: radial-gradient(ellipse 80% 150% at left, #005AA2, #004D98, #0D0379, #077BCD, #3088D8),
-                linear-gradient(45deg, #005AA2, #004D98, #0D0379, #077BCD, #3088D8);
+    background: radial-gradient(
+        ellipse 80% 150% at left,
+        #005aa2,
+        #004d98,
+        #0d0379,
+        #077bcd,
+        #3088d8
+      ),
+      linear-gradient(45deg, #005aa2, #004d98, #0d0379, #077bcd, #3088d8);
   }
   75% {
-    background: radial-gradient(ellipse 150% 120% at right, #004D98, #0D0379, #077BCD, #3088D8, #005AA2),
-                linear-gradient(45deg, #004D98, #0D0379, #077BCD, #3088D8, #005AA2);
+    background: radial-gradient(
+        ellipse 150% 120% at right,
+        #004d98,
+        #0d0379,
+        #077bcd,
+        #3088d8,
+        #005aa2
+      ),
+      linear-gradient(45deg, #004d98, #0d0379, #077bcd, #3088d8, #005aa2);
   }
   100% {
-    background: radial-gradient(ellipse 150% 200% at center, #0D0379, #077BCD, #3088D8, #005AA2, #004D98),
-                linear-gradient(45deg, #0D0379, #077BCD, #3088D8, #005AA2, #004D98);
+    background: radial-gradient(
+        ellipse 150% 200% at center,
+        #0d0379,
+        #077bcd,
+        #3088d8,
+        #005aa2,
+        #004d98
+      ),
+      linear-gradient(45deg, #0d0379, #077bcd, #3088d8, #005aa2, #004d98);
     background-position: 0% 50%;
   }
 }
 
 body {
-  font-family: 'Urbanist', sans-serif;
+  font-family: "Urbanist", sans-serif;
   font-size: 16px;
   color: #000;
   line-height: 1.5;
@@ -38,45 +73,55 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  overflow-y: hidden;
 }
 
 .cover {
-  font-family: 'Urbanist', sans-serif;
+  font-family: "Urbanist", sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: '#fff';
+  color: "#fff";
   margin: 0;
   height: 100vh;
   display: flex;
   justify-content: center;
   width: 100%;
   align-items: center;
-  background: radial-gradient(ellipse at top, #077BCD, #3088D8, #005AA2, #004D98, #0D0379),
-              linear-gradient(45deg, #077BCD, #3088D8, #005AA2, #004D98, #0D0379);
+  background: radial-gradient(
+      ellipse at top,
+      #077bcd,
+      #3088d8,
+      #005aa2,
+      #004d98,
+      #0d0379
+    ),
+    linear-gradient(45deg, #077bcd, #3088d8, #005aa2, #004d98, #0d0379);
   background-blend-mode: overlay;
   -webkit-animation: gradientAnimation 8s linear infinite alternate both;
   animation: gradientAnimation 30s linear infinite alternate both;
 }
 
 .focus-in-expand-fwd {
-	-webkit-animation: focus-in-expand-fwd 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: focus-in-expand-fwd 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: focus-in-expand-fwd 0.8s
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: focus-in-expand-fwd 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 @-webkit-keyframes focus-in-expand-fwd {
   0% {
     letter-spacing: -0.5em;
     -webkit-transform: translateZ(-800px);
-            transform: translateZ(-800px);
+    transform: translateZ(-800px);
     -webkit-filter: blur(12px);
-            filter: blur(12px);
+    filter: blur(12px);
     opacity: 0;
   }
   100% {
     -webkit-transform: translateZ(0);
-            transform: translateZ(0);
+    transform: translateZ(0);
     -webkit-filter: blur(0);
-            filter: blur(0);
+    filter: blur(0);
     opacity: 1;
   }
 }
@@ -84,16 +129,16 @@ body {
   0% {
     letter-spacing: -0.5em;
     -webkit-transform: translateZ(-800px);
-            transform: translateZ(-800px);
+    transform: translateZ(-800px);
     -webkit-filter: blur(12px);
-            filter: blur(12px);
+    filter: blur(12px);
     opacity: 0;
   }
   100% {
     -webkit-transform: translateZ(0);
-            transform: translateZ(0);
+    transform: translateZ(0);
     -webkit-filter: blur(0);
-            filter: blur(0);
+    filter: blur(0);
     opacity: 1;
   }
 }
