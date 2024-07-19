@@ -135,7 +135,7 @@ export const EducationForm = () => {
                   control={educationForm.control}
                   name={`educations.${index}.institutionName`}
                   render={({ field }) => (
-                    <FormItem className='sm:w-[80vw] lg:w-[45vw]'>
+                    <FormItem className="w-[90%]">
                       <Label id={`educations.${index}.institutionName`}>
                         Institution
                       </Label>
@@ -157,7 +157,7 @@ export const EducationForm = () => {
                   control={educationForm.control}
                   name={`educations.${index}.degree`}
                   render={({ field }) => (
-                    <FormItem className='sm:w-[80vw] lg:w-[45vw]'>
+                    <FormItem className="w-[90%]">
                       <Label id={`educations.${index}.degree`}>Degree</Label>
                       <FormControl>
                         <Input
@@ -221,7 +221,7 @@ export const EducationForm = () => {
                   control={educationForm.control}
                   name={`educations.${index}.description`}
                   render={({ field }) => (
-                    <FormItem className='sm:w-[80vw] lg:w-[45vw]'>
+                    <FormItem className="w-[90%]">
                       <Label id={`educations.${index}.description`}>
                         Description
                       </Label>

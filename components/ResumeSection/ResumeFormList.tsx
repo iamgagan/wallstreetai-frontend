@@ -34,7 +34,7 @@ const ResumeAccordionList = [
 
 export const ResumeFormList = () => {
   return (
-    <div className='pt-3 pb-5 mt-[100px]'>
+    <div className='pb-5 mt-[100px] w-[50vw]'>
       {ResumeAccordionList.map((item) => (
         <ResumeAccordion
           key={item.formTitle}
