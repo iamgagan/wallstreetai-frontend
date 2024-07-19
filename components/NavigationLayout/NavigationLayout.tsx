@@ -16,9 +16,9 @@ export const NavigationLayout = ({ children }: NavigationLayoutProps) => {
   const router = useRouter();
 
   return (
-    <main className='flex flex-col justify-center items-center gap-5 w-full h-full'>
-      <header className='w-full py-2 sm:py-4 shadow-md bg-[#fafafa]'>
-        <div className='flex justify-between px-2 sm:px-6'>
+    <main className='flex flex-col justify-start items-center gap-5 w-full h-full overflow-y-scroll'>
+      <header className='w-full min-h-[80px] flex items-center shadow-md bg-[#fafafa] justify-center fixed'>
+        <div className='max-w-[95vw] flex items-center justify-between w-full'>
           <div>
             <Logo background='light' />
           </div>

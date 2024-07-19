@@ -20,7 +20,7 @@ export const CardWrapper: React.FC<CardWrapperProps> = ({
   footerLabel,
 }) => {
   return (
-    <Card className='w-[90vw] mx-auto min-w-[380px] sm:w-[35vw]'>
+    <Card className='w-[90vw] mx-auto min-w-[380px] sm:w-[35vw] mt-[100px]'>
       {headerLabel ? (
         <CardHeader>
           <CardTitle>{headerLabel}</CardTitle>

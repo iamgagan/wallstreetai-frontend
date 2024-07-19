@@ -1,6 +1,7 @@
 import { NavigationLayout } from "@/components/NavigationLayout/NavigationLayout";
 import { DashboardCard } from "@/components/DashboardCard/DashboardCard";
 import Link from "next/link";
+import { ResumeSection } from "@/components/ResumeSection/ResumeSection";
 
 const cardList = [
   {
@@ -35,16 +36,15 @@ const cardList = [
 
 export default function Dashboard() {
   return (
-    <main className='min-h-screen w-full'>
-      <NavigationLayout>
-        <ul className='flex gap-3'>
-          {cardList.map((card, index) => (
-            <Link key={card.title} href={card.navigateTo}>
-              <DashboardCard {...card} />
-            </Link>
-          ))}
-        </ul>
-      </NavigationLayout>
-    </main>
+    <NavigationLayout>
+      <ul className='flex gap-3 justify-between w-full max-w-[80vw] mt-[100px]'>
+        {cardList.map((card) => (
+          <Link key={card.title} href={card.navigateTo}>
+            <DashboardCard {...card} />
+          </Link>
+        ))}
+      </ul>
+      <ResumeSection />
+    </NavigationLayout>
   );
 }

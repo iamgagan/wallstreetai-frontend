@@ -1,8 +1,6 @@
 "use client";
 
 import { Card } from "flowbite-react";
-import { useRouter } from "next/navigation";
-import { DetailedHTMLProps, ImgHTMLAttributes } from "react";
 
 interface DashboardCardProps {
   title: string;
@@ -17,7 +15,6 @@ export const DashboardCard = ({
   description,
   icon,
 }: DashboardCardProps) => {
-  const router = useRouter();
   return (
     <Card
       className={`w-[8rem] h-[8rem] lg:w-[15rem] lg:h-[12rem] rounded-xl ${bgColor} cursor-pointer`}

@@ -9,7 +9,7 @@ const font = Poppins({
 });
 export const ErrorCard = () => {
   return (
-    <Card className='w-[400px] shadow-md'>
+    <Card className='w-[400px] shadow-md mt-[100px]'>
       <CardHeader>
         <div className='w-full flex flex-col gap-y-4 items-center justify-center'>
           <h1 className={cn("text-3xl font-semibold", font.className)}>

@@ -41,6 +41,7 @@ const config = {
         "blue-30": "#005AA2",
         "blue-40": "#004D98",
         "blue-50": "#0D0379",
+        "linkedin-blue": "#0a66c2",
         "form-input": "#f5f9ff",
         "form-bg": "#B2EBF2",
         background: "#ffffff",

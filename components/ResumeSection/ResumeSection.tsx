@@ -1,10 +1,13 @@
-import { Card } from "../ui/card";
+import { Card, CardTitle } from "../ui/card";
+import { ResumeCard } from "./ResumeCard";
 
 export const ResumeSection = () => {
   return (
-    <Card>
-      <h2>Documents</h2>
-      {/* <ResumeTab /> */}
+    <Card className='bg-secondary max-w-[80vw] w-full pb-10 mb-[10rem]'>
+      <CardTitle className='p-8'>Documents</CardTitle>
+      <div>
+        <ResumeCard />
+      </div>
     </Card>
   );
 };
