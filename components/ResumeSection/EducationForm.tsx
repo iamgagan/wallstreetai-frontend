@@ -7,7 +7,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { EducationArraySchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "../ui/label";
@@ -44,6 +44,11 @@ export const EducationForm = () => {
     control: educationForm.control,
   });
 
+  const output = useWatch({
+    name: "educations",
+    control: educationForm.control,
+  });
+
   const onSubmit = (values: FormValues) => {
     console.log(values);
   };
@@ -54,12 +59,78 @@ export const EducationForm = () => {
         className='space-y-8 flex flex-col'
       >
         {fields.map((field, index) => (
-          <>
+          <div key={field.id}>
             {index > 0 ? (
               <hr className='my-3 border-[1px] border-slate-400 mx-2' />
             ) : null}
             <div key={field.id} className='flex justify-between items-center'>
-              <div className='flex flex-col gap-2 w-[90%] pl-1'>
+              <div className='flex flex-col gap-3 w-[90%] pl-1'>
+                <FormField
+                  control={educationForm.control}
+                  name={`educations.${index}.currentlyStudyingHere`}
+                  render={({ field }) => (
+                    <FormItem className='flex gap-2 items-end'>
+                      <Label id={`educations.${index}.currentlyStudyingHere`}>
+                        Currently studying here
+                      </Label>
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className='flex gap-2'>
+                  <FormField
+                    control={educationForm.control}
+                    name={`educations.${index}.startDate`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label id={`educations.${index}.startDate`}>
+                          Start date
+                        </Label>
+                        <FormControl>
+                          <Input
+                            {...educationForm.register(
+                              `educations.${index}.startDate`
+                            )}
+                            type='text'
+                            placeholder='June 2016'
+                            autoComplete='start-date'
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {!output[index]?.["currentlyStudyingHere"] ? (
+                    <FormField
+                      control={educationForm.control}
+                      name={`educations.${index}.endDate`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <Label id={`educations.${index}.endDate`}>
+                            End date
+                          </Label>
+                          <FormControl>
+                            <Input
+                              {...educationForm.register(
+                                `educations.${index}.endDate`
+                              )}
+                              type='text'
+                              placeholder='June 2019'
+                              autoComplete='end-date'
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ) : null}
+                </div>
                 <FormField
                   control={educationForm.control}
                   name={`educations.${index}.institutionName`}
@@ -142,52 +213,7 @@ export const EducationForm = () => {
                     </FormItem>
                   )}
                 />
-                <div className='flex gap-2'>
-                  <FormField
-                    control={educationForm.control}
-                    name={`educations.${index}.startDate`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <Label id={`educations.${index}.startDate`}>
-                          Start date
-                        </Label>
-                        <FormControl>
-                          <Input
-                            {...educationForm.register(
-                              `educations.${index}.startDate`
-                            )}
-                            type='text'
-                            placeholder='June 2016'
-                            autoComplete='start-date'
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={educationForm.control}
-                    name={`educations.${index}.endDate`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <Label id={`educations.${index}.endDate`}>
-                          End date
-                        </Label>
-                        <FormControl>
-                          <Input
-                            {...educationForm.register(
-                              `educations.${index}.endDate`
-                            )}
-                            type='text'
-                            placeholder='June 2019'
-                            autoComplete='end-date'
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+
                 <FormField
                   control={educationForm.control}
                   name={`educations.${index}.description`}
@@ -209,25 +235,6 @@ export const EducationForm = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={educationForm.control}
-                  name={`educations.${index}.currentlyStudyingHere`}
-                  render={({ field }) => (
-                    <FormItem className='flex gap-2 items-end'>
-                      <Label id={`educations.${index}.currentlyStudyingHere`}>
-                        Currently studying here
-                      </Label>
-                      <FormControl>
-                        <Checkbox
-                          {...educationForm.register(
-                            `educations.${index}.currentlyStudyingHere`
-                          )}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
               </div>
               <div className='flex flex-1 justify-center'>
                 <Button
@@ -239,7 +246,7 @@ export const EducationForm = () => {
                 </Button>
               </div>
             </div>
-          </>
+          </div>
         ))}
         <Button
           className='w-[10%]'

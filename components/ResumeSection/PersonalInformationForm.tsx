@@ -116,7 +116,7 @@ export const PersonalInformationForm = () => {
             )}
           />
         </div>
-        <div className='flex flex-col'>
+        <div className='flex flex-col gap-3'>
           <Label>Address</Label>
           <div className='gap-4 flex'>
             <FormField
@@ -124,7 +124,7 @@ export const PersonalInformationForm = () => {
               name='addressLine1'
               render={({ field }) => (
                 <FormItem>
-                  <Label id='addressLine1'>Address Line 1</Label>
+                  <Label id='addressLine1' className="text-xs">Address Line 1</Label>
                   <FormControl>
                     <Input
                       {...field}
@@ -142,7 +142,7 @@ export const PersonalInformationForm = () => {
               name='addressLine2'
               render={({ field }) => (
                 <FormItem>
-                  <Label id='addressLine1'>Address Line 2</Label>
+                  <Label id='addressLine1' className="text-xs">Address Line 2</Label>
                   <FormControl>
                     <Input
                       {...field}
@@ -162,7 +162,7 @@ export const PersonalInformationForm = () => {
               name='postalCode'
               render={({ field }) => (
                 <FormItem>
-                  <Label id='postalCode'>Postal</Label>
+                  <Label id='postalCode' className="text-xs">Postal</Label>
                   <FormControl>
                     <Input
                       {...field}
@@ -180,7 +180,7 @@ export const PersonalInformationForm = () => {
               name='country'
               render={({ field }) => (
                 <FormItem>
-                  <Label id='country'>Country</Label>
+                  <Label id='country' className="text-xs">Country</Label>
                   <FormControl>
                     <Input
                       {...field}

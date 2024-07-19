@@ -47,7 +47,7 @@ export const QualificationForm = () => {
         className='space-y-6 flex flex-col'
       >
         {fields.map((field, index) => (
-          <>
+          <div key={field.id}>
             {index > 0 ? (
               <hr className='my-3 border-[1px] border-slate-400 mx-2' />
             ) : null}
@@ -130,7 +130,7 @@ export const QualificationForm = () => {
                 </Button>
               </div>
             </div>
-          </>
+          </div>
         ))}
         <Button
           className='w-[10%]'
