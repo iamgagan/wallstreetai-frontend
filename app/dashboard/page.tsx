@@ -1,3 +1,4 @@
+'use client'
 import { NavigationLayout } from "@/components/NavigationLayout/NavigationLayout";
 import { DashboardCard } from "@/components/DashboardCard/DashboardCard";
 import Link from "next/link";
@@ -34,17 +35,18 @@ const cardList = [
   },
 ];
 
+
 export default function Dashboard() {
   return (
-    <NavigationLayout>
-      <ul className='flex gap-3 justify-between w-full max-w-[80vw] mt-[100px]'>
-        {cardList.map((card) => (
-          <Link key={card.title} href={card.navigateTo}>
-            <DashboardCard {...card} />
-          </Link>
-        ))}
-      </ul>
-      <ResumeSection />
-    </NavigationLayout>
+      <NavigationLayout>
+        <ul className='flex gap-3 justify-between w-full max-w-[80vw] mt-[100px]'>
+          {cardList.map((card) => (
+            <Link key={card.title} href={card.navigateTo}>
+              <DashboardCard {...card} />
+            </Link>
+          ))}
+        </ul>
+        <ResumeSection />
+      </NavigationLayout>
   );
 }
