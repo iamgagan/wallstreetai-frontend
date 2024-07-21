@@ -1,0 +1,12 @@
+{
+  "prettier.jsxSingleQuote": false,
+  "prettier.singleQuote": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "eslint.validate": ["json"]
+}

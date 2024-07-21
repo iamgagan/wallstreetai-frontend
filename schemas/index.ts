@@ -89,3 +89,9 @@ export const EducationArraySchema = z.array(EducationSchema);
 export const SkillsArraySchema = z.array(SkillsSchema);
 export const QualificationsArraySchema = z.array(QualificationSchema);
 export const WorkArraySchema = z.array(WorkSchema);
+
+export const LinkedInURLSchema = z.object({
+  linkedInURL: z.string().min(1, {
+    message: "Please enter a valid LinkedIn username",
+  }),
+});

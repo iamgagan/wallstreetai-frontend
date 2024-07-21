@@ -1,5 +1,5 @@
-import { NavigationLayout } from "@/components/NavigationLayout/NavigationLayout";
-import { LoginForm } from "@/components/AuthForm/LoginForm";
+import { NavigationLayout } from '@/components/NavigationLayout/NavigationLayout';
+import { LoginForm } from '@/components/AuthForm/LoginForm';
 
 export default function Login() {
   return (
