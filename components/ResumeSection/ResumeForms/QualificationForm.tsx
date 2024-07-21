@@ -57,7 +57,7 @@ export const QualificationForm = () => {
                   control={qualificationForm.control}
                   name={`qualifications.${index}.qualification`}
                   render={({ field }) => (
-                    <FormItem className="w-[90%]">
+                    <FormItem className="w-full">
                       <Label id={`qualifications.${index}.qualification`}>
                         Qualification
                       </Label>
@@ -79,7 +79,7 @@ export const QualificationForm = () => {
                   control={qualificationForm.control}
                   name={`qualifications.${index}.awardedDate`}
                   render={({ field }) => (
-                    <FormItem className="w-[90%]">
+                    <FormItem className="w-full">
                       <Label id={`qualifications.${index}.awardedDate`}>
                         Date
                       </Label>
@@ -101,7 +101,7 @@ export const QualificationForm = () => {
                   control={qualificationForm.control}
                   name={`qualifications.${index}.institution`}
                   render={({ field }) => (
-                    <FormItem className="w-[90%]">
+                    <FormItem className="w-full">
                       <Label id={`qualifications.${index}.institution`}>
                         Awarding Institution
                       </Label>

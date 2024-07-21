@@ -209,7 +209,7 @@ export const WorkExperienceForm = () => {
                   control={workForm.control}
                   name={`work.${index}.description`}
                   render={({ field }) => (
-                    <FormItem className="w-[90%]">
+                    <FormItem className="w-full">
                       <Label id={`work.${index}.description`}>
                         Description
                       </Label>
