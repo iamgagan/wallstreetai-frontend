@@ -47,9 +47,9 @@ export const ResumeCard = ({ }) => {
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          className='w-[90%] flex justify-center hover:border-[1px] hover:border-black hover:bg-primary-foreground cursor-pointer bg-secondary py-2 h-[60px] shadow-xl rounded-lg'
+          className='w-[90%] flex justify-start hover:border-[1px] hover:border-black hover:bg-primary-foreground cursor-pointer bg-secondary py-2 h-[60px] shadow-xl rounded-lg'
         >
-            <CardContent className='flex gap-3 items-center'>
+            <CardContent className='flex gap-3 items-center justify-start'>
               <FaLinkedin size={25} color={"#0a66c2"} />
               <p className='text-sm'>Import from LinkedIn</p>
             </CardContent>
