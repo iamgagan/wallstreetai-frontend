@@ -1,4 +1,3 @@
-'use client'
 import { NavigationLayout } from "@/components/NavigationLayout/NavigationLayout";
 import { DashboardCard } from "@/components/DashboardCard/DashboardCard";
 import Link from "next/link";

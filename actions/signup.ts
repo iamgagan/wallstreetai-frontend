@@ -6,7 +6,6 @@ import bcryptjs from "bcryptjs";
 import { db } from "@/lib/db";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { login } from "./login";
 
 /**
  * manual sign up will be written to the database using this function

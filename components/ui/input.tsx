@@ -22,7 +22,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 );
 Input.displayName = "Input";
 
-export const InputWithPrefix = React.forwardRef<HTMLInputElement, InputProps & {prefix:string}>(
+const InputWithPrefix = React.forwardRef<HTMLInputElement, InputProps & {prefix:string}>(
   ({ className, prefix, type, ...props }, ref) => {
     return (
       <div className="flex h-10 w-full rounded-md bg-form-input text-lg px-2 py-2 ring-offset-white placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
@@ -43,4 +43,6 @@ export const InputWithPrefix = React.forwardRef<HTMLInputElement, InputProps & {
   }
 );
 
-export { Input };
+InputWithPrefix.displayName = "InputWithPrefix";
+
+export { Input, InputWithPrefix };

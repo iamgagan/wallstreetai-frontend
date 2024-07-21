@@ -1,4 +1,3 @@
-import { Card } from "../ui/card";
 import { RxPerson } from "react-icons/rx";
 import { ResumeAccordion } from "./ResumeAccordion";
 import { PersonalInformationForm } from "./PersonalInformationForm";
