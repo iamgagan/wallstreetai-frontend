@@ -6,9 +6,11 @@ import { InputWithPrefix } from "../ui/input"
 import { Label } from "../ui/label"
 import { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from "next/navigation";
 
 export const ImportFromLinkedIn = () => {
     const [text, setText] = useState('');
+    const router = useRouter();
 
   const copyText = () => {
     navigator.clipboard.writeText("https://www.linkedin.com/in/" + text)
@@ -21,6 +23,10 @@ export const ImportFromLinkedIn = () => {
         console.error('Failed to copy text: ', err);
       });
   };
+    
+    const handleImport = () => {
+     router.push('/resumes/form');
+    }
 
     return (
         <DialogContent className="sm:max-w-[38rem]">
@@ -55,7 +61,7 @@ export const ImportFromLinkedIn = () => {
                 Close
               </Button>
             </DialogClose>
-            <Button type="submit" variant="default">Import</Button>
+            <Button type="button" variant="default" onClick={handleImport}>Import</Button>
           </DialogFooter>
         </DialogContent>
     )
