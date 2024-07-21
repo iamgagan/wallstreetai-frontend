@@ -44,11 +44,10 @@ export const ImportFromLinkedIn = () => {
         /**
          * TODO: scrape data from Linkedin profile and return data to the form
          */
-        console.log('submit-values',values);
+        console.log('submit',values);
         });
      router.push('/resumes/form');
     }
-    console.log('text', text)
 
     return (
         <DialogContent className="sm:max-w-[38rem]">
@@ -72,8 +71,6 @@ export const ImportFromLinkedIn = () => {
                     <InputWithPrefix
                         {...field}
                         type="text"
-                        id="linkedInURL"
-                        name="linkedInURL"
                         placeholder="username"
                         prefix="https://www.linkedin.com/in/"
                         value={text}
