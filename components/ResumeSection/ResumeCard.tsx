@@ -7,8 +7,30 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 import { Dialog, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { ImportFromLinkedIn } from "../ImportFromLinkedIn.tsx/ImportFromLinkedIn";
+import { createRef } from "react";
+import { useRouter } from "next/navigation";
 
 export const ResumeCard = ({ }) => {
+  const inputRef = createRef<HTMLInputElement>();
+  const router = useRouter();
+
+  const uploadFile = () => {
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
+  }
+  
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      /**
+       * TODO: extract pdf data and return the data to 
+       */
+      console.log(file);
+      router.push('/resumes/form');
+    }
+  }
+
   return (
     <Dialog>
     <Card className='w-[18rem] rounded-lg flex flex-col justify-start items-center border-dashed border-[1px] border-black ml-8 pt-3 pb-5 gap-2'>
@@ -37,6 +59,9 @@ export const ResumeCard = ({ }) => {
       <ResumeOption
         icon={<IoCloudUploadOutline size={25} />}
         label='Upload Resume'
+        inputRef={inputRef}
+          onClick={uploadFile}
+          onFileChange={handleFileChange}
       />
       </Card>
       <ImportFromLinkedIn/>

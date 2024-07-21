@@ -25,6 +25,9 @@ export const ImportFromLinkedIn = () => {
   };
     
     const handleImport = () => {
+        /**
+         * TODO: scrape data from Linkedin profile and return data to the form
+         */
      router.push('/resumes/form');
     }
 
