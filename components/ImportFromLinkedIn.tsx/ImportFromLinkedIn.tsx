@@ -48,6 +48,7 @@ export const ImportFromLinkedIn = () => {
         });
      router.push('/resumes/form');
     }
+    console.log('text', text)
 
     return (
         <DialogContent className="sm:max-w-[38rem]">
@@ -66,12 +67,13 @@ export const ImportFromLinkedIn = () => {
               control={form.control}
               name='linkedInURL'
               render={({ field }) => (
-                <FormItem className="">
+                <FormItem>
                   <FormControl>
                     <InputWithPrefix
-                        {...form.register('linkedInURL')}
+                        {...field}
                         type="text"
                         id="linkedInURL"
+                        name="linkedInURL"
                         placeholder="username"
                         prefix="https://www.linkedin.com/in/"
                         value={text}
