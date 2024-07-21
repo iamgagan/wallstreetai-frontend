@@ -5,13 +5,13 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "../../ui/form";
+import { Input } from "../../ui/input";
 import { useForm, useFieldArray } from "react-hook-form";
 import { QualificationsArraySchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Label } from "../ui/label";
-import { Button } from "../ui/button";
+import { Label } from "../../ui/label";
+import { Button } from "../../ui/button";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 const defaultValues = {

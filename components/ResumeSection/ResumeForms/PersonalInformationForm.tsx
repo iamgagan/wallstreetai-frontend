@@ -5,13 +5,13 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "../../ui/form";
+import { Input } from "../../ui/input";
 import { useForm } from "react-hook-form";
 import { ProfileSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Label } from "../ui/label";
+import { Label } from "../../ui/label";
 
 export const PersonalInformationForm = () => {
   const profileForm = useForm<z.infer<typeof ProfileSchema>>({

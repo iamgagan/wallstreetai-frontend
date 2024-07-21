@@ -5,16 +5,17 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "../../ui/form";
+import { Input } from "../../ui/input";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { EducationArraySchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
-import { Checkbox } from "../ui/checkbox";
-import { Button } from "../ui/button";
+import { Label } from "../../ui/label";
+import { Checkbox } from "../../ui/checkbox";
+import { Button } from "../../ui/button";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const defaultValues = {
   educations: [
@@ -226,12 +227,10 @@ export const EducationForm = () => {
                         Description
                       </Label>
                       <FormControl>
-                        <Textarea
-                          {...educationForm.register(
-                            `educations.${index}.description`
-                          )}
+                        <ReactQuill
+                          theme="snow"
                           placeholder=''
-                          autoComplete='description'
+                          {...field}
                         />
                       </FormControl>
                       <FormMessage />

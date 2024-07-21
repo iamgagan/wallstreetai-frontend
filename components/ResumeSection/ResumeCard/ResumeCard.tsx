@@ -4,9 +4,9 @@ import { ResumeOption } from "./ResumeOption";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaLinkedin } from "react-icons/fa";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { Dialog, DialogTrigger } from "../ui/dialog";
-import { Button } from "../ui/button";
-import { ImportFromLinkedIn } from "../ImportFromLinkedIn.tsx/ImportFromLinkedIn";
+import { Dialog, DialogTrigger } from "../../ui/dialog";
+import { Button } from "../../ui/button";
+import { ImportFromLinkedIn } from "../../ImportFromLinkedIn.tsx/ImportFromLinkedIn";
 import { createRef } from "react";
 import { useRouter } from "next/navigation";
 
@@ -38,13 +38,8 @@ export const ResumeCard = ({ }) => {
         icon={<IoIosAddCircleOutline size={25} />}
         label='New Resume'
         href='/resumes/template'
-      />
-      <ResumeOption
-        icon={<IoIosAddCircleOutline size={25} />}
-        label='New Resume with AI'
-        href='resumes/create-with-ai'
         />
-      <DialogTrigger asChild>
+         <DialogTrigger asChild>
         <Button
           variant="ghost"
           className='w-[90%] flex justify-start hover:border-[1px] hover:border-black hover:bg-primary-foreground cursor-pointer bg-secondary py-2 h-[60px] shadow-xl rounded-lg'
@@ -55,13 +50,19 @@ export const ResumeCard = ({ }) => {
             </CardContent>
         </Button>
       </DialogTrigger>
-
       <ResumeOption
         icon={<IoCloudUploadOutline size={25} />}
         label='Upload Resume'
         inputRef={inputRef}
           onClick={uploadFile}
           onFileChange={handleFileChange}
+      />
+      <ResumeOption
+        icon={<IoCloudUploadOutline size={25} />}
+        label='Upload Resume with AI'
+        inputRef={inputRef}
+        onClick={uploadFile}
+        onFileChange={handleFileChange}
       />
       </Card>
       <ImportFromLinkedIn/>

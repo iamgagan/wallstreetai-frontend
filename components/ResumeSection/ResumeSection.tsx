@@ -1,5 +1,5 @@
 import { Card, CardTitle } from "../ui/card";
-import { ResumeCard } from "./ResumeCard";
+import { ResumeCard } from "./ResumeCard/ResumeCard";
 
 export const ResumeSection = () => {
   return (

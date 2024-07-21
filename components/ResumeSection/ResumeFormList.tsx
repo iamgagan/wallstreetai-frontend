@@ -1,12 +1,12 @@
 import { RxPerson } from "react-icons/rx";
 import { ResumeAccordion } from "./ResumeAccordion";
-import { PersonalInformationForm } from "./PersonalInformationForm";
+import { PersonalInformationForm } from "./ResumeForms/PersonalInformationForm";
 import { LuBuilding2 } from "react-icons/lu";
 import { RiGraduationCapLine } from "react-icons/ri";
 import { GrDocumentText } from "react-icons/gr";
-import { WorkExperienceForm } from "./WorkExperienceForm";
-import { EducationForm } from "./EducationForm";
-import { QualificationForm } from "./QualificationForm";
+import { WorkExperienceForm } from "./ResumeForms/WorkExperienceForm";
+import { EducationForm } from "./ResumeForms/EducationForm";
+import { QualificationForm } from "./ResumeForms/QualificationForm";
 
 const ResumeAccordionList = [
   {

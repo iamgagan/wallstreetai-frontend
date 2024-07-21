@@ -1,9 +1,9 @@
 "use client";
 
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent } from "../../ui/card";
 import React from "react";
 import Link from "next/link";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 
 interface ResumeOptionProps {
   icon: React.ReactNode;
