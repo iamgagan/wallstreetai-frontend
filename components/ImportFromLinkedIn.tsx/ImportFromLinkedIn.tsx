@@ -60,7 +60,7 @@ export const ImportFromLinkedIn = () => {
               We will import your LinkedIn profile information to create your resume.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-start space-x-2">
             <div className="grid flex-1 gap-2">
               <FormField
               control={form.control}
@@ -83,11 +83,11 @@ export const ImportFromLinkedIn = () => {
                   )}
                 />             
             </div>
-            <Button type="submit" size="sm" className="px-3 active:bg-white active:text-black" onClick={copyText}>
+            <Button type="button" size="sm" className="px-3 active:bg-white active:text-black" onClick={copyText}>
               <span className="sr-only">Copy</span>
               <Copy className="h-4 w-4" />
             </Button>
-                </div>
+          </div>
             
           <DialogFooter className="sm:justify-end flex gap-3">
             <DialogClose asChild>
@@ -95,7 +95,7 @@ export const ImportFromLinkedIn = () => {
                 Close
               </Button>
             </DialogClose>
-            <Button type="button" variant="default">Import</Button>
+            <Button type="submit" variant="default">Import</Button>
             </DialogFooter>
           </form>
         </FormProvider>

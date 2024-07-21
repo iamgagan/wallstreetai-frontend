@@ -29,7 +29,7 @@ const InputWithPrefix = React.forwardRef<HTMLInputElement, InputProps & {prefix:
     const inputProps = {...props, ...register(props.name ?? '')}
    
     return (
-      <div className="flex h-10 w-full rounded-md bg-form-input text-lg px-2 py-2 ring-offset-white placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+      <div className="flex h-10 w-full rounded-md bg-zinc-200 text-lg px-2 py-2 ring-offset-white placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
         <span className='flex items-center text-lg text-zinc-600'>
           {prefix}
         </span>
