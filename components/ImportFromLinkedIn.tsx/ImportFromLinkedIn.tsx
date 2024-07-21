@@ -76,10 +76,10 @@ export const ImportFromLinkedIn = () => {
                         prefix="https://www.linkedin.com/in/"
                         value={text}
                         onChange={(e) => setText(e.target.value)}
-                            />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                   )}
                 />             
             </div>
