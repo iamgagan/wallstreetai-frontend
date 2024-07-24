@@ -24,7 +24,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
-  const { updateEmail, updateIsLoggedIn } = useUserStore();
+  const { updateEmail, updateIsLoggedIn, updateUserId } = useUserStore();
   const { data } = useSession();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -39,9 +39,12 @@ export const LoginForm = () => {
 
   useEffect(() => {
     if (data && data.user) {
-      const { email } = data.user;
+      const { email, id } = data.user;
       updateEmail(email || "");
       updateIsLoggedIn(true);
+      if (id) {
+        updateUserId(id);
+      }
       router.push("/dashboard");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

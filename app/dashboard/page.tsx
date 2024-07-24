@@ -1,7 +1,11 @@
+'use client'
 import { NavigationLayout } from '@/components/NavigationLayout/NavigationLayout';
 import { DashboardCard } from '@/components/DashboardCard/DashboardCard';
 import Link from 'next/link';
 import { ResumeSection } from '@/components/ResumeSection/ResumeSection';
+import { useSession } from "next-auth/react";
+import { useUserStore } from '@/store/store';
+import { useEffect } from 'react';
 
 const cardList = [
   {
@@ -35,6 +39,15 @@ const cardList = [
 ];
 
 export default function Dashboard() {
+  const { data } = useSession();
+  const { updateUserId } = useUserStore();
+
+  useEffect(() => {
+    if (data && data.user && data.user.id) {
+      updateUserId(data.user.id);
+    }
+  },[data?.user?.id]);
+
   return (
     <NavigationLayout>
       <ul className="flex gap-3 justify-between w-full max-w-[80vw] mt-[100px]">

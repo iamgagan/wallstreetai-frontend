@@ -7,6 +7,17 @@ export const getUserByEmail = async (email: string | undefined) => {
       where: {
         email,
       },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        emailVerified: true,
+        name: true,
+        image: true,
+        resumeFiles: true,
+        resumes: true,
+        password: true,
+      }
     });
 
     return user;
@@ -22,6 +33,16 @@ export const getUserById = async (id: string | undefined) => {
       where: {
         id,
       },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        emailVerified: true,
+        name: true,
+        image: true,
+        resumeFiles: true,
+        resumes: true,
+      }
     });
 
     return user;

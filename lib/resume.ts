@@ -66,7 +66,7 @@ export const getResumeFilesByEmail = async (email: string | undefined) => {
 export const getResumeFilesByUserId = async (userId:string | undefined) => {
     if (!userId || db.user === undefined) return null;
     try {
-        const resumeFiles = await db.resume.findMany({
+        const resumeFiles = await db.resumeFile.findMany({
         where: {
             userId,
         },
@@ -147,7 +147,7 @@ export const updateOrCreateResumeFileByUserId = async (userId: string | undefine
                     fileName: resumeFile.fileName,
                 },
             });
-
+            console.log('resumeFile', newResumeFile)
             return newResumeFile;
         }
     } catch (error) {

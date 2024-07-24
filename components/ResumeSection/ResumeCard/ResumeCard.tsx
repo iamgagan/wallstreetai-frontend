@@ -9,10 +9,14 @@ import { Button } from "../../ui/button";
 import { ImportFromLinkedIn } from "../../ImportFromLinkedIn.tsx/ImportFromLinkedIn";
 import { createRef } from "react";
 import { useRouter } from "next/navigation";
+import { fileToBase64String } from "@/lib/fileToBase64String";
+import { useUserStore } from "@/store/store";
+import { useSession } from "next-auth/react";
 
-export const ResumeCard = ({ }) => {
+export const ResumeCard = () => {
   const inputRef = createRef<HTMLInputElement>();
   const router = useRouter();
+  const { userId } = useUserStore();
 
   const uploadFile = () => {
     if (inputRef.current) {
@@ -20,14 +24,31 @@ export const ResumeCard = ({ }) => {
     }
   }
   
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
+      const fileString = await fileToBase64String(file);
+      try {
+        if(fileString && userId) {
+          const response = await fetch('/api/resumeFile/upload', {
+            method: 'POST',
+            body: JSON.stringify({
+              file: fileString,
+              fileName: file.name,
+              fileType: file.type,
+              userId,
+            }),
+          })
+        }
+        router.push('/resumes/form');
+      } catch (error) {
+        console.error(error);
+      }
       /**
        * TODO: extract pdf data and return the data to 
        */
-      console.log(file);
-      router.push('/resumes/form');
+
+      
     }
   }
 

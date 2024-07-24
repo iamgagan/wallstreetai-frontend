@@ -35,17 +35,20 @@ export const SignUpForm = () => {
       password: "",
     },
   });
-  const { updateEmail, updateIsLoggedIn } = useUserStore();
+  const { updateEmail, updateIsLoggedIn, updateUserId } = useUserStore();
 
   useEffect(() => {
     if (data && data.user) {
-      const { email } = data.user;
+      const { email, id } = data.user;
       updateEmail(email || "");
       updateIsLoggedIn(true);
+      if (id) {
+        updateUserId(id)
+      }
       router.push("/dashboard");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.user]);
+  }, [data?.user?.id]);
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
