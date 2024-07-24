@@ -13,8 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 enum UserRole {
   USER
   ADMIN
@@ -29,6 +27,7 @@ model User {
   image         String?
   accounts      Account[]
   resumes       Resume[]
+  resumeFiles   ResumeFile[]
   role          UserRole          @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -36,13 +35,27 @@ model User {
 
 model Resume {
   id String @id @default(cuid())
-  userId String
-  fileName String
-  personalInfo   PersonalInfo @relation(fields: [personalInfoId], references: [id])
-  personalInfoId String          @unique
+  resumeFileId String? @unique
+  userId String @unique
+  personalInfo   PersonalInfo? @relation(fields: [personalInfoId], references: [id])
+  personalInfoId String? @unique @default(cuid())
   workExperience WorkExperience[]
   education Education[]
   qualification Qualification[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  skills String[]
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ResumeFile {
+  id String @id @default(cuid())
+  userId String
+  resumeId String? @unique
+  file String
+  fileName String
+  fileType String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
  
@@ -51,16 +64,16 @@ model Resume {
 
 model PersonalInfo {
   id String @id @default(cuid())
-  resumeId String @unique
-  firstName String
-  lastName String
-  email String
-  phoneNumber String
-  addressLine1 String
-  addressLine2 String
-  city String
-  postalCode String
-  country String
+  resumeId String 
+  firstName String?
+  lastName String?
+  email String?
+  phoneNumber String?
+  addressLine1 String?
+  addressLine2 String?
+  city String?
+  postalCode String?
+  country String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   // personalInfo is a required field in Resume (1 to 1 relationship)
@@ -70,13 +83,13 @@ model PersonalInfo {
 model WorkExperience {
   id String @id @default(cuid())
   resumeId String
-  jobTitle String
-  company String
-  location String
-  startDate DateTime
-  endDate DateTime
-  currentlyWorkingHere Boolean
-  description String
+  jobTitle String?
+  company String?
+  location String?
+  startDate DateTime?
+  endDate DateTime?
+  currentlyWorkingHere Boolean? @default(false)
+  description String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
  
@@ -86,24 +99,26 @@ model WorkExperience {
 model Education {
   id String @id @default(cuid())
   resumeId String
-  school String
-  degree String
-  fieldOfStudy String
-  startDate DateTime
-  endDate DateTime
-  description String
+  institution String?
+  degree String?
+  fieldOfStudy String?
+  startDate DateTime?
+  endDate DateTime?
+  description String?
+  currentlyStudyingHere Boolean? @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
  
   resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 }
 
+
 model Qualification {
   id String @id @default(cuid())
   resumeId String
-  qualification String
-  awardedDate String
-  institution DateTime
+  qualification String?
+  awardedDate String?
+  institution DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
  
