@@ -38,3 +38,6 @@ next-env.d.ts
 
 *.sql
 /prisma/migrations
+
+**/.venv
+**/__pycache__

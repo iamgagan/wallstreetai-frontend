@@ -1,17 +1,8 @@
 import { getResumesByUserId } from '@/lib/resume';
-import { Resume } from '@prisma/client';
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { NextResponse } from "next/server";
-type QueryParams = {
-    userId: string;
-}
+import { NextRequest, NextResponse } from "next/server";
 
-type ResponseData  = {
-    resumes: Resume[] | null;
-} | { error: string };
-
-export async function GET(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-    const { userId } = req.query as QueryParams;
+export async function GET(req: NextRequest) {
+    const userId = req.nextUrl.pathname;
    
     try {
         const response = await getResumesByUserId(userId);
