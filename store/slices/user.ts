@@ -1,3 +1,4 @@
+import { ResumeFile } from "@/types/Resume";
 import { StateCreator } from "zustand";
 
 export interface UserSlice {
@@ -7,12 +8,14 @@ export interface UserSlice {
   imgSrc: string;
   sessionId: string;
   isLoggedIn: boolean;
+  resumeFiles: ResumeFile[];
   updateSessionId: (sessionId: string) => void;
   updateName: (name: string) => void;
   updateEmail: (email: string) => void;
   updateUserId: (userId: string) => void;
   updateImageSrc: (imgSrc: string) => void;
   updateIsLoggedIn: (isLoggedIn: boolean) => void;
+  updateResumeFiles: (resumeFiles: ResumeFile[]) => void;
   resetYourDetails: () => void;
 }
 
@@ -25,12 +28,14 @@ export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
   email: "",
   imgSrc: "",
   isLoggedIn: false,
+  resumeFiles: [],
   updateSessionId: (sessionId) => set(() => ({ sessionId })),
   updateName: (name) => set(() => ({ name })),
   updateEmail: (email) => set(() => ({ email })),
   updateImageSrc: (imgSrc) => set(() => ({ imgSrc })),
   updateIsLoggedIn: (isLoggedIn) => set(() => ({ isLoggedIn })),
   updateUserId: (userId) => set(() => ({ userId })),
+  updateResumeFiles: (resumeFiles) => set(() => ({ resumeFiles })),
   resetYourDetails: () =>
     set(() => ({
       firstName: "",

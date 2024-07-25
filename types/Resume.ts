@@ -15,9 +15,12 @@ export interface Resume {
 
 export interface ResumeFile {
     id?: string;
+    resumeId?: string;
     file: string;
     fileType: string;
     fileName: string;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface PersonalInfo {

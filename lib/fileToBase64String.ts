@@ -14,3 +14,10 @@ export const fileToBase64String = async (file: File) => {
     reader.readAsDataURL(file);
   });
 }
+
+export const convertBas64StringToFile = async (base64String: string, fileName: string, fileType: string) => {
+  const response = await fetch(base64String);
+  const blob = await response.blob();
+  const file = new File([blob], fileName, { type: fileType });
+  return file;
+}

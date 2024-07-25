@@ -40,11 +40,16 @@ const cardList = [
 
 export default function Dashboard() {
   const { data } = useSession();
-  const { updateUserId } = useUserStore();
+  const { updateUserId, updateResumeFiles } = useUserStore();
 
   useEffect(() => {
-    if (data && data.user && data.user.id) {
-      updateUserId(data.user.id);
+    if (data && data.user) {
+      if (data.user.id) {
+        updateUserId(data.user.id);
+      }
+      if(data.user.resumeFiles) {
+        updateResumeFiles(data.user.resumeFiles)
+      }
     }
   },[data?.user?.id]);
 

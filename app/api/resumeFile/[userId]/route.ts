@@ -1,5 +1,4 @@
 import { getResumeFilesByUserId } from '@/lib/resume';
-import { ResumeFile } from '@/types/Resume';
 import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
@@ -15,11 +14,10 @@ export async function GET(req: NextRequest) {
                     file: resumeFile.file,
                     fileName: resumeFile.fileName,
                     fileType: resumeFile.fileType,
-
                 }
             }) : null
         });
-        return Response.json({ data: ''})
+
     } catch (error) {
         return Response.json({ error: 'Internal Server Error' });
     }

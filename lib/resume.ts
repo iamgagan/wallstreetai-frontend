@@ -147,7 +147,6 @@ export const updateOrCreateResumeFileByUserId = async (userId: string | undefine
                     fileName: resumeFile.fileName,
                 },
             });
-            console.log('resumeFile', newResumeFile)
             return newResumeFile;
         }
     } catch (error) {
@@ -215,7 +214,7 @@ export const updateOrCreateResumeByUserId = async (userId: string | undefined, r
                     ...resume.personalInfo,
                 },
             });
-
+            
             return newResume;
         }
         

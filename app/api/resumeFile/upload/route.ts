@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
             fileName,
             fileType,
         })
-        console.log('post-response', response)
         return Response.json({message: 'Resume uploaded successfully', data: response}, {status: 201});
     } catch (error) {
         return Response.json({ error: 'Internal Server Error' }, {status: 500});
