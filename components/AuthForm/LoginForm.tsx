@@ -40,6 +40,7 @@ export const LoginForm = () => {
   useEffect(() => {
     if (data && data.user) {
       const { email, id } = data.user;
+      console.log(data.user);
       updateEmail(email || "");
       updateIsLoggedIn(true);
       if (id) {
