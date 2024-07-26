@@ -15,9 +15,9 @@ source .venv/bin/activate
 * Press `Command + Shift + P` to open VSCode menu and then select `Python: Select Interpreter`
 * VSCode will detect the Python version from the local venv as the first option, so select this option.
 
-## Install Flask
+## Install all the packages in `requirements.txt`
 ```
-pip install Flask
+pip install -r requirements.txt
 ```
 
 ## Start the server
@@ -26,3 +26,9 @@ python main.app
 ```
 The app will start at `http://127.0.0.1:5000/` by default. 
 
+***************************************
+
+## To save all relevant packages to `requirements.txt`
+```
+pip freeze > requirements.txt
+```
