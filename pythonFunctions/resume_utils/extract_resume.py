@@ -1,5 +1,6 @@
 import json
 import tempfile
+from textwrap import dedent
 from typing import Dict, Any, Union
 import os
 from crewai import Agent, Task, Crew
@@ -27,7 +28,7 @@ resume_analyst = Agent(
 
 def extract_resume_information(file_path: str) -> Task:
     return Task(
-        description=f""" Given a .pdf, .doc or .docx document provided at this file path: {file_path}, read the file and extract the personal details, work experience, education and qualifications of the applicant. For the work experience description, keep the original version of the information as well as enhance the description of the work experience by rectifying any typos, grammatical errors and sentence structure and present the information in a concise and punchy manner. For the education description, keep the original version of the information as well as enhance the description of the education by rectifying any typos, grammatical errors and sentence structure and present the information in a concise and punchy manner. Return all the information as a JSON string with the following structure: 
+        description=dedent(f""" Given a .pdf, .doc or .docx document provided at this file path: {file_path}, read the file and extract the personal details, work experience, education and qualifications of the applicant. For the work experience description, keep the original version of the information as well as enhance the description of the work experience by rectifying any typos, grammatical errors and sentence structure and present the information in a concise and punchy manner. For the education description, keep the original version of the information as well as enhance the description of the education by rectifying any typos, grammatical errors and sentence structure and present the information in a concise and punchy manner. Return all the information as a JSON string with the following structure: 
         {{
             "personal_details": 
                 {{
@@ -72,10 +73,9 @@ def extract_resume_information(file_path: str) -> Task:
                 }}
             ]
         }}
-        """,
+        """),
         agent=resume_analyst,
-        expected_output="JSON dict containing personal details, work experience, education and qualifications "
-                        "information",
+        expected_output=dedent("JSON dict containing personal details, work experience, education and qualifications information"),
     )
 
 
@@ -87,12 +87,11 @@ def process_resume(file_url: str) -> Union[str, Dict[str, Any]]:
             tasks=[extract_resume_details_task],
             verbose=2
         )
+        # receive the data in JSON string
         resume_details_json = crew.kickoff()
-        resume_details = json.loads(resume_details_json)
-        print(resume_details_json)
-        print(resume_details)
 
-        return resume_details_json
+        # convert to Python object
+        return json.loads(resume_details_json)
     except json.JSONDecodeError as e:
         print(f"Error in process_resume: Invalid JSON - {e}")
         return {"error": "Invalid JSON"}
