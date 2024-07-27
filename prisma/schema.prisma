@@ -90,6 +90,7 @@ model WorkExperience {
   endDate DateTime?
   currentlyWorkingHere Boolean? @default(false)
   description String?
+  enhancedDescription String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
  
@@ -105,6 +106,7 @@ model Education {
   startDate DateTime?
   endDate DateTime?
   description String?
+  enhancedDescription String?
   currentlyStudyingHere Boolean? @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

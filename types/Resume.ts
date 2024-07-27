@@ -42,6 +42,7 @@ export interface Education {
     endDate: string;
     currentlyStudyingHere?: boolean;
     description: string;
+    enhancedDescription: string;
 }
 
 export interface WorkExperience {
@@ -52,6 +53,7 @@ export interface WorkExperience {
     endDate: string;
     currentlyWorkingHere?: boolean;
     description: string;
+    enhancedDescription: string;
 }
 
 export interface Qualification {
