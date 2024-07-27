@@ -3,7 +3,7 @@
 ## Create a venv folder
 Create a venv folder within `pythonFunctions` folder to enable a local virtual environment to be activated. 
 ```
-python -m venv .venv
+python3.12 -m venv .venv
 ```
 
 ## Activate the local virtual environment
@@ -20,9 +20,9 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Start the server
+## Start the server (you may specify `python3.12` to be specific)
 ```
-python main.app
+python3.12 main.py
 ```
 The app will start at `http://127.0.0.1:5000/` by default. 
 

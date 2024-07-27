@@ -1,18 +1,17 @@
-import json
 import tempfile
 from typing import Dict, Any
 import os
-import requests
 from crewai import Agent, Task, Crew
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
-from extract_resume_tools import download_doc, fetch_doc_content
 
+from extract_resume_tools import download_doc, fetch_doc_content
 
 load_dotenv()
 # Load environment variables
 api_key = os.getenv("API_KEY")
 model = ChatOpenAI(api_key=api_key, model_name="gpt-4-turbo", temperature=0.8)
+mock_cv_url = "https://res.cloudinary.com/dac48s3os/image/upload/v1722011750/Sarah_Chen_CV_yebcz4.pdf"
 
 personal_details_analyst = Agent(
     role='Personal Details Analyst',
@@ -187,7 +186,7 @@ def process_resume(file_url: str) -> Dict[str, Any]:
         return {"error": str(e)}
 
 
-def main(doc_url:str):
+def main(doc_url=mock_cv_url):
     doc_content = download_doc(doc_url)
 
     # Create a temporary file to save the downloaded PDF
