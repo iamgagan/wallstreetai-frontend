@@ -8,5 +8,6 @@
       "source.fixAll.eslint": "explicit"
     }
   },
-  "eslint.validate": ["json"]
+  "eslint.validate": ["json"],
+  "python.analysis.extraPaths": ["./bin", "./lib"]
 }
