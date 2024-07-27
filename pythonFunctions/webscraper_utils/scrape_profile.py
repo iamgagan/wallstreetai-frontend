@@ -57,7 +57,7 @@ def extract_profile_information(page_url: str) -> Task:
                     "city": "New York", 
                     "postalCode": "NY 10458", 
                     "country": "US"
-                }}
+                }},
             "work_experience": [ 
                 {{   "jobTitle": "Investment analyst",
                     "company": "Blackrock",

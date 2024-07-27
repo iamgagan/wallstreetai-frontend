@@ -3,8 +3,10 @@ from langchain.tools import tool
 from langchain_community.document_loaders import PyMuPDFLoader, UnstructuredWordDocumentLoader
 from pathlib import Path
 
+
 def get_file_suffix(file_name):
     return Path(file_name).suffix[1:]  # Remove the leading dot
+
 
 @tool
 def fetch_doc_content(file_path: str) -> str:
@@ -24,6 +26,7 @@ def fetch_doc_content(file_path: str) -> str:
 
     except Exception as e:
         return f"Error reading doc: {str(e)}"
+
 
 def download_doc(url):
     response = requests.get(url)

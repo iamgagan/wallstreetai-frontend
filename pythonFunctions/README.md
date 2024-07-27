@@ -3,12 +3,12 @@
 ## Create a venv folder
 Create a venv folder within `pythonFunctions` folder to enable a local virtual environment to be activated. 
 ```
-python3.12 -m venv .venv
+python3.12 -m venv venv
 ```
 
 ## Activate the local virtual environment
 ```
-source .venv/bin/activate
+source venv/bin/activate
 ```
 
 ## Select Python interpreter

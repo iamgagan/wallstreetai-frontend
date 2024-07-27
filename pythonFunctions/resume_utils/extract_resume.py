@@ -1,56 +1,23 @@
+import json
 import tempfile
-from typing import Dict, Any
+from typing import Dict, Any, Union
 import os
 from crewai import Agent, Task, Crew
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 
-from extract_resume_tools import download_doc, fetch_doc_content
+from resume_utils.extract_resume_tools import fetch_doc_content, download_doc
 
 load_dotenv()
 # Load environment variables
-api_key = os.getenv("API_KEY")
+api_key = os.getenv("OPENAI_API_KEY")
 model = ChatOpenAI(api_key=api_key, model_name="gpt-4-turbo", temperature=0.8)
-mock_cv_url = "https://res.cloudinary.com/dac48s3os/image/upload/v1722011750/Sarah_Chen_CV_yebcz4.pdf"
+mock_cv_url = ""
 
-personal_details_analyst = Agent(
-    role='Personal Details Analyst',
-    goal='Extract personal details of an applicant from the document, including first name, last name, email address, '
-         'phone number, address line1, address line2, city, postal code and country',
-    backstory='Specialized in parsing document content for personal details',
-    verbose=True,
-    tools=[fetch_doc_content],
-    allow_delegation=False,
-    llm=model
-)
-
-work_experience_analyst = Agent(
-    role='Work Experience Analyst',
-    goal='Extract the work experience of an applicant from the document, including job title, company name, '
-         'company location, start date, end date, job description for all the past and present jobs',
-    backstory='Specialized in parsing document content for work experience',
-    verbose=True,
-    tools=[fetch_doc_content],
-    allow_delegation=False,
-    llm=model
-)
-
-education_analyst = Agent(
-    role='Education Analyst',
-    goal='Extract the education history of an applicant from the document, including institution name, degree, '
-         'field of study, start date, end date, description for all past and present education',
-    backstory='Specialized in parsing document content for education',
-    verbose=True,
-    tools=[fetch_doc_content],
-    allow_delegation=False,
-    llm=model
-)
-
-qualifications_analyst = Agent(
-    role='Qualification Analyst',
-    goal='Extract qualifications of an applicant from the document, including qualification name, awarded date and '
-         'awarding institution',
-    backstory='Specialized in parsing document content for qualifications',
+resume_analyst = Agent(
+    role='Resume Analyst',
+    goal='Extract personal details, work experience, education and qualifications of an applicant from the document',
+    backstory='Specialized in parsing document content for personal details, work experience, education and qualifications of an applicant from the document',
     verbose=True,
     tools=[fetch_doc_content],
     allow_delegation=False,
@@ -58,30 +25,22 @@ qualifications_analyst = Agent(
 )
 
 
-def extract_personal_details(file_path: str) -> Task:
+def extract_resume_information(file_path: str) -> Task:
     return Task(
-        description=f""" Given a .pdf, .doc or .docx document provided at this file path: {file_path}, read the file and extract the personal details of the applicant. Return the information as a JSON string with the following structure: 
-        {{ 
-            "firstName": "John", 
-            "lastName": "Smith", 
-            "email": "abc@gmail.com", 
-            "phoneNumber": "+12345678910", 
-            "addressLine1": "6 William Street", 
-            "addressLine2": "Bronx, NY 10458", 
-            "city": "New York", 
-            "postalCode": "NY 10458", 
-            "country": "US", 
-        }} """,
-        agent=personal_details_analyst,
-        expected_output="JSON string containing personal details information",
-    )
-
-
-def extract_work_experience(file_path: str) -> Task:
-    return Task(
-        description=f""" Given a .pdf, .doc or .docx document provided at this file path: {file_path}, read the file and extract the work experience of the applicant. Keep the original description of the work experience as well as enhance the description of the work experience by rectifying any typos, grammatical errors and sentence structure. Return the information as a JSON string with the following 
-        structure: 
-        {{ 
+        description=f""" Given a .pdf, .doc or .docx document provided at this file path: {file_path}, read the file and extract the personal details, work experience, education and qualifications of the applicant. For the work experience description, keep the original version of the information as well as enhance the description of the work experience by rectifying any typos, grammatical errors and sentence structure and present the information in a concise and punchy manner. For the education description, keep the original version of the information as well as enhance the description of the education by rectifying any typos, grammatical errors and sentence structure and present the information in a concise and punchy manner. Return all the information as a JSON string with the following structure: 
+        {{
+            "personal_details": 
+                {{
+                    "firstName": "John", 
+                    "lastName": "Smith", 
+                    "email": "abc@gmail.com", 
+                    "phoneNumber": "+12345678910", 
+                    "addressLine1": "6 William Street", 
+                    "addressLine2": "Bronx, NY 10458", 
+                    "city": "New York", 
+                    "postalCode": "NY 10458", 
+                    "country": "US"
+                }},
             "work_experience": [ 
                 {{   "jobTitle": "Investment analyst",
                     "company": "Blackrock",
@@ -92,19 +51,7 @@ def extract_work_experience(file_path: str) -> Task:
                     "enhancedDescription": "This is the enhanced description of the work experience",
                     "currentlyWorkingHere": "True"
                 }}
-            ]
-        }} """,
-        agent=work_experience_analyst,
-        expected_output="JSON string containing work experience information",
-    )
-
-
-def extract_education(file_path: str) -> Task:
-    return Task(
-        description=f""" Given a .pdf, .doc or .docx document provided at this file path: {file_path}, read the file and extract the education history of the applicant. Keep the original description 
-        of the education as well as enhance the description of the education by rectifying any typos, grammatical 
-        errors and sentence structure. Return the information as a JSON string with the following structure: 
-        {{ 
+            ],
             "education": [ 
                 {{
                         "institution": "New York University",
@@ -116,18 +63,7 @@ def extract_education(file_path: str) -> Task:
                         "enhancedDescription": "This is the enhanced description of the education",
                         "currentlyStudyingHere": "False"
                 }}
-            ]
-        }} """,
-        agent=education_analyst,
-        expected_output="JSON string containing education information",
-    )
-
-
-def extract_qualifications(file_path: str) -> Task:
-    return Task(
-        description=f""" Given a .pdf, .doc or .docx document provided at this file path: {file_path}, read the file and extract the qualifications of the applicant (outside of university education). Return the information as a JSON 
-        string with the following structure: 
-        {{ 
+            ],
             "qualifications": [
                 {{
                     "qualification": "CFA",
@@ -135,58 +71,42 @@ def extract_qualifications(file_path: str) -> Task:
                     "institution": "CFA Institute",
                 }}
             ]
-        }} """,
-        agent=qualifications_analyst,
-        expected_output="JSON string containing qualifications information",
+        }}
+        """,
+        agent=resume_analyst,
+        expected_output="JSON dict containing personal details, work experience, education and qualifications "
+                        "information",
     )
 
 
-def process_resume(file_url: str) -> Dict[str, Any]:
+def process_resume(file_url: str) -> Union[str, Dict[str, Any]]:
     try:
-        extract_personal_details_task = extract_personal_details(file_url)
+        extract_resume_details_task = extract_resume_information(file_url)
         crew = Crew(
-            agents=[personal_details_analyst],
-            tasks=[extract_personal_details_task],
+            agents=[resume_analyst],
+            tasks=[extract_resume_details_task],
             verbose=2
         )
-        personal_details = crew.kickoff()
+        resume_details_json = crew.kickoff()
+        resume_details = json.loads(resume_details_json)
+        print(resume_details_json)
+        print(resume_details)
 
-        extract_work_experience_task = extract_work_experience(file_url)
-        crew = Crew(
-            agents=[work_experience_analyst],
-            tasks=[extract_work_experience_task],
-            verbose=2
-        )
-        work_experience = crew.kickoff()
-
-        extract_education_task = extract_education(file_url)
-        crew = Crew(
-            agents=[education_analyst],
-            tasks=[extract_education_task],
-            verbose=2
-        )
-        education = crew.kickoff()
-
-        extract_qualifications_task = extract_qualifications(file_url)
-        crew = Crew(
-            agents=[qualifications_analyst],
-            tasks=[extract_qualifications_task],
-            verbose=2
-        )
-        qualifications = crew.kickoff()
-
-        return {
-            "personal_details": personal_details,
-            "work_experience": work_experience,
-            "education": education,
-            "qualifications": qualifications,
-        }
+        return resume_details_json
+    except json.JSONDecodeError as e:
+        print(f"Error in process_resume: Invalid JSON - {e}")
+        return {"error": "Invalid JSON"}
     except Exception as e:
         print(f"Error in process_resume: {e}")
         return {"error": str(e)}
 
 
 def main(doc_url=mock_cv_url):
+    """This function is used to extract personal details, work experience, education, and qualifications from a
+    resume document by supplying a document url. The document can be in .pdf, .doc, or .docx format. The function
+    will first download the resume document, create a temp file and hold the file in memory, read the temp file and
+    then extract and return the personal details, work experience, education and qualifications information.
+    """
     doc_content = download_doc(doc_url)
 
     # Create a temporary file to save the downloaded PDF
