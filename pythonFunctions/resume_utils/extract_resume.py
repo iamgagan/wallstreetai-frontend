@@ -13,9 +13,6 @@ load_dotenv()
 # Load environment variables
 api_key = os.getenv("API_KEY")
 model = ChatOpenAI(api_key=api_key, model_name="gpt-4-turbo", temperature=0.8)
-doc_url = 'https://res.cloudinary.com/dac48s3os/image/upload/v1722011750/Sarah_Chen_CV_yebcz4.pdf'
-pdf_path = 'Sarah_Chen_CV.pdf'
-
 
 personal_details_analyst = Agent(
     role='Personal Details Analyst',
@@ -188,7 +185,6 @@ def process_resume(file_url: str) -> Dict[str, Any]:
     except Exception as e:
         print(f"Error in process_resume: {e}")
         return {"error": str(e)}
-
 
 
 def main(doc_url:str):

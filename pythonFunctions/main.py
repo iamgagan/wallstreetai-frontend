@@ -1,6 +1,6 @@
 import urllib.parse
 from flask import Flask, jsonify, request
-from utils.extract_resume import main as extract_resume
+from resume_utils.extract_resume import main as extract_resume
 
 app = Flask(__name__)
 
