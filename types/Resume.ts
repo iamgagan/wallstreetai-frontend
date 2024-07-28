@@ -1,13 +1,11 @@
 export interface Resume {
     id?: string;
+    resumeFileId?: string;
     userId: string;
-    file?: string;
-    fileType?: string;
-    fileName?: string;
     personalInfo?: PersonalInfo;
-    education?: Education[];
-    workExperience?: WorkExperience[];
-    qualifications?: Qualification[];
+    education: Education[];
+    workExperience: WorkExperience[];
+    qualifications: Qualification[];
     skills?: string[];
     createdAt?: string;
     updatedAt?: string;

@@ -37,9 +37,6 @@ export async function POST(req: Request) {
                     userId,
                     {
                         userId,
-                        file: file,
-                        fileType: fileType,
-                        fileName: fileName,
                         personalInfo: personal_details,
                         education,
                         workExperience: work_experience,
