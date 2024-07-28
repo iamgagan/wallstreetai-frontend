@@ -35,13 +35,12 @@ model User {
 
 model Resume {
   id String @id @default(cuid())
-  resumeFileId String? @unique
-  userId String @unique
-  personalInfo   PersonalInfo? @relation(fields: [personalInfoId], references: [id])
-  personalInfoId String? @unique @default(cuid())
-  workExperience WorkExperience[]
-  education Education[]
-  qualification Qualification[]
+  resumeFileId String?
+  userId String 
+  personalInfo   Json?
+  workExperience Json?
+  education Json?
+  qualification Json?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   skills String[]
@@ -62,70 +61,62 @@ model ResumeFile {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model PersonalInfo {
-  id String @id @default(cuid())
-  resumeId String 
-  firstName String?
-  lastName String?
-  email String?
-  phoneNumber String?
-  addressLine1 String?
-  addressLine2 String?
-  city String?
-  postalCode String?
-  country String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  // personalInfo is a required field in Resume (1 to 1 relationship)
-  resume Resume?
-}
+// model PersonalInfo {
+//   id String @id @default(cuid())
+//   resumeId String @unique
+//   firstName String?
+//   lastName String?
+//   email String?
+//   phoneNumber String?
+//   addressLine1 String?
+//   addressLine2 String?
+//   city String?
+//   postalCode String?
+//   country String?
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
 
-model WorkExperience {
-  id String @id @default(cuid())
-  resumeId String
-  jobTitle String?
-  company String?
-  location String?
-  startDate DateTime?
-  endDate DateTime?
-  currentlyWorkingHere Boolean? @default(false)
-  description String?
-  enhancedDescription String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// model WorkExperience {
+//   id String @id @default(cuid())
+//   resumeId String
+//   jobTitle String?
+//   company String?
+//   location String?
+//   startDate DateTime?
+//   endDate DateTime?
+//   currentlyWorkingHere String? @default("False")
+//   description String?
+//   enhancedDescription String?
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//  }
  
-  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
-}
- 
-model Education {
-  id String @id @default(cuid())
-  resumeId String
-  institution String?
-  degree String?
-  fieldOfStudy String?
-  startDate DateTime?
-  endDate DateTime?
-  description String?
-  enhancedDescription String?
-  currentlyStudyingHere Boolean? @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
- 
-  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
-}
+// model Education {
+//   id String @id @default(cuid())
+//   resumeId String
+//   institution String?
+//   degree String?
+//   fieldOfStudy String?
+//   startDate DateTime?
+//   endDate DateTime?
+//   description String?
+//   enhancedDescription String?
+//   currentlyStudyingHere String? @default("False")
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
 
 
-model Qualification {
-  id String @id @default(cuid())
-  resumeId String
-  qualification String?
-  awardedDate String?
-  institution DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
- 
-  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
-}
+// model Qualification {
+//   id String @id @default(cuid())
+//   resumeId String
+//   qualification String?
+//   awardedDate String?
+//   institution DateTime?
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//  }
 
 model Account {
   userId            String

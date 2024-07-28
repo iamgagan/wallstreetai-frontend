@@ -21,3 +21,17 @@ export const convertBas64StringToFile = async (base64String: string, fileName: s
   const file = new File([blob], fileName, { type: fileType });
   return file;
 }
+
+export const fileToByteArray = async (file: File) => {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const byteArray = new Uint8Array(event.target?.result as ArrayBuffer);
+      resolve(byteArray.toString());
+    };
+    reader.onerror = () => {
+      reject("Failed to convert file to base64 string");
+    };
+    reader.readAsArrayBuffer(file);
+  });
+}

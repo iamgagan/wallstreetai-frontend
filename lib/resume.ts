@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { Resume, ResumeFile } from "@/types/Resume";
+import { JsonObject, JsonValue } from "@prisma/client/runtime/library";
 
 export const getResumesByEmail = async (email: string | undefined) => {
   if (!email || db.user === undefined) return null;
@@ -159,66 +160,97 @@ export const updateOrCreateResumeByUserId = async (userId: string | undefined, r
     if (!userId || db.user === undefined) return null;
     try {
         if (resume.id) {
-            const resumeFile = await db.resumeFile.findFirst({
-                where: {
-                    resumeId: resume.id,
-                },
-            });
-            
-            const updatedResume = await db.resume.update({
+            const updatedRes = await db.resume.update({
                 where: {
                     id: resume.id,
                 },
                 data: {
-                    personalInfo: {
-                        create: {
-                            resumeId: resume.id,
-                            ...resume.personalInfo,
-                        },
-                    },
-                    resumeFileId: resumeFileId || resumeFile?.id,
-                    education: {
-                        create: resume.education,
-                    },
-                    workExperience: {
-                        create: resume.workExperience,
-                    },
-                    qualification: {
-                        create: resume.qualification,
-                    },
-                    skills: resume.skills,
+                    userId,
+                    resumeFileId: resumeFileId || '',
+                    personalInfo: JSON.stringify(resume.personalInfo),
+                    education: JSON.stringify(resume.education),
+                    workExperience: JSON.stringify(resume.workExperience),
+                    qualification: JSON.stringify(resume.qualifications),
+                    skills: [],
                 },
+                select: {
+                    id: true,
+                    userId: true,
+                    resumeFileId: true,
+                    personalInfo: true,
+                    education: true,
+                    workExperience: true,
+                    qualification: true,
+                    createdAt: true,
+                    updatedAt: true,
+                }
             });
-            return updatedResume;
+
+            if (resumeFileId) {
+                await db.resumeFile.update({
+                    where: {
+                        id: resumeFileId,
+                    },
+                    data: {
+                        resumeId: updatedRes.id,
+                    }
+                })
+            }
+
+            return {
+                ...updatedRes,
+                personalInfo: updatedRes.personalInfo ? JSON.parse(updatedRes.personalInfo as string) : null,
+                education: updatedRes.education ? JSON.parse(updatedRes.education as string) : null,
+                workExperience: updatedRes.workExperience ? JSON.parse(updatedRes.workExperience as string) : null,
+                qualification: updatedRes.qualification ? JSON.parse(updatedRes.qualification as string) : null,
+            }
+
         } else {
             const newResume = await db.resume.create({
                 data: {
                     userId,
-                    resumeFileId: resumeFileId,
-                    education: {
-                        create: resume.education,
-                    },
-                    workExperience: {
-                        create: resume.workExperience,
-                    },
-                    qualification: {
-                        create: resume.qualification,
-                    },
-                    skills: resume.skills,
+                    resumeFileId : resumeFileId || '',
+                    personalInfo: JSON.stringify(resume.personalInfo),
+                    education: JSON.stringify(resume.education),
+                    workExperience: JSON.stringify(resume.workExperience),
+                    qualification: JSON.stringify(resume.qualifications),
+                    skills: [],
                 },
+                select: {
+                    id: true,
+                    userId: true,
+                    resumeFileId: true,
+                    personalInfo: true,
+                    education: true,
+                    workExperience: true,
+                    qualification: true,
+                    createdAt: true,
+                    updatedAt: true,
+                }
             });
-            
-            await db.personalInfo.create({
-                data: {
-                    resumeId: newResume.id,
-                    ...resume.personalInfo,
-                },
-            });
-            
-            return newResume;
+
+            if (resumeFileId) {
+                await db.resumeFile.update({
+                    where: {
+                        id: resumeFileId,
+                    },
+                    data: {
+                        resumeId: newResume.id,
+                    }
+                })
+            }
+
+            return {
+                ...newResume,
+                personalInfo: newResume.personalInfo ? JSON.parse(newResume.personalInfo as string) : null,
+                education: newResume.education ? JSON.parse(newResume.education as string) : null,
+                workExperience: newResume.workExperience ? JSON.parse(newResume.workExperience as string) : null,
+                qualification: newResume.qualification ? JSON.parse(newResume.qualification as string) : null,
+            }
         }
         
     } catch (error) {
         return null;
     }
 }
+

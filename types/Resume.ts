@@ -1,16 +1,23 @@
 export interface Resume {
     id?: string;
     userId: string;
-    file: string;
-    fileType: string;
-    fileName: string;
-    personalInfo: PersonalInfo;
+    file?: string;
+    fileType?: string;
+    fileName?: string;
+    personalInfo?: PersonalInfo;
+    education?: Education[];
+    workExperience?: WorkExperience[];
+    qualifications?: Qualification[];
+    skills?: string[];
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export interface ExtractedResumeData {
+    personal_details: PersonalInfo;
     education: Education[];
-    workExperience: WorkExperience[];
-    qualification: Qualification[];
-    skills: string[];
-    createdAt: string;
-    updatedAt: string;
+    work_experience: WorkExperience[];
+    qualifications: Qualification[];
 }
 
 export interface ResumeFile {
@@ -38,9 +45,10 @@ export interface PersonalInfo {
 export interface Education {
     institution: string;
     degree: string;
+    fieldOfStudy?: string;
     startDate: string;
     endDate: string;
-    currentlyStudyingHere?: boolean;
+    currentlyStudyingHere?: string;
     description: string;
     enhancedDescription: string;
 }
@@ -51,7 +59,7 @@ export interface WorkExperience {
     location: string;
     startDate: string;
     endDate: string;
-    currentlyWorkingHere?: boolean;
+    currentlyWorkingHere?: string;
     description: string;
     enhancedDescription: string;
 }
