@@ -19,25 +19,26 @@ export const ResumeCard = () => {
   const { userId } = useUserStore();
 
   const uploadFile = () => {
+    console.log("this is inputRef",inputRef);
     if (inputRef.current) {
       inputRef.current.click();
     }
   }
   
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("this is e",e);
     if (e.target.files && e.target.files.length > 0) {
+      console.log("this is e.target.files",e.target.files);
       const file = e.target.files[0];
-      const fileString = await fileToBase64String(file);
+      const data = new FormData();
+      data.append('file', file);
+      data.append('userId', userId);
+      console.log("this is data",data);
       try {
-        if(fileString && userId) {
+        if(file && userId) {
           const response = await fetch('/api/resumeFile/upload', {
             method: 'POST',
-            body: JSON.stringify({
-              file: fileString,
-              fileName: file.name,
-              fileType: file.type,
-              userId,
-            }),
+            body: data
           })
         }
         router.push('/resumes/form');
