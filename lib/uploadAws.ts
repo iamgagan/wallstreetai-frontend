@@ -65,6 +65,9 @@ export class FileUpload {
                     data: "AWS S3 resume upload not successful"
                 }
             }
+
+            const awsUrl : string = upload.Location;
+            return {awsUrl: awsUrl};
         } catch (error) {
             return error;
         }
