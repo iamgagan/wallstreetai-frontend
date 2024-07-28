@@ -14,7 +14,7 @@ interface ResumeFileBody {
 export async function POST(req: Request) {
     try {
         const { userId, file, fileName, fileType } = await req.json() as ResumeFileBody;
-       
+        console.log('resumeFile')
         if (file && userId) {
             // save the file to db
             const fileRes = await updateOrCreateResumeFileByUserId(userId, {

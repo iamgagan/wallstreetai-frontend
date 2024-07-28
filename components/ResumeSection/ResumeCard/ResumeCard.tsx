@@ -7,12 +7,12 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 import { createRef } from "react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/store";
-import { Resume } from '@/types/Resume';
+import { toast, Toaster } from "react-hot-toast";
 
 export const ResumeCard = () => {
   const inputRef = createRef<HTMLInputElement>();
   const router = useRouter();
-  const { userId } = useUserStore();
+  const { userId, updateResumes, resumes, resumeFiles, updateResumeFiles } = useUserStore();
 
   const uploadFile = () => {
     if (inputRef.current) {
@@ -21,6 +21,7 @@ export const ResumeCard = () => {
   }
   
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('file change',e.target.files)
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       const formData = new FormData();
@@ -51,18 +52,52 @@ export const ResumeCard = () => {
               }),
             });
             const data = await postRes.json();
+            if (data.error) {
+              toast.error(data.error);
+              return;
+            }
+            const { data: resumeData } = data;
+            if (resumeData) {
+              const { resumeId, resumeFileId, userId, ...otherResumeData } = resumeData;
+              // update resumes
+              if (resumes.filter(resume => resume.id === resumeId).length === 0) {
+                updateResumes([...resumes, { id: resumeId, resumeFileId, ...otherResumeData }]);
+              } else {
+                const updatedResumes = resumes.map(resume => {
+                  if (resume.id === resumeId) {
+                    return { id: resumeId, resumeFileId, ...otherResumeData };
+                  }
+                  return resume;
+                });
+                updateResumes(updatedResumes);
+              }
+              // update resumeFiles
+              if (resumeFiles.filter(file => file.id === resumeFileId).length === 0) {
+                updateResumeFiles([...resumeFiles, { id: resumeFileId, file: secure_url, fileName: file.name, fileType: file.type }]);
+              } else {
+                const updatedResumeFiles = resumeFiles.map(resumeFile => {
+                  if (resumeFile.id === resumeFileId) {
+                    return { id: resumeFileId, file: secure_url, fileName: file.name, fileType: file.type };
+                  }
+                  return resumeFile;
+                });
+                updateResumeFiles(updatedResumeFiles);
+              }
+              toast.success('Resume uploaded successfully')
+            }
           }
+          router.push('/resumes/form');
         }
-        router.push('/resumes/form');
       } catch (error) {
-        console.error(error);
+        toast.error('Failed to upload resume file');
       }
     }
   }
+  
 
   return (
-
     <Card className='w-[18rem] rounded-lg flex flex-col justify-start items-center border-dashed border-[1px] border-black ml-8 pt-3 pb-5 gap-2'>
+      <Toaster/>
       <ResumeOption
         icon={<IoIosAddCircleOutline size={25} />}
         label='New Resume'
@@ -83,6 +118,5 @@ export const ResumeCard = () => {
         onFileChange={handleFileChange}
       />
       </Card>
-
   );
 };

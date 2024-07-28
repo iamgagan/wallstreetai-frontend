@@ -35,7 +35,7 @@ export const ResumeOption = ({
         </CardContent>
       </Link>
       </Card>
-      <Input type="file" className="hidden" ref={inputRef} readOnly value="" />
+      <Input type="file" className="hidden" ref={inputRef} value="" onChange={onFileChange} />
     </>
   );
 };
