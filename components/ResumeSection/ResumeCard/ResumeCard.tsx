@@ -4,23 +4,27 @@ import { ResumeOption } from "./ResumeOption";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { createRef } from "react";
+import { createRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/store";
 import { toast, Toaster } from "react-hot-toast";
+import { LoadingModal } from "@/components/LoadingModal/LoadingModal";
+
 
 export const ResumeCard = () => {
   const inputRef = createRef<HTMLInputElement>();
   const router = useRouter();
   const { userId, updateResumes, resumes, resumeFiles, updateResumeFiles } = useUserStore();
-
+  const [ loading, setLoading ] = useState(false);
+  
   const uploadFile = () => {
     if (inputRef.current) {
-      inputRef.current.click();
+      inputRef.current.click()
     }
   }
   
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoading(true)
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       const formData = new FormData();
@@ -85,30 +89,35 @@ export const ResumeCard = () => {
               toast.success('Resume uploaded successfully')
             }
           }
+          
           router.push('/resumes/form');
         }
       } catch (error) {
         toast.error('Failed to upload resume file');
       }
     }
+    setLoading(false)
   }
   
 
   return (
-    <Card className='w-[18rem] rounded-lg flex flex-col justify-start items-center border-dashed border-[1px] border-black ml-8 pt-3 pb-5 gap-2'>
+    <>
+      <Card className='w-[18rem] rounded-lg flex flex-col justify-start items-center border-dashed border-[1px] border-black ml-8 pt-3 pb-5 gap-2' id="loading">
       <Toaster/>
       <ResumeOption
         icon={<IoIosAddCircleOutline size={25} />}
         label='New Resume'
         href='/resumes/template'
         />
-      <ResumeOption
-        icon={<IoCloudUploadOutline size={25} />}
-        label='Upload Resume'
-        inputRef={inputRef}
+
+        <ResumeOption
+          icon={<IoCloudUploadOutline size={25} />}
+          label='Upload Resume'
+          inputRef={inputRef}
           onClick={uploadFile}
           onFileChange={handleFileChange}
-      />
+        />
+
       <ResumeOption
         icon={<IoCloudUploadOutline size={25} />}
         label='Upload Resume with AI'
@@ -117,5 +126,8 @@ export const ResumeCard = () => {
         onFileChange={handleFileChange}
       />
       </Card>
+      
+      <LoadingModal loading={loading} setLoading={setLoading} />
+    </>
   );
 };
