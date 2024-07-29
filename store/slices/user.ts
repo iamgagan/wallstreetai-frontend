@@ -10,6 +10,8 @@ export interface UserSlice {
   isLoggedIn: boolean;
   resumeFiles: ResumeFile[];
   resumes: Resume[];
+  selectedResumeFile: ResumeFile | null;
+  selectedResume: Resume | null;
   updateSessionId: (sessionId: string) => void;
   updateName: (name: string) => void;
   updateEmail: (email: string) => void;
@@ -18,6 +20,8 @@ export interface UserSlice {
   updateIsLoggedIn: (isLoggedIn: boolean) => void;
   updateResumeFiles: (resumeFiles: ResumeFile[]) => void;
   updateResumes: (resumes: Resume[]) => void;
+  updateSelectedResumeFile: (selectedResumeFile: ResumeFile) => void;
+  updateSelectedResume: (selectedResume: Resume) => void;
   resetYourDetails: () => void;
 }
 
@@ -32,6 +36,8 @@ export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
   isLoggedIn: false,
   resumeFiles: [],
   resumes: [],
+  selectedResumeFile: null,
+  selectedResume: null,
   updateSessionId: (sessionId) => set(() => ({ sessionId })),
   updateName: (name) => set(() => ({ name })),
   updateEmail: (email) => set(() => ({ email })),
@@ -40,6 +46,10 @@ export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
   updateUserId: (userId) => set(() => ({ userId })),
   updateResumeFiles: (resumeFiles) => set(() => ({ resumeFiles })),
   updateResumes: (resumes) => set(() => ({ resumes })),
+  updateSelectedResumeFile: (selectedResumeFile) =>
+    set(() => ({ selectedResumeFile })),
+  updateSelectedResume: (selectedResume) =>
+    set(() => ({ selectedResume })),
   resetYourDetails: () =>
     set(() => ({
       firstName: "",

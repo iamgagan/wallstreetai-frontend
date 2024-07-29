@@ -109,7 +109,6 @@ export const ResumeCard = () => {
         label='New Resume'
         href='/resumes/template'
         />
-
         <ResumeOption
           icon={<IoCloudUploadOutline size={25} />}
           label='Upload Resume'
@@ -117,7 +116,6 @@ export const ResumeCard = () => {
           onClick={uploadFile}
           onFileChange={handleFileChange}
         />
-
       <ResumeOption
         icon={<IoCloudUploadOutline size={25} />}
         label='Upload Resume with AI'
@@ -126,7 +124,6 @@ export const ResumeCard = () => {
         onFileChange={handleFileChange}
       />
       </Card>
-      
       <LoadingModal loading={loading} setLoading={setLoading} />
     </>
   );

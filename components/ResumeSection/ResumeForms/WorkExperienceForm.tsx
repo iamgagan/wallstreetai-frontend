@@ -16,12 +16,14 @@ import { Button } from "../../ui/button";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useUserStore } from "@/store/store";
+import { useEffect } from "react";
 
 
 const defaultValues = {
   work: [
     {
-      companyName: "",
+      company: "",
       position: "",
       city: "",
       country: "",
@@ -36,10 +38,33 @@ const defaultValues = {
 type FormValues = typeof defaultValues;
 
 export const WorkExperienceForm = () => {
+  const { selectedResume } = useUserStore();
+  const initialValues = selectedResume && selectedResume.workExperience 
+  ? {
+    work: selectedResume.workExperience.map((work) => ({
+      ...work,
+      position: work.jobTitle,
+      city: work.location,
+      currentlyWorkingHere: work.currentlyWorkingHere === "True"
+    }))
+  } : defaultValues;
   const workForm = useForm<FormValues>({
     resolver: zodResolver(WorkArraySchema),
-    defaultValues,
+    defaultValues: initialValues,
   });
+
+  useEffect(() => {
+    if (selectedResume && selectedResume.education) {
+      workForm.reset({
+        work: selectedResume.workExperience.map((work) => ({
+          ...work,
+          position: work.jobTitle,
+          city: work.location,
+          currentlyWorkingHere: work.currentlyWorkingHere === "True"
+        }))
+      });
+    }
+  }, [selectedResume, workForm]);
   const output = useWatch({
     control: workForm.control,
     name: "work",
@@ -131,13 +156,13 @@ export const WorkExperienceForm = () => {
                 <div className='flex gap-2'>
                   <FormField
                     control={workForm.control}
-                    name={`work.${index}.companyName`}
+                    name={`work.${index}.company`}
                     render={({ field }) => (
                       <FormItem>
-                        <Label id={`work.${index}.companyName`}>Company</Label>
+                        <Label id={`work.${index}.company`}>Company</Label>
                         <FormControl>
                           <Input
-                            {...workForm.register(`work.${index}.companyName`)}
+                            {...workForm.register(`work.${index}.company`)}
                             type='text'
                             placeholder='Bank of ABC'
                             autoComplete='company-name'

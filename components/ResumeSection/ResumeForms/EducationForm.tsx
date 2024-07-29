@@ -16,11 +16,13 @@ import { Button } from "../../ui/button";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useUserStore } from "@/store/store";
+import { useEffect } from 'react';
 
 const defaultValues = {
   educations: [
     {
-      institutionName: "",
+      institution: "",
       degree: "",
       city: "",
       country: "",
@@ -35,10 +37,29 @@ const defaultValues = {
 type FormValues = typeof defaultValues;
 
 export const EducationForm = () => {
+  const { selectedResume } = useUserStore();
+  const initialValues = selectedResume && selectedResume.education 
+  ? {
+      educations: selectedResume.education.map((education) => ({
+        ...education,
+        currentlyStudyingHere: education.currentlyStudyingHere === "True",
+    }))
+  } : defaultValues;
   const educationForm = useForm<FormValues>({
     resolver: zodResolver(EducationArraySchema),
-    defaultValues,
+    defaultValues: initialValues,
   });
+
+  useEffect(() => {
+    if (selectedResume && selectedResume.education) {
+      educationForm.reset({
+        educations: selectedResume.education.map((education) => ({
+          ...education,
+          currentlyStudyingHere: education.currentlyStudyingHere === "True",
+        }))
+      });
+    }
+  }, [selectedResume, educationForm]);
 
   const { fields, append, remove } = useFieldArray({
     name: "educations",
@@ -53,6 +74,7 @@ export const EducationForm = () => {
   const onSubmit = (values: FormValues) => {
     console.log(values);
   };
+
   return (
     <Form {...educationForm}>
       <form
@@ -134,16 +156,16 @@ export const EducationForm = () => {
                 </div>
                 <FormField
                   control={educationForm.control}
-                  name={`educations.${index}.institutionName`}
+                  name={`educations.${index}.institution`}
                   render={({ field }) => (
                     <FormItem className="w-full">
-                      <Label id={`educations.${index}.institutionName`}>
+                      <Label id={`educations.${index}.institution`}>
                         Institution
                       </Label>
                       <FormControl>
                         <Input
                           {...educationForm.register(
-                            `educations.${index}.institutionName`
+                            `educations.${index}.institution`
                           )}
                           type='text'
                           placeholder='University of ABC'
@@ -195,28 +217,7 @@ export const EducationForm = () => {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={educationForm.control}
-                    name={`educations.${index}.country`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <Label id={`educations.${index}.country`}>
-                          Country
-                        </Label>
-                        <FormControl>
-                          <Input
-                            {...educationForm.register(
-                              `educations.${index}.country`
-                            )}
-                            type='text'
-                            placeholder='United States'
-                            autoComplete='country'
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  
                 </div>
                 <FormField
                   control={educationForm.control}

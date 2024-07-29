@@ -56,7 +56,7 @@ export const ProfileSchema = z.object({
 });
 
 export const WorkSchema = z.object({
-  companyName: z.string().optional(),
+  company: z.string().optional(),
   position: z.string().optional(),
   city: z.string().optional(),
   country: z.string().optional(),
@@ -67,7 +67,7 @@ export const WorkSchema = z.object({
 });
 
 export const EducationSchema = z.object({
-  institutionName: z.string().optional(),
+  institution: z.string().optional(),
   degree: z.string().optional(),
   city: z.string().optional(),
   country: z.string().optional(),

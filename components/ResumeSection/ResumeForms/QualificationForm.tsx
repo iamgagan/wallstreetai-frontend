@@ -13,6 +13,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "../../ui/label";
 import { Button } from "../../ui/button";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useUserStore } from '@/store/store';
+import { useEffect } from 'react';
 
 const defaultValues = {
   qualifications: [
@@ -27,10 +29,23 @@ const defaultValues = {
 type FormValues = typeof defaultValues;
 
 export const QualificationForm = () => {
+  const { selectedResume } = useUserStore();
+  const initialValues = selectedResume && selectedResume.qualifications 
+  ? {
+    qualifications: selectedResume.qualifications
+  } : defaultValues;
   const qualificationForm = useForm<FormValues>({
     resolver: zodResolver(QualificationsArraySchema),
-    defaultValues,
+    defaultValues: initialValues,
   });
+
+  useEffect(() => {
+    if (selectedResume && selectedResume.qualifications) {
+      qualificationForm.reset({
+        qualifications: selectedResume.qualifications
+      });
+    }
+  }, [selectedResume, qualificationForm]);
 
   const { fields, append, remove } = useFieldArray({
     name: "qualifications",

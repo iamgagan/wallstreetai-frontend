@@ -40,7 +40,7 @@ const cardList = [
 
 export default function Dashboard() {
   const { data } = useSession();
-  const { updateUserId, updateResumeFiles } = useUserStore();
+  const { updateUserId, updateResumeFiles, updateResumes } = useUserStore();
 
   useEffect(() => {
     if (data && data.user) {
@@ -49,6 +49,9 @@ export default function Dashboard() {
       }
       if(data.user.resumeFiles) {
         updateResumeFiles(data.user.resumeFiles)
+      }
+      if(data.user.resumes) {
+        updateResumes(data.user.resumes)
       }
     }
   },[data?.user?.id]);

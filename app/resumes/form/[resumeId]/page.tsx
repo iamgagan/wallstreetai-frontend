@@ -3,7 +3,13 @@ import { NavigationLayout } from '@/components/NavigationLayout/NavigationLayout
 import { ResumeFormList } from '@/components/ResumeSection/ResumeFormList';
 import { ResumePreview } from '@/components/ResumeSection/ResumePreview';
 
-export default function ResumeForm() {
+interface ResumeFormByIdProps {
+  params: {
+    resumeId:string
+  }
+}
+
+export default function ResumeFormById({ params}: ResumeFormByIdProps) {
   return (
     <NavigationLayout>
       <div className="flex gap-5 max-w-[95vw] mt-[100px] overflow-hidden">

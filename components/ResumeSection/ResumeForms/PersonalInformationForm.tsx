@@ -12,22 +12,39 @@ import { ProfileSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Label } from "../../ui/label";
+import { useUserStore } from '@/store/store';
+import { useEffect } from "react";
+
+const defaultValues = {
+  firstName: "",
+  lastName: "",
+  phoneNumber: "",
+  email: "",
+  addressLine1: "",
+  addressLine2: "",
+  city: "",
+  country: "",
+  postalCode: "",
+}
 
 export const PersonalInformationForm = () => {
+  const { selectedResume } = useUserStore();
+  const initialValues = selectedResume && selectedResume.personalInfo 
+  ? {
+    ...selectedResume.personalInfo
+  } : defaultValues;
   const profileForm = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      email: "",
-      addressLine1: "",
-      addressLine2: "",
-      city: "",
-      country: "",
-      postalCode: "",
-    },
+    defaultValues: initialValues,
   });
+
+  useEffect(() => {
+    if (selectedResume && selectedResume.personalInfo) {
+      profileForm.reset({
+        ...selectedResume.personalInfo
+      });
+    }
+  }, [selectedResume, profileForm]);
 
   const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
     console.log(values);

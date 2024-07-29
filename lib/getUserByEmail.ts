@@ -20,7 +20,18 @@ export const getUserByEmail = async (email: string | undefined) => {
       }
     });
 
-    return user;
+    const formattedUser = {
+      ...user,
+      resumes: user?.resumes.map((resume) => ({
+        ...resume,
+        personalInfo: resume.personalInfo ? JSON.parse(resume.personalInfo as string) : null,
+        education: resume.education ? JSON.parse(resume.education as string) : null,
+        workExperience: resume.workExperience ? JSON.parse(resume.workExperience as string) : null,
+        qualification: resume.qualification ? JSON.parse(resume.qualification as string) : null,
+    }))
+  }
+
+    return formattedUser;
   } catch (error) {
     return null;
   }
@@ -45,7 +56,18 @@ export const getUserById = async (id: string | undefined) => {
       }
     });
 
-    return user;
+    const formattedUser = {
+      ...user,
+      resumes: user?.resumes.map((resume) => ({
+        ...resume,
+        personalInfo: resume.personalInfo ? JSON.parse(resume.personalInfo as string) : null,
+        education: resume.education ? JSON.parse(resume.education as string) : null,
+        workExperience: resume.workExperience ? JSON.parse(resume.workExperience as string) : null,
+        qualification: resume.qualification ? JSON.parse(resume.qualification as string) : null,
+    }))
+  }
+
+    return formattedUser;
   } catch (error) {
     return null;
   }

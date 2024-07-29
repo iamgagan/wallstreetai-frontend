@@ -14,7 +14,16 @@ export const getResumesByEmail = async (email: string | undefined) => {
         }
     });
       if (resumes?.resumes) {
-          return resumes.resumes.sort((a, b) => b.createdAt.getDate() - a.createdAt.getDate());
+          const formattedResumes = resumes.resumes.map((resume) => ({
+                ...resume,
+                personalInfo: resume.personalInfo ? JSON.parse(resume.personalInfo as string) : null,
+                education: resume.education ? JSON.parse(resume.education as string) : null,
+                workExperience: resume.workExperience ? JSON.parse(resume.workExperience as string) : null,
+                qualification: resume.qualification ? JSON.parse(resume.qualification as string) : null,
+          }))
+              .sort((a, b) => b.createdAt.getDate() - a.createdAt.getDate());
+          
+          return formattedResumes;
       } else {
           return null;
       }
@@ -32,8 +41,17 @@ export const getResumesByUserId = async (userId:string | undefined) => {
       },
     });
 
-    if (resumes) {
-        return resumes.sort((a, b) => b.createdAt.getDate() - a.createdAt.getDate());
+      if (resumes) {
+          const formattedResumes = resumes.map((resume) => ({
+                ...resume,
+                personalInfo: resume.personalInfo ? JSON.parse(resume.personalInfo as string) : null,
+                education: resume.education ? JSON.parse(resume.education as string) : null,
+                workExperience: resume.workExperience ? JSON.parse(resume.workExperience as string) : null,
+                qualification: resume.qualification ? JSON.parse(resume.qualification as string) : null,
+            })
+          )
+              .sort((a, b) => b.createdAt.getDate() - a.createdAt.getDate());
+          return formattedResumes;
     } else {
         return null;
     }
@@ -91,7 +109,18 @@ export const getResumeByResumeFileId = async (resumeFileId: string | undefined) 
                 resumeFileId,
             },
         });
-        return resume;
+        if (resume) {
+            const formattedResume = {
+                ...resume,
+                personalInfo: resume.personalInfo ? JSON.parse(resume.personalInfo as string) : null,
+                education: resume.education ? JSON.parse(resume.education as string) : null,
+                workExperience: resume.workExperience ? JSON.parse(resume.workExperience as string) : null,
+                qualification: resume.qualification ? JSON.parse(resume.qualification as string) : null,
+            }
+            return formattedResume;
+        } else {
+            return null;
+        }
     } catch (error) {
         return null;
     }
