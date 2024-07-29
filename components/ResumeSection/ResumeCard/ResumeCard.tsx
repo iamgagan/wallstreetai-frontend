@@ -14,7 +14,7 @@ import { LoadingModal } from "@/components/LoadingModal/LoadingModal";
 export const ResumeCard = () => {
   const inputRef = createRef<HTMLInputElement>();
   const router = useRouter();
-  const { userId, updateResumes, resumes, resumeFiles, updateResumeFiles } = useUserStore();
+  const { userId, updateResumes, resumes, resumeFiles, updateResumeFiles, updateIsUploadWithAI } = useUserStore();
   const [ loading, setLoading ] = useState(false);
   
   const uploadFile = () => {
@@ -98,6 +98,11 @@ export const ResumeCard = () => {
     }
     setLoading(false)
   }
+
+  const handleUploadWithAI = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleFileChange(e);
+    updateIsUploadWithAI(true)
+  }
   
 
   return (
@@ -121,7 +126,7 @@ export const ResumeCard = () => {
         label='Upload Resume with AI'
         inputRef={inputRef}
         onClick={uploadFile}
-        onFileChange={handleFileChange}
+        onFileChange={handleUploadWithAI}
       />
       </Card>
       <LoadingModal loading={loading} setLoading={setLoading} />

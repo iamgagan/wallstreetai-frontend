@@ -37,11 +37,12 @@ const defaultValues = {
 type FormValues = typeof defaultValues;
 
 export const EducationForm = () => {
-  const { selectedResume } = useUserStore();
+  const { selectedResume, isUploadWithAI } = useUserStore();
   const initialValues = selectedResume && selectedResume.education 
   ? {
       educations: selectedResume.education.map((education) => ({
         ...education,
+        description: isUploadWithAI ? education.enhancedDescription : education.description,
         currentlyStudyingHere: education.currentlyStudyingHere === "True",
     }))
   } : defaultValues;
@@ -55,6 +56,7 @@ export const EducationForm = () => {
       educationForm.reset({
         educations: selectedResume.education.map((education) => ({
           ...education,
+          description: isUploadWithAI ? education.enhancedDescription : education.description,
           currentlyStudyingHere: education.currentlyStudyingHere === "True",
         }))
       });

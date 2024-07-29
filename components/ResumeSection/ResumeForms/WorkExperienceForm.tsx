@@ -38,13 +38,14 @@ const defaultValues = {
 type FormValues = typeof defaultValues;
 
 export const WorkExperienceForm = () => {
-  const { selectedResume } = useUserStore();
+  const { selectedResume, isUploadWithAI } = useUserStore();
   const initialValues = selectedResume && selectedResume.workExperience 
   ? {
     work: selectedResume.workExperience.map((work) => ({
       ...work,
       position: work.jobTitle,
       city: work.location,
+      description: isUploadWithAI ? work.enhancedDescription : work.description,
       currentlyWorkingHere: work.currentlyWorkingHere === "True"
     }))
   } : defaultValues;
@@ -60,6 +61,7 @@ export const WorkExperienceForm = () => {
           ...work,
           position: work.jobTitle,
           city: work.location,
+          description: isUploadWithAI ? work.enhancedDescription : work.description,
           currentlyWorkingHere: work.currentlyWorkingHere === "True"
         }))
       });

@@ -12,6 +12,7 @@ export interface UserSlice {
   resumes: Resume[];
   selectedResumeFile: ResumeFile | null;
   selectedResume: Resume | null;
+  isUploadWithAI: boolean;
   updateSessionId: (sessionId: string) => void;
   updateName: (name: string) => void;
   updateEmail: (email: string) => void;
@@ -22,7 +23,8 @@ export interface UserSlice {
   updateResumes: (resumes: Resume[]) => void;
   updateSelectedResumeFile: (selectedResumeFile: ResumeFile) => void;
   updateSelectedResume: (selectedResume: Resume) => void;
-  resetYourDetails: () => void;
+  updateIsUploadWithAI: (isUploadWithAI: boolean) => void;
+  resetUserDetails: () => void;
 }
 
 export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
@@ -38,6 +40,7 @@ export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
   resumes: [],
   selectedResumeFile: null,
   selectedResume: null,
+  isUploadWithAI: false,
   updateSessionId: (sessionId) => set(() => ({ sessionId })),
   updateName: (name) => set(() => ({ name })),
   updateEmail: (email) => set(() => ({ email })),
@@ -50,7 +53,8 @@ export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
     set(() => ({ selectedResumeFile })),
   updateSelectedResume: (selectedResume) =>
     set(() => ({ selectedResume })),
-  resetYourDetails: () =>
+  updateIsUploadWithAI: (isUploadWithAI) => set(() => ({ isUploadWithAI })),
+  resetUserDetails: () =>
     set(() => ({
       firstName: "",
       lastName: "",
