@@ -1,9 +1,19 @@
 'use client';
-import { ResumeFormPage } from '@/components/ResumeSection/ResumeFormPage';
+import dynamic from 'next/dynamic';
+
+const DynamicResumeFormPage = dynamic(
+  () =>
+    import('@/components/ResumeSection/ResumeFormPage').then(
+      (mod) => mod.ResumeFormPage
+    ),
+  {
+    ssr: false,
+  }
+);
 
 interface ResumeFormByIdProps {
   params: {
-    resumeId: string;
+    resumeId?: string;
   };
 }
 
@@ -12,5 +22,5 @@ export default function ResumeFormById({ params }: ResumeFormByIdProps) {
   if (!resumeId) {
     return null;
   }
-  return <ResumeFormPage />;
+  return <DynamicResumeFormPage />;
 }

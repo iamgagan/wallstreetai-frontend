@@ -14,8 +14,6 @@ interface LoadingModalProps {
   setLoading: (loading: boolean) => void;
 }
 
-Modal.setAppElement('#loading');
-
 export const LoadingModal = ({ loading, setLoading }: LoadingModalProps) => {
   if (!loading) {
     return null;
@@ -27,6 +25,7 @@ export const LoadingModal = ({ loading, setLoading }: LoadingModalProps) => {
       onRequestClose={() => setLoading(false)}
       className={`fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 ${loading ? `animate-in fade-in-0 zoom-in-95 slide-in-from-left-1/2 slide-in-from-top-[48%]` : `animate-out fade-out-0 zoom-out-95 slide-out-to-left-1/2 slide-out-to-top-[48%]`} sm:rounded-lg`}
       contentLabel="Example Modal"
+      ariaHideApp={false}
     >
       <Dialog>
         <DialogHeader className="flex flex-col gap-4">

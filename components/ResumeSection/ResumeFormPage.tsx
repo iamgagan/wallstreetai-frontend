@@ -3,10 +3,22 @@ import { NavigationLayout } from '@/components/NavigationLayout/NavigationLayout
 import { ResumeFormList } from './ResumeFormList';
 import { ResumePreview } from './ResumePreview';
 import { ResumeMenuTabs } from './ResumeMenuTabs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const ResumeFormPage = () => {
   const [index, setIndex] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    if (document.readyState === 'complete' && typeof window !== 'undefined') {
+      setIsMounted(true);
+    }
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <NavigationLayout>
       <div className="flex flex-col gap-y-6 w-full overflow-hidden mt-[100px]">
