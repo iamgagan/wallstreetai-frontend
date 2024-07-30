@@ -18,15 +18,18 @@ export function ResumeMenuTabs({onTabChange, menu}: ResumeMenuTabsProps) {
   const handleClick = (event: React.MouseEvent<HTMLUListElement>) => {
     // Check if the clicked element is an li
     if (event.target) {
-      console.log('event.target', event)
-      const clickedItem = event.target;
-      if(clickedItem) {
-        const listItems = Array.from((clickedItem as any).parentNode?.children);
+      const clickedItem = event.target as HTMLElement;
+      const parentNode = clickedItem.parentNode;
+  
+      if (parentNode) {
+        const listItems = Array.from(parentNode.children);
         const index = listItems.indexOf(clickedItem);
-        onTabChange(index);
+        if (index !== -1) {
+          onTabChange(index);
+        }
       }
     }
-};
+  };
   
   return (
     <TabContainer 
