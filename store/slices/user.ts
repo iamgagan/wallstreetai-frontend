@@ -1,5 +1,5 @@
-import { Resume, ResumeFile } from "@/types/Resume";
-import { StateCreator } from "zustand";
+import { Resume, ResumeFile } from '@/types/Resume';
+import { StateCreator } from 'zustand';
 
 export interface UserSlice {
   name: string;
@@ -30,11 +30,11 @@ export interface UserSlice {
 export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
   set
 ) => ({
-  sessionId: "",
-  userId: "",
-  name: "",
-  email: "",
-  imgSrc: "",
+  sessionId: '',
+  userId: '',
+  name: '',
+  email: '',
+  imgSrc: '',
   isLoggedIn: false,
   resumeFiles: [],
   resumes: [],
@@ -51,15 +51,14 @@ export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
   updateResumes: (resumes) => set(() => ({ resumes })),
   updateSelectedResumeFile: (selectedResumeFile) =>
     set(() => ({ selectedResumeFile })),
-  updateSelectedResume: (selectedResume) =>
-    set(() => ({ selectedResume })),
+  updateSelectedResume: (selectedResume) => set(() => ({ selectedResume })),
   updateIsUploadWithAI: (isUploadWithAI) => set(() => ({ isUploadWithAI })),
   resetUserDetails: () =>
     set(() => ({
-      firstName: "",
-      lastName: "",
-      email: "",
-      sessionId: "",
-      userId: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      sessionId: '',
+      userId: '',
     })),
 });

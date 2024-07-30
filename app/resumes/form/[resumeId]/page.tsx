@@ -1,14 +1,16 @@
-import React from 'react';
+'use client';
 import { ResumeFormPage } from '@/components/ResumeSection/ResumeFormPage';
 
 interface ResumeFormByIdProps {
   params: {
-    resumeId:string
-  }
+    resumeId: string;
+  };
 }
 
-export default function ResumeFormById({ params}: ResumeFormByIdProps) {
-  return (
-    <ResumeFormPage />
-  );
+export default function ResumeFormById({ params }: ResumeFormByIdProps) {
+  const { resumeId } = params;
+  if (!resumeId) {
+    return null;
+  }
+  return <ResumeFormPage />;
 }

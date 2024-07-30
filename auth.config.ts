@@ -1,11 +1,11 @@
-import type { NextAuthConfig } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import Google from "next-auth/providers/google";
-import LinkedIn from "next-auth/providers/linkedin";
-import Apple from "next-auth/providers/apple";
-import { LoginSchema } from "./schemas";
-import { getUserByEmail } from "./lib/getUserByEmail";
-import bcryptjs from "bcryptjs";
+import type { NextAuthConfig } from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
+import Google from 'next-auth/providers/google';
+import LinkedIn from 'next-auth/providers/linkedin';
+import Apple from 'next-auth/providers/apple';
+import { LoginSchema } from './schemas';
+import { getUserByEmail } from './lib/getUserByEmail';
+import bcryptjs from 'bcryptjs';
 
 // can use prisma here because it doesn't run on the edge
 export default {
@@ -19,8 +19,8 @@ export default {
       clientSecret: process.env.LINKEDIN_SECRET,
     }),
     Apple({
-      clientId: process.env.APPLE_ID || "",
-      clientSecret: process.env.APPLE_SECRET || "",
+      clientId: process.env.APPLE_ID || '',
+      clientSecret: process.env.APPLE_SECRET || '',
     }),
     Credentials({
       async authorize(credentials) {

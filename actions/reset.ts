@@ -1,7 +1,7 @@
-"use server";
+'use server';
 
-import { ResetSchema } from "@/schemas";
-import { z } from "zod";
+import { ResetSchema } from '@/schemas';
+import { z } from 'zod';
 
 export const reset = async (values: z.infer<typeof ResetSchema>) => {
   // const validatedFields = ResetSchema.safeParse(values);
@@ -25,5 +25,5 @@ export const reset = async (values: z.infer<typeof ResetSchema>) => {
   //   passwordResetToken.token
   // );
 
-  return { success: "Reset email sent!" };
+  return { success: 'Reset email sent!' };
 };

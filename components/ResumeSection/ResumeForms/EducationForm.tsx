@@ -1,34 +1,34 @@
-"use client";
+'use client';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "../../ui/form";
-import { Input } from "../../ui/input";
-import { useFieldArray, useForm, useWatch } from "react-hook-form";
-import { EducationArraySchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Label } from "../../ui/label";
-import { Checkbox } from "../../ui/checkbox";
-import { Button } from "../../ui/button";
-import { RiDeleteBin6Line } from "react-icons/ri";
+} from '../../ui/form';
+import { Input } from '../../ui/input';
+import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { EducationArraySchema } from '@/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Label } from '../../ui/label';
+import { Checkbox } from '../../ui/checkbox';
+import { Button } from '../../ui/button';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useUserStore } from "@/store/store";
+import { useUserStore } from '@/store/store';
 import { useEffect } from 'react';
 
 const defaultValues = {
   educations: [
     {
-      institution: "",
-      degree: "",
-      city: "",
-      country: "",
-      startDate: "",
-      endDate: "",
-      description: "",
+      institution: '',
+      degree: '',
+      city: '',
+      country: '',
+      startDate: '',
+      endDate: '',
+      description: '',
       currentlyStudyingHere: false,
     },
   ],
@@ -38,14 +38,18 @@ type FormValues = typeof defaultValues;
 
 export const EducationForm = () => {
   const { selectedResume, isUploadWithAI } = useUserStore();
-  const initialValues = selectedResume && selectedResume.education 
-  ? {
-      educations: selectedResume.education.map((education) => ({
-        ...education,
-        description: isUploadWithAI ? education.enhancedDescription : education.description,
-        currentlyStudyingHere: education.currentlyStudyingHere === "True",
-    }))
-  } : defaultValues;
+  const initialValues =
+    selectedResume && selectedResume.education
+      ? {
+          educations: selectedResume.education.map((education) => ({
+            ...education,
+            description: isUploadWithAI
+              ? education.enhancedDescription
+              : education.description,
+            currentlyStudyingHere: education.currentlyStudyingHere === 'True',
+          })),
+        }
+      : defaultValues;
   const educationForm = useForm<FormValues>({
     resolver: zodResolver(EducationArraySchema),
     defaultValues: initialValues,
@@ -56,20 +60,22 @@ export const EducationForm = () => {
       educationForm.reset({
         educations: selectedResume.education.map((education) => ({
           ...education,
-          description: isUploadWithAI ? education.enhancedDescription : education.description,
-          currentlyStudyingHere: education.currentlyStudyingHere === "True",
-        }))
+          description: isUploadWithAI
+            ? education.enhancedDescription
+            : education.description,
+          currentlyStudyingHere: education.currentlyStudyingHere === 'True',
+        })),
       });
     }
   }, [selectedResume, educationForm]);
 
   const { fields, append, remove } = useFieldArray({
-    name: "educations",
+    name: 'educations',
     control: educationForm.control,
   });
 
   const output = useWatch({
-    name: "educations",
+    name: 'educations',
     control: educationForm.control,
   });
 
@@ -81,20 +87,20 @@ export const EducationForm = () => {
     <Form {...educationForm}>
       <form
         onSubmit={educationForm.handleSubmit(onSubmit)}
-        className='space-y-8 flex flex-col'
+        className="space-y-8 flex flex-col"
       >
         {fields.map((field, index) => (
           <div key={field.id}>
             {index > 0 ? (
-              <hr className='my-3 border-[1px] border-slate-400 mx-2' />
+              <hr className="my-3 border-[1px] border-slate-400 mx-2" />
             ) : null}
-            <div key={field.id} className='flex justify-between items-center'>
-              <div className='flex flex-col gap-3 w-[90%] pl-1'>
+            <div key={field.id} className="flex justify-between items-center">
+              <div className="flex flex-col gap-3 w-[90%] pl-1">
                 <FormField
                   control={educationForm.control}
                   name={`educations.${index}.currentlyStudyingHere`}
                   render={({ field }) => (
-                    <FormItem className='flex gap-2 items-end'>
+                    <FormItem className="flex gap-2 items-end">
                       <Label id={`educations.${index}.currentlyStudyingHere`}>
                         Currently studying here
                       </Label>
@@ -108,7 +114,7 @@ export const EducationForm = () => {
                     </FormItem>
                   )}
                 />
-                <div className='flex gap-2'>
+                <div className="flex gap-2">
                   <FormField
                     control={educationForm.control}
                     name={`educations.${index}.startDate`}
@@ -122,16 +128,16 @@ export const EducationForm = () => {
                             {...educationForm.register(
                               `educations.${index}.startDate`
                             )}
-                            type='text'
-                            placeholder='June 2016'
-                            autoComplete='start-date'
+                            type="text"
+                            placeholder="June 2016"
+                            autoComplete="start-date"
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  {!output[index]?.["currentlyStudyingHere"] ? (
+                  {!output[index]?.['currentlyStudyingHere'] ? (
                     <FormField
                       control={educationForm.control}
                       name={`educations.${index}.endDate`}
@@ -145,9 +151,9 @@ export const EducationForm = () => {
                               {...educationForm.register(
                                 `educations.${index}.endDate`
                               )}
-                              type='text'
-                              placeholder='June 2019'
-                              autoComplete='end-date'
+                              type="text"
+                              placeholder="June 2019"
+                              autoComplete="end-date"
                             />
                           </FormControl>
                           <FormMessage />
@@ -169,9 +175,9 @@ export const EducationForm = () => {
                           {...educationForm.register(
                             `educations.${index}.institution`
                           )}
-                          type='text'
-                          placeholder='University of ABC'
-                          autoComplete='institution-name'
+                          type="text"
+                          placeholder="University of ABC"
+                          autoComplete="institution-name"
                         />
                       </FormControl>
                       <FormMessage />
@@ -189,16 +195,16 @@ export const EducationForm = () => {
                           {...educationForm.register(
                             `educations.${index}.degree`
                           )}
-                          type='text'
-                          placeholder='June 2020'
-                          autoComplete='degree'
+                          type="text"
+                          placeholder="June 2020"
+                          autoComplete="degree"
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <div className='flex gap-2'>
+                <div className="flex gap-2">
                   <FormField
                     control={educationForm.control}
                     name={`educations.${index}.city`}
@@ -210,16 +216,15 @@ export const EducationForm = () => {
                             {...educationForm.register(
                               `educations.${index}.city`
                             )}
-                            type='text'
-                            placeholder='New York'
-                            autoComplete='city'
+                            type="text"
+                            placeholder="New York"
+                            autoComplete="city"
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
                 </div>
                 <FormField
                   control={educationForm.control}
@@ -230,32 +235,28 @@ export const EducationForm = () => {
                         Description
                       </Label>
                       <FormControl>
-                        <ReactQuill
-                          theme="snow"
-                          placeholder=''
-                          {...field}
-                        />
+                        <ReactQuill theme="snow" placeholder="" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
-              <div className='flex flex-1 justify-center'>
+              <div className="flex flex-1 justify-center">
                 <Button
-                  variant='ghost'
-                  className='rounded-full h-25 w-25'
+                  variant="ghost"
+                  className="rounded-full h-25 w-25"
                   onClick={() => remove(index)}
                 >
-                  <RiDeleteBin6Line size={25} color={"#f05252"} />
+                  <RiDeleteBin6Line size={25} color={'#f05252'} />
                 </Button>
               </div>
             </div>
           </div>
         ))}
         <Button
-          className='w-[10%]'
-          type='button'
+          className="w-[10%]"
+          type="button"
           onClick={() => append(defaultValues.educations[0])}
         >
           Add

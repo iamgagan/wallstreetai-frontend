@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import React, { useEffect } from "react";
-import { useUserStore } from "@/store/store";
-import { useSession } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import React, { useEffect } from 'react';
+import { useUserStore } from '@/store/store';
+import { useSession } from 'next-auth/react';
 
 export const Profile = () => {
   const { data } = useSession();
@@ -25,10 +25,10 @@ export const Profile = () => {
   return (
     <Avatar>
       {imgSrc ? (
-        <AvatarImage src={imgSrc} alt='imgSrc' />
+        <AvatarImage src={imgSrc} alt="imgSrc" />
       ) : (
         <AvatarFallback>
-          {avatarName?.slice(0, 1)?.toUpperCase() || ""}
+          {avatarName?.slice(0, 1)?.toUpperCase() || ''}
         </AvatarFallback>
       )}
     </Avatar>

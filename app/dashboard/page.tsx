@@ -1,9 +1,9 @@
-'use client'
+'use client';
 import { NavigationLayout } from '@/components/NavigationLayout/NavigationLayout';
 import { DashboardCard } from '@/components/DashboardCard/DashboardCard';
 import Link from 'next/link';
 import { ResumeSection } from '@/components/ResumeSection/ResumeSection';
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
 import { useUserStore } from '@/store/store';
 import { useEffect } from 'react';
 
@@ -47,18 +47,18 @@ export default function Dashboard() {
       if (data.user.id) {
         updateUserId(data.user.id);
       }
-      if(data.user.resumeFiles) {
-        updateResumeFiles(data.user.resumeFiles)
+      if (data.user.resumeFiles) {
+        updateResumeFiles(data.user.resumeFiles);
       }
-      if(data.user.resumes) {
-        updateResumes(data.user.resumes)
+      if (data.user.resumes) {
+        updateResumes(data.user.resumes);
       }
     }
-  },[data?.user?.id]);
+  }, [data?.user?.id]);
 
   return (
     <NavigationLayout>
-      <ul className="flex gap-3 justify-between w-full max-w-[80vw] mt-[100px]">
+      <ul className="mt-[100px] flex w-full max-w-[80vw] justify-between gap-3">
         {cardList.map((card) => (
           <Link key={card.title} href={card.navigateTo}>
             <DashboardCard {...card} />

@@ -1,34 +1,33 @@
-"use client";
+'use client';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "../../ui/form";
-import { Input } from "../../ui/input";
-import { useFieldArray, useForm, useWatch } from "react-hook-form";
-import { WorkArraySchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Label } from "../../ui/label";
-import { Checkbox } from "../../ui/checkbox";
-import { Button } from "../../ui/button";
-import { RiDeleteBin6Line } from "react-icons/ri";
+} from '../../ui/form';
+import { Input } from '../../ui/input';
+import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { WorkArraySchema } from '@/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Label } from '../../ui/label';
+import { Checkbox } from '../../ui/checkbox';
+import { Button } from '../../ui/button';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useUserStore } from "@/store/store";
-import { useEffect } from "react";
-
+import { useUserStore } from '@/store/store';
+import { useEffect } from 'react';
 
 const defaultValues = {
   work: [
     {
-      company: "",
-      position: "",
-      city: "",
-      startDate: "",
-      endDate: "",
-      description: "",
+      company: '',
+      position: '',
+      city: '',
+      startDate: '',
+      endDate: '',
+      description: '',
       currentlyWorkingHere: false,
     },
   ],
@@ -38,16 +37,20 @@ type FormValues = typeof defaultValues;
 
 export const WorkExperienceForm = () => {
   const { selectedResume, isUploadWithAI } = useUserStore();
-  const initialValues = selectedResume && selectedResume.workExperience 
-  ? {
-    work: selectedResume.workExperience.map((work) => ({
-      ...work,
-      position: work.jobTitle,
-      city: work.location,
-      description: isUploadWithAI ? work.enhancedDescription : work.description,
-      currentlyWorkingHere: work.currentlyWorkingHere === "True"
-    }))
-  } : defaultValues;
+  const initialValues =
+    selectedResume && selectedResume.workExperience
+      ? {
+          work: selectedResume.workExperience.map((work) => ({
+            ...work,
+            position: work.jobTitle,
+            city: work.location,
+            description: isUploadWithAI
+              ? work.enhancedDescription
+              : work.description,
+            currentlyWorkingHere: work.currentlyWorkingHere === 'True',
+          })),
+        }
+      : defaultValues;
   const workForm = useForm<FormValues>({
     resolver: zodResolver(WorkArraySchema),
     defaultValues: initialValues,
@@ -60,19 +63,21 @@ export const WorkExperienceForm = () => {
           ...work,
           position: work.jobTitle,
           city: work.location,
-          description: isUploadWithAI ? work.enhancedDescription : work.description,
-          currentlyWorkingHere: work.currentlyWorkingHere === "True"
-        }))
+          description: isUploadWithAI
+            ? work.enhancedDescription
+            : work.description,
+          currentlyWorkingHere: work.currentlyWorkingHere === 'True',
+        })),
       });
     }
   }, [selectedResume, workForm]);
   const output = useWatch({
     control: workForm.control,
-    name: "work",
+    name: 'work',
   });
 
   const { fields, append, remove } = useFieldArray({
-    name: "work",
+    name: 'work',
     control: workForm.control,
   });
 
@@ -84,23 +89,23 @@ export const WorkExperienceForm = () => {
     <Form {...workForm}>
       <form
         onSubmit={workForm.handleSubmit(onSubmit)}
-        className='space-y-6 flex flex-col'
+        className="space-y-6 flex flex-col"
       >
         {fields.map((field, index) => (
           <div key={field.id}>
             {index > 0 ? (
-              <hr className='my-3 border-[1px] border-slate-400 mx-2' />
+              <hr className="my-3 border-[1px] border-slate-400 mx-2" />
             ) : null}
             <div
               key={field.id}
-              className='flex justify-between items-center pt-3'
+              className="flex justify-between items-center pt-3"
             >
-              <div className='flex flex-col gap-3 w-[90%] pl-1'>
+              <div className="flex flex-col gap-3 w-[90%] pl-1">
                 <FormField
                   control={workForm.control}
                   name={`work.${index}.currentlyWorkingHere`}
                   render={({ field }) => (
-                    <FormItem className='flex gap-2 items-end'>
+                    <FormItem className="flex gap-2 items-end">
                       <Label id={`work.${index}.currentlyWorkingHere`}>
                         Currently working here
                       </Label>
@@ -114,7 +119,7 @@ export const WorkExperienceForm = () => {
                     </FormItem>
                   )}
                 />
-                <div className='flex gap-2'>
+                <div className="flex gap-2">
                   <FormField
                     control={workForm.control}
                     name={`work.${index}.startDate`}
@@ -124,16 +129,16 @@ export const WorkExperienceForm = () => {
                         <FormControl>
                           <Input
                             {...workForm.register(`work.${index}.startDate`)}
-                            type='text'
-                            placeholder='June 2016'
-                            autoComplete='start-date'
+                            type="text"
+                            placeholder="June 2016"
+                            autoComplete="start-date"
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  {!output[index]?.["currentlyWorkingHere"] ? (
+                  {!output[index]?.['currentlyWorkingHere'] ? (
                     <FormField
                       control={workForm.control}
                       name={`work.${index}.endDate`}
@@ -143,9 +148,9 @@ export const WorkExperienceForm = () => {
                           <FormControl>
                             <Input
                               {...workForm.register(`work.${index}.endDate`)}
-                              type='text'
-                              placeholder='June 2019'
-                              autoComplete='end-date'
+                              type="text"
+                              placeholder="June 2019"
+                              autoComplete="end-date"
                             />
                           </FormControl>
                           <FormMessage />
@@ -154,7 +159,7 @@ export const WorkExperienceForm = () => {
                     />
                   ) : null}
                 </div>
-                <div className='flex gap-2'>
+                <div className="flex gap-2">
                   <FormField
                     control={workForm.control}
                     name={`work.${index}.company`}
@@ -164,9 +169,9 @@ export const WorkExperienceForm = () => {
                         <FormControl>
                           <Input
                             {...workForm.register(`work.${index}.company`)}
-                            type='text'
-                            placeholder='Bank of ABC'
-                            autoComplete='company-name'
+                            type="text"
+                            placeholder="Bank of ABC"
+                            autoComplete="company-name"
                           />
                         </FormControl>
                         <FormMessage />
@@ -182,9 +187,9 @@ export const WorkExperienceForm = () => {
                         <FormControl>
                           <Input
                             {...workForm.register(`work.${index}.position`)}
-                            type='text'
-                            placeholder='June 2020'
-                            autoComplete='position'
+                            type="text"
+                            placeholder="June 2020"
+                            autoComplete="position"
                           />
                         </FormControl>
                         <FormMessage />
@@ -192,7 +197,7 @@ export const WorkExperienceForm = () => {
                     )}
                   />
                 </div>
-                <div className='flex gap-2'>
+                <div className="flex gap-2">
                   <FormField
                     control={workForm.control}
                     name={`work.${index}.city`}
@@ -202,9 +207,9 @@ export const WorkExperienceForm = () => {
                         <FormControl>
                           <Input
                             {...workForm.register(`work.${index}.city`)}
-                            type='text'
-                            placeholder='New York'
-                            autoComplete='city'
+                            type="text"
+                            placeholder="New York"
+                            autoComplete="city"
                           />
                         </FormControl>
                         <FormMessage />
@@ -221,32 +226,28 @@ export const WorkExperienceForm = () => {
                         Description
                       </Label>
                       <FormControl>
-                        <ReactQuill
-                          theme="snow"
-                          placeholder=''
-                          {...field}
-                        />
+                        <ReactQuill theme="snow" placeholder="" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
-              <div className='flex flex-1 justify-center'>
+              <div className="flex flex-1 justify-center">
                 <Button
-                  variant='ghost'
-                  className='rounded-full h-25 w-25'
+                  variant="ghost"
+                  className="rounded-full h-25 w-25"
                   onClick={() => remove(index)}
                 >
-                  <RiDeleteBin6Line size={25} color={"#f05252"} />
+                  <RiDeleteBin6Line size={25} color={'#f05252'} />
                 </Button>
               </div>
             </div>
           </div>
         ))}
         <Button
-          className='w-[10%]'
-          type='button'
+          className="w-[10%]"
+          type="button"
           onClick={() => append(defaultValues.work[0])}
         >
           Add

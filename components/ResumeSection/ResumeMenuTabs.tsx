@@ -1,26 +1,23 @@
-'use client'
-import { HiPencil, HiDocumentSearch } from "react-icons/hi";
-import {TabItem, TabContainer} from '../ui/tab';
+'use client';
+import { HiPencil, HiDocumentSearch } from 'react-icons/hi';
+import { TabItem, TabContainer } from '../ui/tab';
 
-
-export const TabItemTitle = ({ title}: {title:string}) => {
-  return (
-    <p className="text-lg">{title }</p>
-  );
-}
+export const TabItemTitle = ({ title }: { title: string }) => {
+  return <p className="text-lg">{title}</p>;
+};
 
 interface ResumeMenuTabsProps {
   onTabChange: (menu: number) => void;
-  menu:number
+  menu: number;
 }
 
-export function ResumeMenuTabs({onTabChange, menu}: ResumeMenuTabsProps) {
+export function ResumeMenuTabs({ onTabChange, menu }: ResumeMenuTabsProps) {
   const handleClick = (event: React.MouseEvent<HTMLUListElement>) => {
     // Check if the clicked element is an li
     if (event.target) {
       const clickedItem = event.target as HTMLElement;
       const parentNode = clickedItem.parentNode;
-  
+
       if (parentNode) {
         const listItems = Array.from(parentNode.children);
         const index = listItems.indexOf(clickedItem);
@@ -30,14 +27,19 @@ export function ResumeMenuTabs({onTabChange, menu}: ResumeMenuTabsProps) {
       }
     }
   };
-  
+
   return (
-    <TabContainer 
-      aria-label="Tabs with icons" 
-      onActiveTabChange={handleClick}
-    >
-      <TabItem active={menu === 0} title={<TabItemTitle title="Edit" />} icon={<HiPencil size={20}/>}/>
-      <TabItem active={menu === 1} title={<TabItemTitle title="Preview" />} icon={<HiDocumentSearch size={20} />} />
+    <TabContainer aria-label="Tabs with icons" onActiveTabChange={handleClick}>
+      <TabItem
+        active={menu === 0}
+        title={<TabItemTitle title="Edit" />}
+        icon={<HiPencil size={20} />}
+      />
+      <TabItem
+        active={menu === 1}
+        title={<TabItemTitle title="Preview" />}
+        icon={<HiDocumentSearch size={20} />}
+      />
     </TabContainer>
   );
 }
