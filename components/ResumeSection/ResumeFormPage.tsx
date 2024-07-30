@@ -13,12 +13,17 @@ export const ResumeFormPage = () => {
             <div className="block lg:hidden mx-5">
                 <ResumeMenuTabs onTabChange={setIndex} menu={index}/>
             </div>
-            <div className="flex gap-5 max-w-[100vw] overflow-hidden">
-                <div className={`overflow-y-scroll overflow-x-hidden w-[100vw] lg:w-[50vw] px-5 box-border flex-col flex-1 max-h-[100%] ${index === 1 ? 'hidden' : 'flex'}`}>
+            <div className="lg:flex lg:gap-5 lg:max-w-[100vw] lg:overflow-hidden hidden">
+                <div className={`overflow-y-scroll overflow-x-hidden w-[50vw] px-5 box-border flex-col flex-1 max-h-[100%]`}>
                     <ResumeFormList />
                 </div>
-                <div className={`overflow-y-scroll lg:w-[50vw] px-5 box-border lg:flex-1 max-h-[100%] ${index === 0 ? 'hidden' : 'flex'}`}>
+                <div className={`overflow-y-scroll w-[50vw] px-5 box-border flex-1 max-h-[100%]`}>
                     <ResumePreview />
+                </div>
+            </div>
+            <div className="flex gap-5 max-w-[100vw] overflow-hidden lg:hidden">
+               <div className={`overflow-y-scroll overflow-x-hidden w-[100vw] px-5 box-border flex-col flex-1 max-h-[100%]`}>
+                    {index === 0 ? <ResumeFormList /> : <ResumePreview />}
                 </div>
             </div>
         </div>
