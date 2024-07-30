@@ -38,7 +38,8 @@ def extract_resume_information(file_path: str) -> Task:
                     "phoneNumber": "+12345678910", 
                     "addressLine1": "6 William Street", 
                     "addressLine2": "Bronx, NY 10458", 
-                    "city": "New York", 
+                    "city": "New York City", 
+                    "state": "New York",
                     "postalCode": "NY 10458", 
                     "country": "US"
                 }},
