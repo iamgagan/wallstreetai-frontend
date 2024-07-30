@@ -59,7 +59,6 @@ export const WorkSchema = z.object({
   company: z.string().optional(),
   position: z.string().optional(),
   city: z.string().optional(),
-  country: z.string().optional(),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
   description: z.string().optional(),

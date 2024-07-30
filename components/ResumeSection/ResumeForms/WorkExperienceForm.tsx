@@ -26,7 +26,6 @@ const defaultValues = {
       company: "",
       position: "",
       city: "",
-      country: "",
       startDate: "",
       endDate: "",
       description: "",
@@ -206,25 +205,6 @@ export const WorkExperienceForm = () => {
                             type='text'
                             placeholder='New York'
                             autoComplete='city'
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={workForm.control}
-                    name={`work.${index}.country`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <Label id={`work.${index}.country`}>Country</Label>
-                        <FormControl>
-                          <Input
-                            {...workForm.register(`work.${index}.country`)}
-                            type='text'
-                            placeholder='United States'
-                            autoComplete='country'
                           />
                         </FormControl>
                         <FormMessage />
