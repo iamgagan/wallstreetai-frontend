@@ -1,26 +1,17 @@
 'use client';
+import { NavigationLayout } from '@/components/NavigationLayout/NavigationLayout';
 import dynamic from 'next/dynamic';
 
-const DynamicResumeFormPage = dynamic(
-  () =>
-    import('@/components/ResumeSection/ResumeFormPage').then(
-      (mod) => mod.ResumeFormPage
-    ),
-  {
-    ssr: false,
-  }
+const DynamicResumeFormPage = dynamic(() =>
+  import('@/components/ResumeSection/ResumeFormPage').then(
+    (mod) => mod.ResumeFormPage
+  )
 );
 
-interface ResumeFormByIdProps {
-  params: {
-    resumeId?: string;
-  };
-}
-
-export default function ResumeFormById({ params }: ResumeFormByIdProps) {
-  const { resumeId } = params;
-  if (!resumeId) {
-    return null;
-  }
-  return <DynamicResumeFormPage />;
+export default function ResumeFormById() {
+  return (
+    <NavigationLayout>
+      <DynamicResumeFormPage />
+    </NavigationLayout>
+  );
 }

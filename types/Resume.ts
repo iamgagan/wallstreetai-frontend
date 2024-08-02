@@ -68,3 +68,23 @@ export interface Qualification {
   awardedDate: string;
   institution: string;
 }
+
+export interface UserResponseType {
+  id?: string;
+  email: string;
+  role?: string;
+  emailVerified?: Date | null | boolean;
+  name?: string | null;
+  image?: string | null;
+  resumeFiles?: ResumeFile[];
+  resumes?: {
+    id?: string;
+    userId: string;
+    personalInfo: PersonalInfo;
+    education: Education[];
+    workExperience: WorkExperience[];
+    qualification: Qualification[];
+    skills?: string[];
+  }[];
+  password?: string;
+}

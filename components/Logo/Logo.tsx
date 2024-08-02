@@ -1,5 +1,4 @@
 import Link from 'next/link';
-
 interface LogoProps {
   background: 'light' | 'dark';
 }
