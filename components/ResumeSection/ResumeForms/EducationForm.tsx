@@ -38,36 +38,27 @@ type FormValues = typeof defaultValues;
 
 export const EducationForm = () => {
   const { selectedResume, isUploadWithAI } = useUserStore();
-  const initialValues =
-    selectedResume && selectedResume.education
-      ? {
-          educations: selectedResume.education.map((education) => ({
-            ...education,
-            description: isUploadWithAI
-              ? education.enhancedDescription
-              : education.description,
-            currentlyStudyingHere: education.currentlyStudyingHere === 'True',
-          })),
-        }
-      : defaultValues;
   const educationForm = useForm<FormValues>({
     resolver: zodResolver(EducationArraySchema),
-    defaultValues: initialValues,
+    defaultValues,
   });
 
   useEffect(() => {
     if (selectedResume && selectedResume.education) {
       educationForm.reset({
-        educations: selectedResume.education.map((education) => ({
-          ...education,
-          description: isUploadWithAI
-            ? education.enhancedDescription
-            : education.description,
-          currentlyStudyingHere: education.currentlyStudyingHere === 'True',
+        educations: selectedResume.education.map((edu) => ({
+          institution: edu.institution,
+          degree: edu.degree,
+          city: edu.city,
+          country: edu.country,
+          startDate: edu.startDate,
+          endDate: edu.endDate,
+          description: edu.description,
+          currentlyStudyingHere: edu.currentlyStudyingHere === 'True',
         })),
       });
     }
-  }, [selectedResume, educationForm]);
+  }, [educationForm.reset]);
 
   const { fields, append, remove } = useFieldArray({
     name: 'educations',

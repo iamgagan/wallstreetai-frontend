@@ -29,24 +29,16 @@ const defaultValues = {
 
 export const PersonalInformationForm = () => {
   const { selectedResume } = useUserStore();
-  const initialValues =
-    selectedResume && selectedResume.personalInfo
-      ? {
-          ...selectedResume.personalInfo,
-        }
-      : defaultValues;
   const profileForm = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
-    defaultValues: initialValues,
+    defaultValues,
   });
 
   useEffect(() => {
     if (selectedResume && selectedResume.personalInfo) {
-      profileForm.reset({
-        ...selectedResume.personalInfo,
-      });
+      profileForm.reset(selectedResume.personalInfo);
     }
-  }, [selectedResume, profileForm]);
+  }, [profileForm.reset]);
 
   const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
     console.log(values);

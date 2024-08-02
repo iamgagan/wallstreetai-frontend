@@ -37,40 +37,27 @@ type FormValues = typeof defaultValues;
 
 export const WorkExperienceForm = () => {
   const { selectedResume, isUploadWithAI } = useUserStore();
-  const initialValues =
-    selectedResume && selectedResume.workExperience
-      ? {
-          work: selectedResume.workExperience.map((work) => ({
-            ...work,
-            position: work.jobTitle,
-            city: work.location,
-            description: isUploadWithAI
-              ? work.enhancedDescription
-              : work.description,
-            currentlyWorkingHere: work.currentlyWorkingHere === 'True',
-          })),
-        }
-      : defaultValues;
   const workForm = useForm<FormValues>({
     resolver: zodResolver(WorkArraySchema),
-    defaultValues: initialValues,
+    defaultValues,
   });
 
   useEffect(() => {
-    if (selectedResume && selectedResume.education) {
+    if (selectedResume && selectedResume.workExperience) {
       workForm.reset({
         work: selectedResume.workExperience.map((work) => ({
-          ...work,
+          company: work.company,
           position: work.jobTitle,
           city: work.location,
-          description: isUploadWithAI
-            ? work.enhancedDescription
-            : work.description,
+          startDate: work.startDate,
+          endDate: work.endDate,
+          description: work.description,
           currentlyWorkingHere: work.currentlyWorkingHere === 'True',
         })),
       });
     }
-  }, [selectedResume, workForm]);
+  }, [workForm.reset]);
+
   const output = useWatch({
     control: workForm.control,
     name: 'work',

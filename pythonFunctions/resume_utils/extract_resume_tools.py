@@ -32,3 +32,4 @@ def download_doc(url):
     response = requests.get(url)
     response.raise_for_status()  # Check if the request was successful
     return response.content
+

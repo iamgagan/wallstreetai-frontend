@@ -20,6 +20,8 @@ export const ResumeCard = () => {
     resumeFiles,
     updateResumeFiles,
     updateIsUploadWithAI,
+    updateSelectedResume,
+    updateSelectedResumeFile,
   } = useUserStore();
   const [loading, setLoading] = useState(false);
 
@@ -39,7 +41,7 @@ export const ResumeCard = () => {
        */
       formData.append('file', file);
       formData.append('upload_preset', 'vmgixasp');
-
+      let newResumeId: string = '';
       try {
         if (file && userId) {
           const res = await fetch(
@@ -50,6 +52,7 @@ export const ResumeCard = () => {
             }
           );
           const { secure_url } = await res.json();
+
           if (secure_url) {
             const postRes = await fetch('/api/resumeFile/upload', {
               method: 'POST',
@@ -73,13 +76,24 @@ export const ResumeCard = () => {
               const { resumeId, resumeFileId, userId, ...otherResumeData } =
                 resumeData;
               // update resumes
+              newResumeId = resumeId;
+              const newResume = {
+                id: resumeId,
+                resumeFileId,
+                ...otherResumeData,
+              };
+              updateSelectedResume(newResume);
+              const newResumeFile = {
+                id: resumeFileId,
+                file: secure_url,
+                fileName: file.name,
+                fileType: file.type,
+              };
+              updateSelectedResumeFile(newResumeFile);
               if (
                 resumes.filter((resume) => resume.id === resumeId).length === 0
               ) {
-                updateResumes([
-                  ...resumes,
-                  { id: resumeId, resumeFileId, ...otherResumeData },
-                ]);
+                updateResumes([...resumes, newResume]);
               } else {
                 const updatedResumes = resumes.map((resume) => {
                   if (resume.id === resumeId) {
@@ -94,24 +108,11 @@ export const ResumeCard = () => {
                 resumeFiles.filter((file) => file.id === resumeFileId)
                   .length === 0
               ) {
-                updateResumeFiles([
-                  ...resumeFiles,
-                  {
-                    id: resumeFileId,
-                    file: secure_url,
-                    fileName: file.name,
-                    fileType: file.type,
-                  },
-                ]);
+                updateResumeFiles([...resumeFiles, newResumeFile]);
               } else {
                 const updatedResumeFiles = resumeFiles.map((resumeFile) => {
                   if (resumeFile.id === resumeFileId) {
-                    return {
-                      id: resumeFileId,
-                      file: secure_url,
-                      fileName: file.name,
-                      fileType: file.type,
-                    };
+                    return newResumeFile;
                   }
                   return resumeFile;
                 });
@@ -120,8 +121,7 @@ export const ResumeCard = () => {
               toast.success('Resume uploaded successfully');
             }
           }
-
-          router.push('/resumes/form');
+          router.push(`/resumes/form/${newResumeId}`);
         }
       } catch (error) {
         toast.error('Failed to upload resume file');
