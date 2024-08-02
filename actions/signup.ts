@@ -1,11 +1,11 @@
-"use server";
-import { getUserByEmail } from "@/lib/getUserByEmail";
-import { RegisterSchema } from "@/schemas";
-import { z } from "zod";
-import bcryptjs from "bcryptjs";
-import { db } from "@/lib/db";
-import { signIn } from "@/auth";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+'use server';
+import { getUserByEmail } from '@/lib/getUserByEmail';
+import { RegisterSchema } from '@/schemas';
+import { z } from 'zod';
+import bcryptjs from 'bcryptjs';
+import { db } from '@/lib/db';
+import { signIn } from '@/auth';
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 
 /**
  * manual sign up will be written to the database using this function
@@ -22,7 +22,7 @@ export const signup = async (values: z.infer<typeof RegisterSchema>) => {
   const existingUser = await getUserByEmail(email);
 
   if (existingUser) {
-    return { error: "Email already in use!" };
+    return { error: 'Email already in use!' };
   }
 
   // To do: implement registration logic here
@@ -34,14 +34,14 @@ export const signup = async (values: z.infer<typeof RegisterSchema>) => {
       },
     });
   } catch (error) {
-    return { error: "Something went wrong" };
+    return { error: 'Something went wrong' };
   }
 
-  await signIn("credentials", {
+  await signIn('credentials', {
     email,
     password,
     redirectTo: DEFAULT_LOGIN_REDIRECT,
   });
 
-  return { success: "Confirmation email sent!" };
+  return { success: 'Confirmation email sent!' };
 };

@@ -22,14 +22,14 @@ export default function Home() {
 
   return (
     <main
-      className="flex flex-col items-center justify-center p-24 min-h-screen cover"
+      className="cover flex min-h-screen flex-col items-center justify-center p-24"
       onTouchMove={() => router.push('/auth/login')}
       onWheel={() => router.push('/auth/login')}
     >
-      <div className="absolute top-2 left-2 sm:top-6 sm:left-6">
+      <div className="absolute left-2 top-2 sm:left-6 sm:top-6">
         <Logo background="dark" />
       </div>
-      <h1 className="text-xl font-normal text-center text-white focus-in-expand-fwd tracking-wider">
+      <h1 className="focus-in-expand-fwd text-center text-xl font-normal tracking-wider text-white">
         {`The only platform you'll ever need to break into Wall Street.`}
       </h1>
     </main>

@@ -21,7 +21,12 @@
       {
         "endOfLine": "auto"
       }
-    ]
+    ],
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "@next/next/no-img-element": "off",
+    "react/prop-types": "off"
   },
   "plugins": ["react"],
   "settings": {

@@ -1,12 +1,12 @@
-import NextAuth from "next-auth";
-import authConfig from "./auth.config";
+import NextAuth from 'next-auth';
+import authConfig from './auth.config';
 import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
   publicRoutes,
-} from "./routes";
-import { NextResponse } from "next/server";
+} from './routes';
+import { NextResponse } from 'next/server';
 
 const { auth } = NextAuth(authConfig);
 
@@ -31,12 +31,12 @@ export default auth((req, res) => {
   }
 
   if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL("/auth/login", nextUrl));
+    return Response.redirect(new URL('/auth/login', nextUrl));
   }
   return NextResponse.next();
 });
 
 // invoke the auth middleware with every route except for static files and the next.js internal routes
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 };

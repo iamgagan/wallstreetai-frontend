@@ -1,25 +1,25 @@
-import NextAuth,  { type DefaultSession }  from "next-auth";
-import authConfig from "@/auth.config";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { db } from "@/lib/db";
-import { getUserByEmail, getUserById } from "./lib/getUserByEmail";
-import { ResumeFile } from '@/types/Resume';
+import NextAuth, { type DefaultSession } from 'next-auth';
+import authConfig from '@/auth.config';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import { db } from '@/lib/db';
+import { getUserByEmail, getUserById } from './lib/getUserByEmail';
+import { Resume, ResumeFile } from '@/types/Resume';
 
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session {
     user: {
       /** The user's postal address. */
       resumeFiles?: ResumeFile[] | null;
+      resumes?: Resume[] | null;
       role?: string;
       id?: string;
-    } & DefaultSession["user"]
+    } & DefaultSession['user'];
   }
 }
 
-
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
-    error: "/auth/error",
+    error: '/auth/error',
   },
   events: {
     /**
@@ -37,7 +37,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user, account }) {
       // allow oauth without email verification
-      if (account?.provider !== "credentials") return true;
+      if (account?.provider !== 'credentials') return true;
 
       const dbUser = await getUserById(user?.id);
       // // prevent sign in without email verification
@@ -71,6 +71,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
   },
   adapter: PrismaAdapter(db),
-  session: { strategy: "jwt" },
+  session: { strategy: 'jwt' },
   ...authConfig,
 });

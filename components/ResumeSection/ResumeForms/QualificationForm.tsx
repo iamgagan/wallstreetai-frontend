@@ -1,25 +1,27 @@
-"use client";
+'use client';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "../../ui/form";
-import { Input } from "../../ui/input";
-import { useForm, useFieldArray } from "react-hook-form";
-import { QualificationsArraySchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Label } from "../../ui/label";
-import { Button } from "../../ui/button";
-import { RiDeleteBin6Line } from "react-icons/ri";
+} from '../../ui/form';
+import { Input } from '../../ui/input';
+import { useForm, useFieldArray } from 'react-hook-form';
+import { QualificationsArraySchema } from '@/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Label } from '../../ui/label';
+import { Button } from '../../ui/button';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { useUserStore } from '@/store/store';
+import { useEffect } from 'react';
 
 const defaultValues = {
   qualifications: [
     {
-      qualification: "",
-      awardedDate: "",
-      institution: "",
+      qualification: '',
+      awardedDate: '',
+      institution: '',
     },
   ],
 };
@@ -27,13 +29,28 @@ const defaultValues = {
 type FormValues = typeof defaultValues;
 
 export const QualificationForm = () => {
+  const { selectedResume } = useUserStore();
+  const initialValues =
+    selectedResume && selectedResume.qualifications
+      ? {
+          qualifications: selectedResume.qualifications,
+        }
+      : defaultValues;
   const qualificationForm = useForm<FormValues>({
     resolver: zodResolver(QualificationsArraySchema),
-    defaultValues,
+    defaultValues: initialValues,
   });
 
+  useEffect(() => {
+    if (selectedResume && selectedResume.qualifications) {
+      qualificationForm.reset({
+        qualifications: selectedResume.qualifications,
+      });
+    }
+  }, [selectedResume, qualificationForm]);
+
   const { fields, append, remove } = useFieldArray({
-    name: "qualifications",
+    name: 'qualifications',
     control: qualificationForm.control,
   });
 
@@ -44,15 +61,15 @@ export const QualificationForm = () => {
     <Form {...qualificationForm}>
       <form
         onSubmit={qualificationForm.handleSubmit(onSubmit)}
-        className='space-y-6 flex flex-col'
+        className="space-y-6 flex flex-col"
       >
         {fields.map((field, index) => (
           <div key={field.id}>
             {index > 0 ? (
-              <hr className='my-3 border-[1px] border-slate-400 mx-2' />
+              <hr className="my-3 border-[1px] border-slate-400 mx-2" />
             ) : null}
-            <div key={field.id} className='flex justify-between items-center'>
-              <div className='flex flex-col gap-2 w-[90%] pl-1'>
+            <div key={field.id} className="flex justify-between items-center">
+              <div className="flex flex-col gap-2 w-[90%] pl-1">
                 <FormField
                   control={qualificationForm.control}
                   name={`qualifications.${index}.qualification`}
@@ -66,9 +83,9 @@ export const QualificationForm = () => {
                           {...qualificationForm.register(
                             `qualifications.${index}.qualification`
                           )}
-                          type='text'
-                          placeholder='CFA'
-                          autoComplete='qualification'
+                          type="text"
+                          placeholder="CFA"
+                          autoComplete="qualification"
                         />
                       </FormControl>
                       <FormMessage />
@@ -88,9 +105,9 @@ export const QualificationForm = () => {
                           {...qualificationForm.register(
                             `qualifications.${index}.awardedDate`
                           )}
-                          type='text'
-                          placeholder='June 2020'
-                          autoComplete='awardedDate'
+                          type="text"
+                          placeholder="June 2020"
+                          autoComplete="awardedDate"
                         />
                       </FormControl>
                       <FormMessage />
@@ -110,9 +127,9 @@ export const QualificationForm = () => {
                           {...qualificationForm.register(
                             `qualifications.${index}.institution`
                           )}
-                          type='text'
-                          placeholder='CFA Institute'
-                          autoComplete='institution-name'
+                          type="text"
+                          placeholder="CFA Institute"
+                          autoComplete="institution-name"
                         />
                       </FormControl>
                       <FormMessage />
@@ -122,19 +139,19 @@ export const QualificationForm = () => {
               </div>
               <div>
                 <Button
-                  variant='ghost'
-                  className='rounded-full h-25 w-25'
+                  variant="ghost"
+                  className="rounded-full h-25 w-25"
                   onClick={() => remove(index)}
                 >
-                  <RiDeleteBin6Line size={25} color={"#f05252"} />
+                  <RiDeleteBin6Line size={25} color={'#f05252'} />
                 </Button>
               </div>
             </div>
           </div>
         ))}
         <Button
-          className='w-[10%]'
-          type='button'
+          className="w-[10%]"
+          type="button"
           onClick={() => append(defaultValues.qualifications[0])}
         >
           Add

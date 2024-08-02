@@ -1,39 +1,72 @@
-import { RxPerson } from "react-icons/rx";
-import { ResumeAccordion } from "./ResumeAccordion";
-import { PersonalInformationForm } from "./ResumeForms/PersonalInformationForm";
-import { LuBuilding2 } from "react-icons/lu";
-import { RiGraduationCapLine } from "react-icons/ri";
-import { GrDocumentText } from "react-icons/gr";
-import { WorkExperienceForm } from "./ResumeForms/WorkExperienceForm";
-import { EducationForm } from "./ResumeForms/EducationForm";
-import { QualificationForm } from "./ResumeForms/QualificationForm";
+'use client';
+import { RxPerson } from 'react-icons/rx';
+import { ResumeAccordion } from './ResumeAccordion';
+import { LuBuilding2 } from 'react-icons/lu';
+import { RiGraduationCapLine } from 'react-icons/ri';
+import { GrDocumentText } from 'react-icons/gr';
+import dynamic from 'next/dynamic';
+
+const DynamicWorkExperienceForm = dynamic(
+  () =>
+    import('./ResumeForms/WorkExperienceForm').then(
+      (mod) => mod.WorkExperienceForm
+    ),
+  { ssr: false }
+);
+
+const DynamicPersonalInformationForm = dynamic(
+  () =>
+    import('./ResumeForms/PersonalInformationForm').then(
+      (mod) => mod.PersonalInformationForm
+    ),
+  {
+    ssr: false,
+  }
+);
+
+const DynamicEducationForm = dynamic(
+  () => import('./ResumeForms/EducationForm').then((mod) => mod.EducationForm),
+  {
+    ssr: false,
+  }
+);
+
+const DynamicQualificationForm = dynamic(
+  () =>
+    import('./ResumeForms/QualificationForm').then(
+      (mod) => mod.QualificationForm
+    ),
+  {
+    ssr: false,
+  }
+);
 
 const ResumeAccordionList = [
   {
-    formTitle: "Personal Information",
+    formTitle: 'Personal Information',
     icon: <RxPerson size={30} />,
-    formBody: <PersonalInformationForm />,
+    formBody: <DynamicPersonalInformationForm />,
   },
   {
-    formTitle: "Work Experience",
+    formTitle: 'Work Experience',
     icon: <LuBuilding2 size={30} />,
-    formBody: <WorkExperienceForm />,
+    formBody: <DynamicWorkExperienceForm />,
   },
   {
-    formTitle: "Education",
+    formTitle: 'Education',
     icon: <RiGraduationCapLine size={30} />,
-    formBody: <EducationForm />,
+    formBody: <DynamicEducationForm />,
   },
   {
-    formTitle: "Qualifications",
+    formTitle: 'Qualifications',
     icon: <GrDocumentText size={30} />,
-    formBody: <QualificationForm />,
+    formBody: <DynamicQualificationForm />,
   },
 ];
 
 export const ResumeFormList = () => {
   return (
-    <div className='pb-5 w-full'>
+    <div className="pb-5 w-full">
       {ResumeAccordionList.map((item) => (
         <ResumeAccordion
           key={item.formTitle}

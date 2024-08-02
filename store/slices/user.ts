@@ -1,5 +1,5 @@
-import { ResumeFile } from "@/types/Resume";
-import { StateCreator } from "zustand";
+import { Resume, ResumeFile } from '@/types/Resume';
+import { StateCreator } from 'zustand';
 
 export interface UserSlice {
   name: string;
@@ -9,6 +9,10 @@ export interface UserSlice {
   sessionId: string;
   isLoggedIn: boolean;
   resumeFiles: ResumeFile[];
+  resumes: Resume[];
+  selectedResumeFile: ResumeFile | null;
+  selectedResume: Resume | null;
+  isUploadWithAI: boolean;
   updateSessionId: (sessionId: string) => void;
   updateName: (name: string) => void;
   updateEmail: (email: string) => void;
@@ -16,19 +20,27 @@ export interface UserSlice {
   updateImageSrc: (imgSrc: string) => void;
   updateIsLoggedIn: (isLoggedIn: boolean) => void;
   updateResumeFiles: (resumeFiles: ResumeFile[]) => void;
-  resetYourDetails: () => void;
+  updateResumes: (resumes: Resume[]) => void;
+  updateSelectedResumeFile: (selectedResumeFile: ResumeFile) => void;
+  updateSelectedResume: (selectedResume: Resume) => void;
+  updateIsUploadWithAI: (isUploadWithAI: boolean) => void;
+  resetUserDetails: () => void;
 }
 
 export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
   set
 ) => ({
-  sessionId: "",
-  userId: "",
-  name: "",
-  email: "",
-  imgSrc: "",
+  sessionId: '',
+  userId: '',
+  name: '',
+  email: '',
+  imgSrc: '',
   isLoggedIn: false,
   resumeFiles: [],
+  resumes: [],
+  selectedResumeFile: null,
+  selectedResume: null,
+  isUploadWithAI: false,
   updateSessionId: (sessionId) => set(() => ({ sessionId })),
   updateName: (name) => set(() => ({ name })),
   updateEmail: (email) => set(() => ({ email })),
@@ -36,12 +48,17 @@ export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
   updateIsLoggedIn: (isLoggedIn) => set(() => ({ isLoggedIn })),
   updateUserId: (userId) => set(() => ({ userId })),
   updateResumeFiles: (resumeFiles) => set(() => ({ resumeFiles })),
-  resetYourDetails: () =>
+  updateResumes: (resumes) => set(() => ({ resumes })),
+  updateSelectedResumeFile: (selectedResumeFile) =>
+    set(() => ({ selectedResumeFile })),
+  updateSelectedResume: (selectedResume) => set(() => ({ selectedResume })),
+  updateIsUploadWithAI: (isUploadWithAI) => set(() => ({ isUploadWithAI })),
+  resetUserDetails: () =>
     set(() => ({
-      firstName: "",
-      lastName: "",
-      email: "",
-      sessionId: "",
-      userId: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      sessionId: '',
+      userId: '',
     })),
 });

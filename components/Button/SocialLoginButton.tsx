@@ -1,18 +1,12 @@
-"use client";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebookF } from "react-icons/fa";
-import { BsTwitterX } from "react-icons/bs";
-import { FaLinkedin } from "react-icons/fa";
-import { FaApple } from "react-icons/fa";
-import { signIn } from "next-auth/react";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-
-export type SocialMediaProvider =
-  | "Google"
-  | "Facebook"
-  | "Twitter"
-  | "Linkedin"
-  | "Apple";
+'use client';
+import { FcGoogle } from 'react-icons/fc';
+import { FaFacebookF } from 'react-icons/fa';
+import { BsTwitterX } from 'react-icons/bs';
+import { FaLinkedin } from 'react-icons/fa';
+import { FaApple } from 'react-icons/fa';
+import { signIn } from 'next-auth/react';
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
+import { SocialMediaProvider } from '@/types/SocialMedia';
 
 interface SocialIconProps {
   provider: SocialMediaProvider;
@@ -21,15 +15,15 @@ interface SocialIconProps {
 
 export const SocialIcon = ({ provider, size = 25 }: SocialIconProps) => {
   switch (provider) {
-    case "Google":
+    case 'Google':
       return <FcGoogle size={size} />;
-    case "Facebook":
+    case 'Facebook':
       return <FaFacebookF size={size} />;
-    case "Twitter":
+    case 'Twitter':
       return <BsTwitterX size={size} />;
-    case "Linkedin":
+    case 'Linkedin':
       return <FaLinkedin size={size} />;
-    case "Apple":
+    case 'Apple':
       return <FaApple size={size} />;
     default:
       return <div />;
@@ -38,41 +32,41 @@ export const SocialIcon = ({ provider, size = 25 }: SocialIconProps) => {
 
 const socialMediaBgColor = (provider: SocialMediaProvider) => {
   switch (provider) {
-    case "Google":
-      return "bg-white";
-    case "Facebook":
-      return "bg-blue-500";
-    case "Twitter":
-      return "bg-blue-400";
-    case "Linkedin":
-      return "bg-blue-800";
-    case "Apple":
-      return "bg-black";
+    case 'Google':
+      return 'bg-white';
+    case 'Facebook':
+      return 'bg-blue-500';
+    case 'Twitter':
+      return 'bg-blue-400';
+    case 'Linkedin':
+      return 'bg-blue-800';
+    case 'Apple':
+      return 'bg-black';
     default:
-      return "bg-gray-500";
+      return 'bg-gray-500';
   }
 };
 
 const socialMediaTextColor = (provider: SocialMediaProvider) => {
   switch (provider) {
-    case "Google":
-      return "text-black";
-    case "Facebook":
-      return "text-white";
-    case "Twitter":
-      return "text-white";
-    case "Linkedin":
-      return "text-white";
-    case "Apple":
-      return "text-white";
+    case 'Google':
+      return 'text-black';
+    case 'Facebook':
+      return 'text-white';
+    case 'Twitter':
+      return 'text-white';
+    case 'Linkedin':
+      return 'text-white';
+    case 'Apple':
+      return 'text-white';
     default:
-      return "text-black";
+      return 'text-black';
   }
 };
 
 interface SocialLoginButtonProps {
   provider: SocialMediaProvider;
-  action: "login" | "signup";
+  action: 'login' | 'signup';
 }
 
 export const SocialLoginButton = ({
@@ -85,11 +79,11 @@ export const SocialLoginButton = ({
         callbackUrl: DEFAULT_LOGIN_REDIRECT,
       });
     } catch (error) {
-      console.error("Error signing in with social media", error);
+      console.error('Error signing in with social media', error);
     }
   };
   const actionLabel =
-    action === "login" ? `Log in with ${provider}` : `Sign up with ${provider}`;
+    action === 'login' ? `Log in with ${provider}` : `Sign up with ${provider}`;
 
   return (
     <button
@@ -98,7 +92,7 @@ export const SocialLoginButton = ({
       )} ${socialMediaBgColor(provider)} rounded-md`}
       onClick={() => handleLogin(provider)}
     >
-      <div className='gap-4 col-start-2 lg:col-start-3 col-span-full flex text-lg'>
+      <div className="gap-4 col-start-2 lg:col-start-3 col-span-full flex text-lg">
         <span>
           <SocialIcon provider={provider} size={25} />
         </span>

@@ -38,24 +38,29 @@ export class FileUpload {
                 return error;
             }
 
+            console.log("this is resumeFileId",resumeFileId);
+            console.log("this is userId",userId);
+            console.log("this is resume",resume);
+
             // upload resume to s3
             const upload : any = await new Upload({
                 client: new S3({
                   region : process.env.AWS_REGION,
                   credentials : {
                     accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
-                    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,   
+                    secretAccessKey: process.env.AWS_ACCESS_KEY_SECRET as string,   
                   }
                 }),
     
                 params: {
-                  Bucket      : process.env.AWS_BUCKET_NAME,
+                  Bucket      : process.env.AWS_S3_BUCKET,
                   Key         :  + "_" + resumeFileId,
                   Body        : resume,
                   ContentType : 'stream',
-                  ACL         : "public-read"
                 }
             }).done();
+
+            console.log("this is upload",upload);
 
             if(!upload.Location){
                 const error:Error = {
