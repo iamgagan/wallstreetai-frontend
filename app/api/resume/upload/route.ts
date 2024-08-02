@@ -10,7 +10,7 @@ type RequestBody = {
     resumeFileId?: string;
 }
 
-export async function POST(req: NextRequest) {
+export async function extractRequestInfo(req: NextRequest) {
     const formData = await req.formData();
     const file = formData.getAll('file') as File[];
     const resumeFile = file[0] as File;
@@ -18,16 +18,28 @@ export async function POST(req: NextRequest) {
     const fileType = resumeFile.type;
     const userId = formData.get('userId') as string;
 
-    if (!file || !fileName || !fileType || !userId) {
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
-    }
+    return { file, resumeFile, fileName, fileType, userId };
+}
 
+export async function uploadToAws(userId: string, resumeFile: File, resumeFileId?: string) {
     const fileUpload = new FileUpload();
-    const response:any = await fileUpload.uploadAws(userId, resumeFile, userId);
+    const response:any = await fileUpload.uploadAws(userId, resumeFile, resumeFileId);
     let awsUrl;
     if(response.awsUrl){
         awsUrl = response.awsUrl;
     }
+    return { awsUrl };
+}
+
+export async function POST(req: NextRequest) {
+   
+    const { file, resumeFile, fileName, fileType, userId } = await extractRequestInfo(req);
+
+    if (!file || !fileName || !fileType || !userId) {
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    }
+
+    const { awsUrl } = await uploadToAws(userId, resumeFile, userId);
 
     console.log("this is awsUrl",awsUrl);
 
