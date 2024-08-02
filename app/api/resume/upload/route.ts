@@ -20,8 +20,10 @@ export async function POST(req: NextRequest) {
     const userId = formData.get('userId') as string;
 
     const fileUpload = new FileUpload();
-    const response = await fileUpload.uploadAws(userId, resumeFile, userId);
-
+    const response:any = await fileUpload.uploadAws(userId, resumeFile, userId);
+    if(response.awsUrl){
+        // send it to the Python Function to extract the resume
+    }
 
 
 
