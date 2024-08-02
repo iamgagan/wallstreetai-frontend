@@ -1,17 +1,11 @@
 'use client';
 import { NavigationLayout } from '@/components/NavigationLayout/NavigationLayout';
-import dynamic from 'next/dynamic';
-
-const DynamicResumeFormPage = dynamic(() =>
-  import('@/components/ResumeSection/ResumeFormPage').then(
-    (mod) => mod.ResumeFormPage
-  )
-);
+import { ResumeFormPage } from '@/components/ResumeSection/ResumeFormPage';
 
 export default function ResumeFormById() {
   return (
     <NavigationLayout>
-      <DynamicResumeFormPage />
+      <ResumeFormPage />
     </NavigationLayout>
   );
 }

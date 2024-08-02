@@ -5,6 +5,8 @@ import { ResumeSection } from '@/components/ResumeSection/ResumeSection';
 import { useUserStore } from '@/store/store';
 import { useUserData } from '@/hooks/useUserData';
 import { useEffect } from 'react';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 const cardList = [
   {
@@ -40,7 +42,7 @@ const cardList = [
 export default function Dashboard() {
   const { updateUserId, updateResumeFiles, updateResumes, email } =
     useUserStore();
-  const { data } = useUserData(email);
+  const { data } = useSession();
 
   useEffect(() => {
     if (data && data.user) {
@@ -54,15 +56,15 @@ export default function Dashboard() {
         updateResumes(data.user.resumes);
       }
     }
-  }, [data, data?.user]);
+  }, [data, data?.user, email]);
 
   return (
     <NavigationLayout>
       <ul className="mt-[100px] flex w-full max-w-[80vw] justify-between gap-3">
         {cardList.map((card) => (
-          <a key={card.title} href={card.navigateTo}>
+          <Link key={card.title} href={card.navigateTo}>
             <DashboardCard {...card} />
-          </a>
+          </Link>
         ))}
       </ul>
       <ResumeSection />

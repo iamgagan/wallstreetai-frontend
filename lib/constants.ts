@@ -1,4 +1,4 @@
-import { SocialMediaProvider } from '@/components/Button/SocialLoginButton';
+import { SocialMediaProvider } from '@/types/SocialMedia';
 
 export const SocialMediaList: SocialMediaProvider[] = [
   'Linkedin',

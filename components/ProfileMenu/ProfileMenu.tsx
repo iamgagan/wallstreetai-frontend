@@ -15,7 +15,7 @@ import { useUserStore } from '@/store/store';
 const MenuItems = [
   {
     title: 'Settings',
-    href: '/settings',
+    href: '',
     divider: true,
   },
   {

@@ -5,7 +5,6 @@ import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/store';
-import { useEffect } from 'react';
 
 interface NavigationLayoutProps {
   children: React.ReactNode;

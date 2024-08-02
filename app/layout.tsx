@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { SessionProvider } from 'next-auth/react';
 import { ReactQueryProvider } from './provider';
+import { StoreProvider } from '@/store/store';
 
 export const metadata: Metadata = {
   title: 'Wall Street AI Resume Builder',
@@ -15,11 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ReactQueryProvider>
-        <SessionProvider>
-          <body>{children}</body>
-        </SessionProvider>
-      </ReactQueryProvider>
+      <StoreProvider>
+        <ReactQueryProvider>
+          <SessionProvider>
+            <body>{children}</body>
+          </SessionProvider>
+        </ReactQueryProvider>
+      </StoreProvider>
     </html>
   );
 }

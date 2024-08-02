@@ -6,13 +6,7 @@ import { FaLinkedin } from 'react-icons/fa';
 import { FaApple } from 'react-icons/fa';
 import { signIn } from 'next-auth/react';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
-
-export type SocialMediaProvider =
-  | 'Google'
-  | 'Facebook'
-  | 'Twitter'
-  | 'Linkedin'
-  | 'Apple';
+import { SocialMediaProvider } from '@/types/SocialMedia';
 
 interface SocialIconProps {
   provider: SocialMediaProvider;

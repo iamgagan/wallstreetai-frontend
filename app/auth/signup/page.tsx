@@ -1,3 +1,4 @@
+'use client';
 import { NavigationLayout } from '@/components/NavigationLayout/NavigationLayout';
 import { SignUpForm } from '@/components/AuthForm/SignUp';
 
