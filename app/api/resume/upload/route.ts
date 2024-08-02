@@ -23,12 +23,13 @@ export async function extractRequestInfo(req: NextRequest) {
 
 export async function uploadToAws(userId: string, resumeFile: File, resumeFileId?: string) {
     const fileUpload = new FileUpload();
-    const response:any = await fileUpload.uploadAws(userId, resumeFile, resumeFileId);
-    let awsUrl;
-    if(response.awsUrl){
-        awsUrl = response.awsUrl;
+    try {
+        const response:any = await fileUpload.uploadAws(userId, resumeFile, resumeFileId);
+        return { awsUrl : response.awsUrl  || null};
+    } catch (error) {
+        console.error("Error uploading to AWS:", error);
+        throw new Error("Failed to upload file to AWS");
     }
-    return { awsUrl };
 }
 
 export async function POST(req: NextRequest) {
@@ -41,7 +42,7 @@ export async function POST(req: NextRequest) {
 
     const { awsUrl } = await uploadToAws(userId, resumeFile, userId);
 
-    console.log("this is awsUrl",awsUrl);
+    console.log('this is awsUrl', awsUrl);
 
     const { resume, resumeFileId } = await req.json() as RequestBody;
     try {
