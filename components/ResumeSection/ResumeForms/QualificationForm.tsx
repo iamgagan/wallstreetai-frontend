@@ -30,24 +30,22 @@ type FormValues = typeof defaultValues;
 
 export const QualificationForm = () => {
   const { selectedResume } = useUserStore();
-  const initialValues =
-    selectedResume && selectedResume.qualifications
-      ? {
-          qualifications: selectedResume.qualifications,
-        }
-      : defaultValues;
   const qualificationForm = useForm<FormValues>({
     resolver: zodResolver(QualificationsArraySchema),
-    defaultValues: initialValues,
+    defaultValues,
   });
 
   useEffect(() => {
     if (selectedResume && selectedResume.qualifications) {
       qualificationForm.reset({
-        qualifications: selectedResume.qualifications,
+        qualifications: selectedResume.qualifications.map((item) => ({
+          qualification: item.qualification,
+          awardedDate: item.awardedDate,
+          institution: item.institution,
+        })),
       });
     }
-  }, [selectedResume, qualificationForm]);
+  }, [qualificationForm.reset]);
 
   const { fields, append, remove } = useFieldArray({
     name: 'qualifications',

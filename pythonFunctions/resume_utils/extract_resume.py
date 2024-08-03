@@ -28,10 +28,17 @@ resume_analyst = Agent(
 
 def extract_resume_information(file_path: str) -> Task:
     return Task(
-        description=dedent(f""" Given a .pdf, .doc or .docx document provided at this file path: {file_path}, read the file and extract the personal details, work experience, education and qualifications of the applicant. For the work experience description, keep the original version of the information as well as enhance the description of the work experience by rectifying any typos, grammatical errors and sentence structure and present the information in a concise and punchy manner. For the education description, keep the original version of the information as well as enhance the description of the education by rectifying any typos, grammatical errors and sentence structure and present the information in a concise and punchy manner. Return all the information as a JSON string with the following structure: 
+        description=dedent(f""" Given a .pdf, .doc or .docx document provided at this file path: {file_path}, read 
+        the file and extract the personal details, work experience, education and qualifications of the applicant. 
+        For the work experience description, keep the original version of the information as well as enhance the 
+        description of the work experience by rectifying any typos, grammatical errors and sentence structure and 
+        present the information in a concise and punchy manner. For the education description, keep the original 
+        version of the information as well as enhance the description of the education by rectifying any typos, 
+        grammatical errors and sentence structure and present the information in a concise and punchy manner. Return 
+        all the information as a JSON string with the following structure: 
         {{
-            "personal_details": 
-                {{
+            "personal_details":
+                {{ 
                     "firstName": "John", 
                     "lastName": "Smith", 
                     "email": "abc@gmail.com", 
@@ -39,44 +46,45 @@ def extract_resume_information(file_path: str) -> Task:
                     "addressLine1": "6 William Street", 
                     "addressLine2": "Bronx, NY 10458", 
                     "city": "New York City", 
-                    "state": "New York",
+                    "state": "New York", 
                     "postalCode": "NY 10458", 
-                    "country": "US"
-                }},
+                    "country": "US" 
+                }}, 
             "work_experience": [ 
-                {{   "jobTitle": "Investment analyst",
-                    "company": "Blackrock",
-                    "location": "New York",
-                    "startDate": "2021-02-21",
-                    "endDate": "2023-02-22",
-                    "description": "This is the original description of the work experience",
-                    "enhancedDescription": "This is the enhanced description of the work experience",
-                    "currentlyWorkingHere": "True"
-                }}
-            ],
+                {{   
+                    "jobTitle": "Investment analyst", 
+                    "company": "Blackrock", 
+                    "location": "New York", 
+                    "startDate": "2021-02-21", 
+                    "endDate": "2023-02-22", 
+                    "description": "This is the original description of the work experience", 
+                    "enhancedDescription": "This is the enhanced description of the work experience", 
+                    "currentlyWorkingHere": "True" 
+                }} 
+            ], 
             "education": [ 
-                {{
-                        "institution": "New York University",
-                        "degree": "Master in Finance",
-                        "fieldOfStudy": "Finance",
-                        "startDate": "2019-02-21",
-                        "endDate": "2020-02-22",
-                        "description": "This is the original description of the education",
-                        "enhancedDescription": "This is the enhanced description of the education",
-                        "currentlyStudyingHere": "False"
-                }}
-            ],
-            "qualifications": [
-                {{
-                    "qualification": "CFA",
-                    "awardedDate": "2023-02-21",
-                    "institution": "CFA Institute",
-                }}
-            ]
-        }}
-        """),
+                {{ 
+                    "institution": "New York University", 
+                    "degree": "Master in Finance", 
+                    "fieldOfStudy": "Finance", 
+                    "startDate": "2019-02-21", 
+                    "endDate": "2020-02-22", 
+                    "description": "This is the original description of the education", 
+                    "enhancedDescription": "This is the enhanced description of the education", 
+                    "currentlyStudyingHere": "False" 
+                }} 
+            ], 
+            "qualifications": [ 
+                {{ 
+                    "qualification": "CFA", 
+                    "awardedDate": "2023-02-21", 
+                    "institution": "CFA Institute" 
+                }} 
+            ] 
+        }}"""),
         agent=resume_analyst,
-        expected_output=dedent("JSON dict containing personal details, work experience, education and qualifications information"),
+        expected_output=dedent("JSON dict containing personal details, work experience, education and qualifications "
+                               "information"),
     )
 
 
@@ -89,10 +97,11 @@ def process_resume(file_url: str) -> Union[str, Dict[str, Any]]:
             verbose=2
         )
         # receive the data in JSON string
-        resume_details_json = crew.kickoff()
+        resume_output = crew.kickoff()
+        resume_json = json.loads(resume_output)
 
         # convert to Python object
-        return json.loads(resume_details_json)
+        return resume_json
     except json.JSONDecodeError as e:
         print(f"Error in process_resume: Invalid JSON - {e}")
         return {"error": "Invalid JSON"}

@@ -79,6 +79,10 @@ export async function POST(req: Request) {
           resumeId: resumeDb.id,
           resumeFileId: resumeDb.resumeFileId,
           userId: resumeDb.userId,
+          personalInfo: resumeDb.personalInfo,
+          education: resumeDb.education,
+          workExperience: resumeDb.workExperience,
+          qualifications: resumeDb.qualification,
           ...extractedResumeData,
         };
 

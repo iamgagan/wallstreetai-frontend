@@ -21,6 +21,8 @@ export const ResumeCard = () => {
     resumeFiles,
     updateResumeFiles,
     updateIsUploadWithAI,
+    updateSelectedResume,
+    updateSelectedResumeFile,
   } = useUserStore();
   const [loading, setLoading] = useState(false);
 

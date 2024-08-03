@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(
       {
-        data: { ...userDetails },
+        user: { ...userDetails },
       },
       { status: 200 }
     );

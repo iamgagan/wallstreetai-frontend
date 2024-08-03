@@ -3,19 +3,6 @@ import authConfig from '@/auth.config';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { db } from '@/lib/db';
 import { getUserByEmail, getUserById } from './lib/getUserByEmail';
-import { Resume, ResumeFile } from '@/types/Resume';
-
-declare module 'next-auth' {
-  interface Session {
-    user: {
-      /** The user's postal address. */
-      resumeFiles?: ResumeFile[] | null;
-      resumes?: Resume[] | null;
-      role?: string;
-      id?: string;
-    } & DefaultSession['user'];
-  }
-}
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
@@ -72,5 +59,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   },
   adapter: PrismaAdapter(db),
   session: { strategy: 'jwt' },
+  debug: true,
   ...authConfig,
 });
