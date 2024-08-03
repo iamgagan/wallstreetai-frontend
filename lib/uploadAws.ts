@@ -54,7 +54,7 @@ export class FileUpload {
     
                 params: {
                   Bucket      : process.env.AWS_S3_BUCKET,
-                  Key         :  + "_" + resumeFileId,
+                  Key         :  userId + "_" + resumeFileId,
                   Body        : resume,
                   ContentType : 'stream',
                 }
