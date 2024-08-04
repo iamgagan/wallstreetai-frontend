@@ -57,6 +57,7 @@ export class FileUpload {
                   Key         :  userId + "_" + resumeFileId,
                   Body        : resume,
                   ContentType : 'stream',
+                  ACL         : 'public-read'
                 }
             }).done();
 
