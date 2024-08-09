@@ -88,27 +88,33 @@ def extract_resume_information(file_path: str) -> Task:
     )
 
 
-def process_resume(file_url: str) -> Union[str, Dict[str, Any]]:
+def process_resume(file_path: str) -> Union[str, Dict[str, Any]]:
     try:
-        extract_resume_details_task = extract_resume_information(file_url)
+        extract_resume_details_task = extract_resume_information(file_path)
         crew = Crew(
             agents=[resume_analyst],
             tasks=[extract_resume_details_task],
             verbose=2
         )
-        # receive the data in JSON string
-        resume_output = crew.kickoff()
-        resume_json = json.loads(resume_output)
-
-        # convert to Python object
-        return resume_json
-    except json.JSONDecodeError as e:
-        print(f"Error in process_resume: Invalid JSON - {e}")
-        return {"error": "Invalid JSON"}
+        # receive the data as CrewOutput
+        crew_output = crew.kickoff()
+        
+        # Convert CrewOutput to string and remove code block markers
+        resume_output = str(crew_output).strip('`')
+        if resume_output.startswith('json'):
+            resume_output = resume_output[4:]  # Remove 'json' prefix if present
+        
+        # Attempt to parse the result as JSON
+        try:
+            resume_json = json.loads(resume_output)
+            return resume_json
+        except json.JSONDecodeError as e:
+            # If JSON parsing fails, return the error and raw output
+            return {"error": f"Failed to parse JSON: {str(e)}", "raw_output": resume_output}
+        
     except Exception as e:
         print(f"Error in process_resume: {e}")
         return {"error": str(e)}
-
 
 def main(doc_url=mock_cv_url):
     """This function is used to extract personal details, work experience, education, and qualifications from a
