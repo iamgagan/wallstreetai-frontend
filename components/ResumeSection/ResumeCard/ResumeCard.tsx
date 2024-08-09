@@ -39,14 +39,13 @@ export const ResumeCard = () => {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('userId', userId);
-      let newResumeId:string = "";
+      let newResumeId: string = '';
       try {
-        if(file && userId) {
+        if (file && userId) {
           const response = await fetch('/api/resume/upload', {
             method: 'POST',
-            body: formData
-          })
-
+            body: formData,
+          });
 
           const dataResponse = await response.json();
 
@@ -56,8 +55,13 @@ export const ResumeCard = () => {
           }
           const { data: resumeData } = dataResponse;
           if (resumeData) {
-            const { resumeId, resumeFileId, userId, secure_url, ...otherResumeData } =
-              resumeData;
+            const {
+              resumeId,
+              resumeFileId,
+              userId,
+              secure_url,
+              ...otherResumeData
+            } = resumeData;
             // update resumes
             newResumeId = resumeId;
             const newResume = {
@@ -88,8 +92,8 @@ export const ResumeCard = () => {
             }
             // update resumeFiles
             if (
-              resumeFiles.filter((file) => file.id === resumeFileId)
-                .length === 0
+              resumeFiles.filter((file) => file.id === resumeFileId).length ===
+              0
             ) {
               updateResumeFiles([...resumeFiles, newResumeFile]);
             } else {
@@ -104,8 +108,7 @@ export const ResumeCard = () => {
             toast.success('Resume uploaded successfully');
           }
         }
-          router.push(`/resumes/form/${newResumeId}`);
-
+        router.push(`/resumes/form/${newResumeId}`);
       } catch (error) {
         toast.error('Failed to upload resume file');
       }
