@@ -9,7 +9,8 @@ import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/store';
 import { toast, Toaster } from 'react-hot-toast';
 import { LoadingModal } from '@/components/LoadingModal/LoadingModal';
-import clsx from 'clsx';
+import { postResumeFileToApi } from '@/lib/resume';
+import { ResumeUploadSuccessResponse } from '@/types/Resume';
 
 export const ResumeCard = () => {
   const inputRef = createRef<HTMLInputElement>();
@@ -32,6 +33,58 @@ export const ResumeCard = () => {
     }
   };
 
+  const updateResumesInStore = (
+    resumeData: ResumeUploadSuccessResponse,
+    file: File
+  ) => {
+    const { resumeId, resumeFileId, userId, secure_url, ...otherResumeData } =
+      resumeData;
+    // update selected resume
+    const newResume = {
+      id: resumeId,
+      resumeFileId,
+      userId,
+      ...otherResumeData,
+    };
+    updateSelectedResume(newResume);
+
+    // update selected resume file
+    const newResumeFile = {
+      id: resumeFileId,
+      file: secure_url,
+      fileName: file.name,
+      fileType: file.type,
+    };
+    updateSelectedResumeFile(newResumeFile);
+
+    // update resumes
+    if (resumes.filter((resume) => resume.id === resumeId).length === 0) {
+      updateResumes([...resumes, newResume]);
+    } else {
+      const updatedResumes = resumes.map((resume) => {
+        if (resume.id === resumeId) {
+          return { id: resumeId, userId, resumeFileId, ...otherResumeData };
+        }
+        return resume;
+      });
+      updateResumes(updatedResumes);
+    }
+
+    // update resumeFiles
+    if (resumeFiles.filter((file) => file.id === resumeFileId).length === 0) {
+      updateResumeFiles([...resumeFiles, newResumeFile]);
+    } else {
+      const updatedResumeFiles = resumeFiles.map((resumeFile) => {
+        if (resumeFile.id === resumeFileId) {
+          return newResumeFile;
+        }
+        return resumeFile;
+      });
+      updateResumeFiles(updatedResumeFiles);
+    }
+    return { newResume, newResumeFile };
+  };
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
     if (e.target.files && e.target.files.length > 0) {
@@ -42,12 +95,7 @@ export const ResumeCard = () => {
       let newResumeId: string = '';
       try {
         if (file && userId) {
-          const response = await fetch('/api/resume/upload', {
-            method: 'POST',
-            body: formData,
-          });
-
-          const dataResponse = await response.json();
+          const dataResponse = await postResumeFileToApi(formData);
 
           if (dataResponse.error) {
             toast.error(dataResponse.error);
@@ -55,56 +103,8 @@ export const ResumeCard = () => {
           }
           const { data: resumeData } = dataResponse;
           if (resumeData) {
-            const {
-              resumeId,
-              resumeFileId,
-              userId,
-              secure_url,
-              ...otherResumeData
-            } = resumeData;
-            // update resumes
-            newResumeId = resumeId;
-            const newResume = {
-              id: resumeId,
-              resumeFileId,
-              ...otherResumeData,
-            };
-            updateSelectedResume(newResume);
-            const newResumeFile = {
-              id: resumeFileId,
-              file: secure_url,
-              fileName: file.name,
-              fileType: file.type,
-            };
-            updateSelectedResumeFile(newResumeFile);
-            if (
-              resumes.filter((resume) => resume.id === resumeId).length === 0
-            ) {
-              updateResumes([...resumes, newResume]);
-            } else {
-              const updatedResumes = resumes.map((resume) => {
-                if (resume.id === resumeId) {
-                  return { id: resumeId, resumeFileId, ...otherResumeData };
-                }
-                return resume;
-              });
-              updateResumes(updatedResumes);
-            }
-            // update resumeFiles
-            if (
-              resumeFiles.filter((file) => file.id === resumeFileId).length ===
-              0
-            ) {
-              updateResumeFiles([...resumeFiles, newResumeFile]);
-            } else {
-              const updatedResumeFiles = resumeFiles.map((resumeFile) => {
-                if (resumeFile.id === resumeFileId) {
-                  return newResumeFile;
-                }
-                return resumeFile;
-              });
-              updateResumeFiles(updatedResumeFiles);
-            }
+            const { newResume } = updateResumesInStore(resumeData, file);
+            newResumeId = newResume.id;
             toast.success('Resume uploaded successfully');
           }
         }

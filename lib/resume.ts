@@ -1,6 +1,5 @@
 import { db } from '@/lib/db';
 import { Resume, ResumeFile } from '@/types/Resume';
-import { JsonObject, JsonValue } from '@prisma/client/runtime/library';
 
 export const getResumesByEmail = async (email: string | undefined) => {
   if (!email || db.user === undefined) return null;
@@ -329,6 +328,20 @@ export const updateOrCreateResumeByUserId = async (
           : null,
       };
     }
+  } catch (error) {
+    return null;
+  }
+};
+
+export const postResumeFileToApi = async (formData: FormData) => {
+  try {
+    const response = await fetch('/api/resume/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const dataResponse = await response.json();
+    return dataResponse;
   } catch (error) {
     return null;
   }

@@ -45,8 +45,8 @@ export interface Education {
   institution: string;
   degree: string;
   fieldOfStudy?: string;
-  city:string;
-  country:string;
+  city: string;
+  country: string;
   startDate: string;
   endDate: string;
   currentlyStudyingHere?: string;
@@ -90,3 +90,14 @@ export interface UserResponseType {
   }[];
   password?: string;
 }
+
+export type ResumeUploadSuccessResponse = {
+  resumeId: string;
+  resumeFileId: string;
+  userId: string;
+  personalInfo: PersonalInfo;
+  education: Education[];
+  workExperience: WorkExperience[];
+  qualifications: Qualification[];
+  secure_url: string;
+} & ExtractedResumeData;
