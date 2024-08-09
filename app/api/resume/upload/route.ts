@@ -16,7 +16,6 @@ export async function extractRequestInfo(req: NextRequest) {
     const fileName = resumeFile.name;
     const fileType = resumeFile.type;
     const userId = formData.get('userId') as string;
-    console.log("this is userId",userId);
 
     return { file, resumeFile, fileName, fileType, userId };
 }
@@ -80,7 +79,6 @@ export async function POST(req: NextRequest) {
                 fileRes.id
               );
 
-              console.log("this is resumeDb",resumeDb);
       
               if (!resumeDb) {
                 return NextResponse.json(

@@ -38,9 +38,6 @@ export class FileUpload {
                 return error;
             }
 
-            console.log("this is resumeFileId",resumeFileId);
-            console.log("this is userId",userId);
-            console.log("this is resume",resume);
 
             // upload resume to s3
             const upload : any = await new Upload({
@@ -61,7 +58,6 @@ export class FileUpload {
                 }
             }).done();
 
-            console.log("this is upload",upload);
 
             if(!upload.Location){
                 const error:Error = {

@@ -52,7 +52,6 @@ export const ImportFromLinkedIn = () => {
       /**
        * TODO: scrape data from Linkedin profile and return data to the form
        */
-      console.log('submit', values);
     });
     router.push('/resumes/form');
   };

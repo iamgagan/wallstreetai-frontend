@@ -27,7 +27,6 @@ export const ResumeCard = () => {
   const [loading, setLoading] = useState(false);
 
   const uploadFile = () => {
-    console.log("this is inputRef",inputRef);
     if (inputRef.current) {
       inputRef.current.click();
     }
@@ -35,7 +34,6 @@ export const ResumeCard = () => {
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
-    console.log(e.target.files && e.target.files.length > 0)
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       const formData = new FormData();
@@ -44,8 +42,6 @@ export const ResumeCard = () => {
       let newResumeId:string = "";
       try {
         if(file && userId) {
-          console.log("this is file",file);
-          console.log("this is userId",userId);
           const response = await fetch('/api/resume/upload', {
             method: 'POST',
             body: formData

@@ -203,7 +203,6 @@ export const updateOrCreateResumeFileByUserId = async (
       }
       return updatedResumeFile;
     } else {
-      console.log("this is resumeFile and it is being saved for the first time",resumeFile);
       const newResumeFile = await db.resumeFile.create({
         data: {
           userId,
@@ -212,8 +211,6 @@ export const updateOrCreateResumeFileByUserId = async (
           fileName: resumeFile.fileName,
         },
       });
-      console.log("It is being saved", )
-      console.log("this is newResumeFile",newResumeFile);
       return newResumeFile;
     }
   } catch (error) {
