@@ -16,7 +16,6 @@ export const getFileUrl = async (file: string) => {
       resource_type: 'auto',
     });
     const result = await res.json();
-    console.log('result', result);
     return result;
   } catch (error) {
     console.error(error);
