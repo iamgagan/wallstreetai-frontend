@@ -79,6 +79,8 @@ export async function POST(req: NextRequest) {
                 },
                 fileRes.id
               );
+
+              console.log("this is resumeDb",resumeDb);
       
               if (!resumeDb) {
                 return NextResponse.json(
@@ -91,6 +93,11 @@ export async function POST(req: NextRequest) {
                 resumeId: resumeDb.id,
                 resumeFileId: resumeDb.resumeFileId,
                 userId: resumeDb.userId,
+                personalInfo: resumeDb.personalInfo,
+                education: resumeDb.education,
+                workExperience: resumeDb.workExperience,
+                qualifications: resumeDb.qualification,
+                secure_url:awsUrl,
                 ...extractedResumeData,
               };
       
