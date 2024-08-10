@@ -25,7 +25,7 @@ cohere==5.6.2
 coloredlogs==15.0.1
 configobj==5.0.8
 configparser==7.0.0
-crewai==0.5.0
+crewai==0.41.1
 dataclasses-json==0.6.7
 Deprecated==1.2.14
 distro==1.9.0
@@ -86,14 +86,14 @@ jsonpatch==1.33
 jsonpointer==3.0.0
 jsonref==1.1.0
 kubernetes==30.1.0
-langchain==0.1.0
-langchain-cohere==0.1.9
-langchain-community==0.0.20
-langchain-core==0.1.23
+langchain
+langchain-cohere
+langchain-community==0.2.11
+langchain-core
 langchain-experimental==0.0.63
-langchain-openai==0.0.2.post1
+langchain-openai==0.1.20
 langchain-text-splitters==0.2.2
-langsmith==0.0.87
+langsmith
 looseversion==1.3.0
 lxml==5.2.2
 Mako==1.3.5
@@ -161,7 +161,7 @@ pyxnat==1.6.2
 PyYAML==6.0.1
 qdrant-client==1.10.1
 rdflib==6.3.2
-regex==2024.7.24
+regex
 requests==2.32.3
 requests-oauthlib==2.0.0
 rich==13.7.1
@@ -181,7 +181,7 @@ starlette==0.37.2
 sympy==1.13.1
 tabulate==0.9.0
 tenacity==8.5.0
-tiktoken==0.5.2
+tiktoken
 together==1.2.3
 tokenizers==0.19.1
 tqdm==4.66.4
@@ -201,3 +201,4 @@ Werkzeug==3.0.3
 wrapt==1.16.0
 yarl==1.9.4
 zipp==3.19.2
+gunicorn==22.0.0

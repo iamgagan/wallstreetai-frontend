@@ -1,5 +1,5 @@
-import json
 import urllib.parse
+import os
 from flask import Flask, jsonify, request
 from resume_utils.extract_resume import main as extract_resume
 
@@ -29,4 +29,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT",8080)))

@@ -4,7 +4,6 @@ import {
 } from '@/lib/resume';
 import { NextResponse } from 'next/server';
 import fetch from 'node-fetch';
-import { PYTHON_FUNCTION_BASE_URL } from '@/lib/constants';
 import { ExtractedResumeData } from '@/types/Resume';
 
 interface ResumeFileBody {
@@ -39,7 +38,7 @@ export async function POST(req: Request) {
 
       // extract the data from resume file
       const res = await fetch(
-        `${PYTHON_FUNCTION_BASE_URL}/resume?url=${encodeURIComponent(file)}`
+        `${process.env.PYTHON_FUNCTION_BASE_URL}/resume?url=${encodeURIComponent(file)}`
       );
       const extractedResumeData = (await res.json()) as
         | ExtractedResumeData

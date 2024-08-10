@@ -3,7 +3,6 @@ import {
   updateOrCreateResumeFileByUserId,
 } from '@/lib/resume';
 import { NextRequest, NextResponse } from 'next/server';
-import { PYTHON_FUNCTION_BASE_URL } from '@/lib/constants';
 import { ExtractedResumeData } from '@/types/Resume';
 import { extractRequestInfo, uploadToAws } from '@/actions/resumeFileUtils';
 
@@ -37,7 +36,7 @@ export async function POST(req: NextRequest) {
       );
     }
     const res = await fetch(
-      `${PYTHON_FUNCTION_BASE_URL}/resume?url=${encodeURIComponent(awsUrl)}`
+      `${process.env.PYTHON_FUNCTION_BASE_URL}/resume?url=${encodeURIComponent(awsUrl)}`
     );
 
     const extractedResumeData = (await res.json()) as

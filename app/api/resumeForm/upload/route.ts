@@ -1,7 +1,4 @@
-import {
-  updateOrCreateResumeByUserId,
-  updateOrCreateResumeFileByUserId,
-} from '@/lib/resume';
+import { updateOrCreateResumeByUserId } from '@/lib/resume';
 import { Resume } from '@/types/Resume';
 import { NextResponse } from 'next/server';
 
